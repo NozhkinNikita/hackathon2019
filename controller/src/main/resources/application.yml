@@ -1,0 +1,15 @@
+#hton.datasource.properties.yaml.path: $ {config.dir}/profile-configs/dev/datasource.yml
+#spring:
+#  liquibase:
+##    change-log: classpath:${config.dir}/liquibase/changelog/changelog-master.xml
+##    change-log: file:///${config.dir}/liquibase/changelog/changelog-master.xml
+#    change-log: file:E:\\work\hton\config\liquibase\changelog\changelog-master.xml
+
+server:
+  port: 8443
+  ssl:
+    key-alias: selfsigned_localhost_sslserver
+    key-password: changeit
+    key-store: classpath:/keyStore/ssl-server.jks
+    key-store-provider: SUN
+    key-store-type: JKS
