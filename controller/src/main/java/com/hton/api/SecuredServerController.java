@@ -8,7 +8,7 @@ import java.util.Date;
 @RestController
 public class SecuredServerController {
     @RequestMapping("/secured")
-    public String secured(){
+    public String secured() {
         System.out.println("Inside secured()");
         return "Hello user !!! : " + new Date();
     }

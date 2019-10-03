@@ -7,7 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +20,6 @@ public class HtonPropertiesLoader implements SpringApplicationRunListener {
 
     private static final String LIQUIBASE_PROPERTIES_NAME = "liquibase.properties";
     private static final String PROPERTY_LIQUIBASE_PROPERTIES_YAML_PATH = "liquibase.properties.yaml.path";
-
 
 
     public HtonPropertiesLoader(SpringApplication app, String[] args) {
@@ -47,7 +45,6 @@ public class HtonPropertiesLoader implements SpringApplicationRunListener {
                         propertiesName,
                         new FileSystemResource(yamlPath));
                 environment.getPropertySources().addLast(propertySource.get(0));
-                System.out.println("::::::::::::::::");
             } catch (IOException | IllegalStateException e) {
             }
         }
