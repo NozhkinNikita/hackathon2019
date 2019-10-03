@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="Filip J. Fry" id="user-table-creation">
+        <createTable tableName="user">
+            <column name="id" type="NVARCHAR"/>
+            <column name="fio" type="NVARCHAR"/>
+            <column name="login" type="NVARCHAR"/>
+            <column name="pwd" type="NVARCHAR"/>
+<!--            <column name="roles" type="ARRAY"/>-->
+        </createTable>
+
+        <addNotNullConstraint tableName="user" columnName="id" columnDataType="NVARCHAR"/>
+        <addPrimaryKey tableName="user" columnNames="id" constraintName="user_pkey"/>
+
+        <addNotNullConstraint tableName="user" columnName="fio" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="user" columnName="login" columnDataType="NVARCHAR"/>
+        <addUniqueConstraint tableName="user" columnNames="login"/>
+
+        <addNotNullConstraint tableName="user" columnName="pwd" columnDataType="NVARCHAR"/>
+<!--        <addNotNullConstraint tableName="user" columnName="roles" columnDataType="ARRAY"/>-->
+
+        <rollback>
+            <dropTable tableName="user"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

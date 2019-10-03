@@ -7,17 +7,21 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
-//@Slf4j
 public class HtonPropertiesLoader implements SpringApplicationRunListener {
 
     private static final YamlPropertySourceLoader YAML_LOADER = new YamlPropertySourceLoader();
 
-    private static final String DATASOURCE_PROPERTIES_NAME = "hton.datasource.properties";
-    private static final String PROPERTY_DATASOURCE_PROPERTIES_YAML_PATH = "hton.datasource.properties.yaml.path";
+    private static final String DATASOURCE_PROPERTIES_NAME = "datasource.properties";
+    private static final String PROPERTY_DATASOURCE_PROPERTIES_YAML_PATH = "datasource.properties.yaml.path";
+
+    private static final String LIQUIBASE_PROPERTIES_NAME = "liquibase.properties";
+    private static final String PROPERTY_LIQUIBASE_PROPERTIES_YAML_PATH = "liquibase.properties.yaml.path";
+
 
 
     public HtonPropertiesLoader(SpringApplication app, String[] args) {
@@ -31,22 +35,20 @@ public class HtonPropertiesLoader implements SpringApplicationRunListener {
     @Override
     public void environmentPrepared(ConfigurableEnvironment environment) {
         loadProperties(environment, DATASOURCE_PROPERTIES_NAME, PROPERTY_DATASOURCE_PROPERTIES_YAML_PATH);
+        loadProperties(environment, LIQUIBASE_PROPERTIES_NAME, PROPERTY_LIQUIBASE_PROPERTIES_YAML_PATH);
     }
 
     private void loadProperties(ConfigurableEnvironment environment, String propertiesName, String propertiesPathProperty) {
         String yamlPath = environment.getProperty(propertiesPathProperty);
         if (null == yamlPath) {
-//            log.warn("{} is undefined. {} properties will not be loaded", propertiesPathProperty, propertiesName);
         } else {
             try {
                 List<PropertySource<?>> propertySource = YAML_LOADER.load(
                         propertiesName,
                         new FileSystemResource(yamlPath));
                 environment.getPropertySources().addLast(propertySource.get(0));
-//                log.info("{} properties loaded from path {}", propertiesName, yamlPath);
+                System.out.println("::::::::::::::::");
             } catch (IOException | IllegalStateException e) {
-//                log.warn("{} properties could not be loaded: {}. Exception message: {}",
-//                        propertiesName, yamlPath, e.getMessage());
             }
         }
     }

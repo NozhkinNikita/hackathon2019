@@ -28,13 +28,17 @@
         <lombok.vrsion>1.16.20</lombok.vrsion>
         <spring.starter.web.version>2.1.8.RELEASE</spring.starter.web.version>
         <spring.starter.jetty.version>2.1.4.RELEASE</spring.starter.jetty.version>
+        <spring.starter.security.version>2.0.5.RELEASE</spring.starter.security.version>
+        <spring.context.version>5.0.9.RELEASE</spring.context.version>
+        <spring.starter.data.jpa.version>2.0.5.RELEASE</spring.starter.data.jpa.version>
 
         <!--<spring.data.version>1.11.10.RELEASE</spring.data.version>-->
         <!--<spring.data.commons.version>2.0.10.RELEASE</spring.data.commons.version>-->
         <!--<spring.boot.jdbc.version>2.0.5.RELEASE</spring.boot.jdbc.version>-->
-        <!--<liquibase.version>3.8.0</liquibase.version>-->
-        <!--<hibernate.version>5.2.17.Final</hibernate.version>-->
-        <!--<h2.version>1.4.199</h2.version>-->
+        <liquibase.version>3.8.0</liquibase.version>
+        <hibernate.version>5.2.17.Final</hibernate.version>
+        <h2.version>1.4.199</h2.version>
+        <commons.lang.version>2.6</commons.lang.version>
         <!--<java.version>1.8</java.version>-->
     </properties>
 
@@ -57,6 +61,24 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Internal dependencies -->
+            <dependency>
+                <groupId>com.hton</groupId>
+                <artifactId>logic-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hton</groupId>
+                <artifactId>logic-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hton</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Spring web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -75,64 +97,61 @@
                 <version>${spring.starter.jetty.version}</version>
             </dependency>
 
+            <!-- Spring security -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring.starter.security.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.vrsion}</version>
             </dependency>
+
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.context.version}</version>
+            </dependency>
+
+            <!-- Data -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.starter.data.jpa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+
+            <!-- Commons -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!--<dependencies>-->
-    <!--<dependency>-->
-    <!--<groupId>org.projectlombok</groupId>-->
-    <!--<artifactId>lombok</artifactId>-->
-    <!--<version>${lombok.vrsion}</version>-->
-    <!--</dependency>-->
-
-    <!--&lt;!&ndash; Spring Web &ndash;&gt;-->
-    <!--<dependency>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-starter-web</artifactId>-->
-    <!--<version>${spring.starter.web.version}</version>-->
-    <!--<exclusions>-->
-    <!--<exclusion>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-    <!--</exclusion>-->
-    <!--</exclusions>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-starter-jetty</artifactId>-->
-    <!--<version>${spring.starter.jetty.version}</version>-->
-    <!--</dependency>-->
-
-    <!--&lt;!&ndash; Data &ndash;&gt;-->
-    <!--<dependency>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-    <!--<version>1.4.0.RELEASE</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-    <!--<groupId>org.hibernate</groupId>-->
-    <!--<artifactId>hibernate-entitymanager</artifactId>-->
-    <!--<version>${hibernate.version}</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-    <!--<groupId>org.hibernate</groupId>-->
-    <!--<artifactId>hibernate-core</artifactId>-->
-    <!--<version>${hibernate.version}</version>-->
-    <!--</dependency>-->
-
-    <!--&lt;!&ndash; Test &ndash;&gt;-->
-    <!--<dependency>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-starter-test</artifactId>-->
-    <!--<version>2.0.5.RELEASE</version>-->
-    <!--</dependency>-->
-    <!--</dependencies>-->
 
     <modules>
         <module>common</module>

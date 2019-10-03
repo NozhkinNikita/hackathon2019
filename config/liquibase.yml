@@ -1,0 +1,6 @@
+spring:
+  liquibase:
+    change-log: classpath:/liquibase/changelog/changelog-master.xml
+#    url: jdbc:h2:mem:TestDB
+#    username: sa
+#    password:

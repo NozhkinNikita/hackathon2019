@@ -22,15 +22,18 @@ import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URL;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.hton.api", "com.hton.service", "com.hton.config"})
-@EntityScan("com.hton.entity")
+@SpringBootApplication(scanBasePackages = {
+        "com.hton.api",
+        "com.hton.config",
+        "com.hton.converters",
+        "com.hton.dao"
+})
+@EntityScan("com.hton.entities")
 @EnableConfigurationProperties
 public class Application extends SpringBootServletInitializer {
 
