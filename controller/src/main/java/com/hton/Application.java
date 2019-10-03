@@ -1,5 +1,6 @@
 package com.hton;
 
+import com.hton.config.ServerConfigurator;
 import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -9,10 +10,12 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.JettyServerCustomizer;
 import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
@@ -26,13 +29,17 @@ import org.springframework.web.context.WebApplicationContext;
 import java.net.URL;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.hton.api", "com.hton.service",})
+@ComponentScan(basePackages = {"com.hton.api", "com.hton.service", "com.hton.config"})
 @EntityScan("com.hton.entity")
+@EnableConfigurationProperties
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
+    @Autowired
+    private ServerConfigurator serverConfigurator;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -56,11 +63,11 @@ public class Application extends SpringBootServletInitializer {
 
             // HTTPS
             SslContextFactory sslContextFactory = new SslContextFactory();
-            URL urlKeystore = getClass().getClassLoader().getResource("keyStore/ssl-server.jks");
+            URL urlKeystore = getClass().getClassLoader().getResource(serverConfigurator.getKeyStore());
             sslContextFactory.setKeyStoreResource(Resource.newResource(urlKeystore));
-            sslContextFactory.setKeyStoreProvider("SUN");
-            sslContextFactory.setKeyStoreType("JKS");
-            sslContextFactory.setKeyStorePassword("changeit");
+            sslContextFactory.setKeyStoreProvider(serverConfigurator.getKeyStoreProvider());
+            sslContextFactory.setKeyStoreType(serverConfigurator.getKeyStoreType());
+            sslContextFactory.setKeyStorePassword(serverConfigurator.getKeyPassword());
             sslContextFactory.setTrustAll(true);
 
             HttpConfiguration https = new HttpConfiguration();

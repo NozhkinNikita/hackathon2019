@@ -1,6 +1,5 @@
-package com.hton.common;
+package com.hton.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.boot.env.YamlPropertySourceLoader;

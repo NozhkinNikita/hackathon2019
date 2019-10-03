@@ -1,9 +1,6 @@
-#spring:
-#  server:
-#    port: 8443
-#    ssl:
-#      key-alias: selfsigned_localhost_sslserver
-#      key-password: changeit
-#      key-store: classpath:/keyStore/ssl-server.jks
-#      key-store-provider: SUN
-#      key-store-type: JKS
+server:
+  port: 8443
+  keyPassword: changeit
+  keyStore: keyStore/ssl-server.jks
+  keyStoreProvider: SUN
+  keyStoreType: JKS
