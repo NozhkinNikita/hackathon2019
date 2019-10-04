@@ -19,6 +19,11 @@
             <column name="pwd" value="KFMN_PWD"/>
         </insert>
 
+        <insert tableName="location">
+            <column name="id" valueNumeric="-1"/>
+            <column name="name" value="KFMN_LOCATION"/>
+        </insert>
+
         <insert tableName="role">
             <column name="id" value="ADMIN"/>
         </insert>

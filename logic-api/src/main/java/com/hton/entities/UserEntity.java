@@ -43,7 +43,7 @@ public class UserEntity implements BaseEntity {
 
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "fio", "login", pwd);
+        return Arrays.asList("id", "fio", "login", "pwd");
     }
 
     @Override

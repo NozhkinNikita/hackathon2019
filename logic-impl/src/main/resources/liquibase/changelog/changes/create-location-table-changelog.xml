@@ -6,17 +6,12 @@
 
     <changeSet author="Filip J. Fry" id="location-table-creation">
         <createTable tableName="location">
-            <column name="id" type="NVARCHAR(36)">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="name" type="NVARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="id" type="NVARCHAR(36)"/>
+            <column name="name" type="NVARCHAR(255)"/>
         </createTable>
 
         <addNotNullConstraint tableName="location" columnName="id" columnDataType="NVARCHAR"/>
         <addPrimaryKey tableName="location" columnNames="id" constraintName="location_pkey"/>
-
         <addNotNullConstraint tableName="location" columnName="name" columnDataType="NVARCHAR"/>
 
         <rollback>
