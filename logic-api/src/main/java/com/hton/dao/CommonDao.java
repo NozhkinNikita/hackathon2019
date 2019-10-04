@@ -442,7 +442,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         }
     }
 
-    public EntityTransaction openTransaction(EntityManager entityManager) {
+    private EntityTransaction openTransaction(EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         if (!transaction.isActive()) {
             transaction.begin();
@@ -450,21 +450,34 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         return transaction;
     }
 
-    public void commitTransaction(EntityTransaction transaction) {
+    private void commitTransaction(EntityTransaction transaction) {
         if (transaction.isActive()) {
             transaction.commit();
         }
     }
 
-    public void rollbackTransaction(EntityTransaction transaction) {
-        if (transaction.isActive()) {
-            transaction.rollback();
+    public void remove(final Object entity) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            if (entity != null) {
+                em.remove(em.contains(entity) ? entity : em.merge(entity));
+            }
+        } finally {
+            em.close();
         }
     }
 
-    public void removeInOpenedTransaction(final Object entity, EntityManager entityManager) {
-        if (entity != null) {
-            entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+    public void update(D domain) {
+        E entity = converter.toEntityObject(domain);
+        EntityManager em = emf.createEntityManager();
+        try {
+            EntityTransaction transaction = openTransaction(em);
+            em.merge(entity);
+            commitTransaction(transaction);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
 
@@ -480,13 +493,5 @@ public abstract class CommonDao<D, E extends BaseEntity> {
                 em.close();
             }
         }
-    }
-
-    public void saveInOpenedTransaction(BaseEntity entity, EntityManager entityManager) {
-        entityManager.persist(entity);
-    }
-
-    public void editInOpenedTransaction(BaseEntity entity, EntityManager entityManager) {
-        entityManager.merge(entity);
     }
 }
