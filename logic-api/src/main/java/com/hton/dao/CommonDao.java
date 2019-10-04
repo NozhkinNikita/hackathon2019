@@ -60,43 +60,8 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         return converter.toDomainObject(e);
     }
 
-    public E getById(String id, EntityManager entityManager) {
-        E t = entityManager.find(getEntityClass(), id);
-        return t;
-    }
-
-    public E getById(String id, EntityManager entityManager, LockModeType lockModeType) {
-        E t = entityManager.find(getEntityClass(), id, lockModeType);
-        return t;
-    }
-
-    public E getByIdOrNull(String id, EntityManager entityManager) {
-        return entityManager.find(getEntityClass(), id);
-    }
-
-    public List<E> getByCondition(Condition condition) {
-        return executeCondition(condition, null);
-    }
-
-    public List<E> getByCondition(Condition condition, EntityManager entityManager) {
-        return executeCondition(condition, entityManager);
-    }
-
-    public Long count(Condition condition) {
-        return count(condition, null);
-    }
-
-    public Long count(Condition condition, EntityManager entityManager) {
-        EntityManager manager = emf.createEntityManager();
-        condition.setMaskFields(Collections.singletonList("id"));
-
-        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Class<E> entityClass = getEntityClass();
-        Root<E> parentRoot = criteriaQuery.from(entityClass);
-        criteriaQuery.select(criteriaBuilder.count(parentRoot))
-                .where(condition.getPredicate(criteriaBuilder, parentRoot, criteriaQuery));
-        return manager.createQuery(criteriaQuery).getSingleResult();
+    public List<D> getByCondition(Condition condition) {
+        return executeCondition(condition, null).stream().map(e -> converter.toDomainObject(e)).collect(Collectors.toList());
     }
 
     private List<E> executeCondition(Condition condition, EntityManager entityManager) {
@@ -503,7 +468,8 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         }
     }
 
-    public void save(BaseEntity entity) {
+    public void save(D domain) {
+        E entity = converter.toEntityObject(domain);
         EntityManager em = emf.createEntityManager();
         try {
             EntityTransaction transaction = openTransaction(em);

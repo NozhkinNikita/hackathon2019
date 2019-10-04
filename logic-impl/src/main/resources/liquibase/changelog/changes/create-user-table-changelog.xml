@@ -10,7 +10,6 @@
             <column name="fio" type="NVARCHAR"/>
             <column name="login" type="NVARCHAR"/>
             <column name="pwd" type="NVARCHAR"/>
-<!--            <column name="roles" type="ARRAY"/>-->
         </createTable>
 
         <addNotNullConstraint tableName="user" columnName="id" columnDataType="NVARCHAR"/>
@@ -21,10 +20,32 @@
         <addUniqueConstraint tableName="user" columnNames="login"/>
 
         <addNotNullConstraint tableName="user" columnName="pwd" columnDataType="NVARCHAR"/>
-<!--        <addNotNullConstraint tableName="user" columnName="roles" columnDataType="ARRAY"/>-->
 
         <rollback>
             <dropTable tableName="user"/>
         </rollback>
+
+        <createTable tableName="role">
+            <column name="id" type="NVARCHAR"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="role" columnName="id" columnDataType="NVARCHAR"/>
+        <addPrimaryKey tableName="role" columnNames="id" constraintName="role_pkey"/>
+
+        <createTable tableName="user_roles">
+            <column name="userId" type="NVARCHAR"/>
+            <column name="roleId" type="NVARCHAR"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_user_role"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="roleId"
+                                 constraintName="fk_role_user"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

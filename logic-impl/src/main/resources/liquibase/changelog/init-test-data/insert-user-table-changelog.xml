@@ -7,10 +7,32 @@
     <changeSet author="Filip J. Fry" id="2">
         <insert tableName="user">
             <column name="id" valueNumeric="1"/>
+            <column name="fio" value="admin"/>
+            <column name="login" value="admin"/>
+            <column name="pwd" value="password"/>
+        </insert>
+
+        <insert tableName="user">
+            <column name="id" valueNumeric="2"/>
             <column name="fio" value="KFMN_FIO"/>
             <column name="login" value="KFMN_LOGIN"/>
             <column name="pwd" value="KFMN_PWD"/>
-<!--            <column name="roles" value="[USER, ADMIN]"/>-->
+        </insert>
+
+        <insert tableName="role">
+            <column name="id" value="ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="USER"/>
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="userId" valueNumeric="1"/>
+            <column name="roleId" value="ADMIN"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="userId" valueNumeric="2"/>
+            <column name="roleId" value="USER"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserConverter implements Converter<User, UserEntity> {
+
     @Override
     public User toDomainObject(UserEntity entity) {
         User user = null;
@@ -15,6 +16,7 @@ public class UserConverter implements Converter<User, UserEntity> {
             user.setFio(entity.getFio());
             user.setLogin(entity.getLogin());
             user.setPwd(entity.getPwd());
+            user.setRoleEntities(entity.getRoleEntities());
         }
         return user;
     }
@@ -28,6 +30,7 @@ public class UserConverter implements Converter<User, UserEntity> {
             entity.setFio(domain.getFio());
             entity.setLogin(domain.getLogin());
             entity.setPwd(domain.getPwd());
+            entity.setRoleEntities(domain.getRoleEntities());
         }
         return entity;
     }

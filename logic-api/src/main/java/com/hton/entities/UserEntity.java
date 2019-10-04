@@ -6,10 +6,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -28,9 +32,11 @@ public class UserEntity implements BaseEntity {
 
     private String pwd;
 
-//    @ElementCollection
-//    @Enumerated(EnumType.STRING)
-//    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "roleId", nullable = false, updatable = false)})
+    private List<RoleEntity> roleEntities;
 //
 //    @OneToMany(mappedBy = "user_id")
 //    private List<LocationEntity> locations;
@@ -42,6 +48,6 @@ public class UserEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return new ArrayList<>();
+        return Collections.singletonList("roleEntities");
     }
 }
