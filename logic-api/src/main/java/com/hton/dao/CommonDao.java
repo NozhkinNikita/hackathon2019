@@ -456,6 +456,16 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         }
     }
 
+    public void remove(final String id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Object entity = em.find(getEntityClass(), id);
+            remove(entity);
+        } finally {
+            em.close();
+        }
+    }
+
     public void remove(final Object entity) {
         EntityManager em = emf.createEntityManager();
         try {
