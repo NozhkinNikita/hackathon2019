@@ -1,6 +1,7 @@
 package com.hton.config;
 
 import com.hton.api.WebMvcConfig;
+import com.hton.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
@@ -43,8 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers(WebMvcConfig.SECURITY_PATH + "/user/**").hasRole("USER")
-                .antMatchers(WebMvcConfig.SECURITY_PATH + "/admin/**").hasRole("ADMIN")
+                .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.ADMIN.name())
                 .and()
                 .csrf().disable()
                 .formLogin().loginPage("/login").permitAll()
