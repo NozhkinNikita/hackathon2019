@@ -36,7 +36,7 @@ public class UserEntity implements BaseEntity {
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "roleId", nullable = false, updatable = false)})
-    private List<RoleEntity> roleEntities;
+    private List<RoleEntity> roles;
 //
 //    @OneToMany(mappedBy = "user_id")
 //    private List<LocationEntity> locations;

@@ -1,8 +1,11 @@
 package com.hton.converters;
 
 import com.hton.domain.User;
+import com.hton.entities.RoleEntity;
 import com.hton.entities.UserEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class UserConverter implements Converter<User, UserEntity> {
@@ -16,7 +19,7 @@ public class UserConverter implements Converter<User, UserEntity> {
             user.setFio(entity.getFio());
             user.setLogin(entity.getLogin());
             user.setPwd(entity.getPwd());
-            user.setRoleEntities(entity.getRoleEntities());
+            user.setRoles(entity.getRoles().stream().map(RoleEntity::getRole).collect(Collectors.toList()));
         }
         return user;
     }
@@ -30,7 +33,7 @@ public class UserConverter implements Converter<User, UserEntity> {
             entity.setFio(domain.getFio());
             entity.setLogin(domain.getLogin());
             entity.setPwd(domain.getPwd());
-            entity.setRoleEntities(domain.getRoleEntities());
+            entity.setRoles(domain.getRoles().stream().map(RoleEntity::new).collect(Collectors.toList()));
         }
         return entity;
     }

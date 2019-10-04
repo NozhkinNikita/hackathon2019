@@ -25,7 +25,6 @@ public class RoleEntity implements BaseEntity {
     @Id
     @Column(name = "id", unique = true)
     @Enumerated(EnumType.STRING)
-    @Getter
     private Role id;
 
     @Override
@@ -40,5 +39,9 @@ public class RoleEntity implements BaseEntity {
 
     public String getId() {
         return id.name();
+    }
+
+    public Role getRole() {
+        return id;
     }
 }

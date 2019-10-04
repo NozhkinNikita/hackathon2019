@@ -1,6 +1,6 @@
 package com.hton.domain;
 
-import com.hton.entities.RoleEntity;
+import com.hton.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,5 @@ public class User {
 
     private String pwd;
 
-    private List<RoleEntity> roleEntities;
+    private List<Role> roles;
 }

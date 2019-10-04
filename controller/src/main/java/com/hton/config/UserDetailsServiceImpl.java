@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -33,9 +33,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .setSearchValue(login)
                 .build();
         User user = userDao.getByCondition(condition).stream().findFirst().orElse(null);
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(ROLE_PREFIX + "ADMIN"));
-
         if (user != null) {
+            List<GrantedAuthority> authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.name()))
+                    .collect(Collectors.toList());
             return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPwd(), authorities);
         } else {
             throw new BadCredentialsException("Wrong user name");
