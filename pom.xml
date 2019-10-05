@@ -165,9 +165,9 @@
         <module>logic-impl</module>
     </modules>
 
-    <scm>
-        <connection>scm:git:http://${user.name}@stash.ca.sbrf.ru/scm/~kolmogorov-dv/hton.git</connection>
-        <developerConnection>scm:git:http://${user.name}@stash.ca.sbrf.ru/scm/~kolmogorov-dv/hton.git</developerConnection>
-        <url>http://stash.ca.sbrf.ru/projects/~kolmogorov-dv/repos/hton/browse</url>
-    </scm>
+<!--    <scm>-->
+<!--        <connection>scm:git:http://${user.name}@stash.ca.sbrf.ru/scm/~kolmogorov-dv/hton.git</connection>-->
+<!--        <developerConnection>scm:git:http://${user.name}@stash.ca.sbrf.ru/scm/~kolmogorov-dv/hton.git</developerConnection>-->
+<!--        <url>http://stash.ca.sbrf.ru/projects/~kolmogorov-dv/repos/hton/browse</url>-->
+<!--    </scm>-->
 </project>
