@@ -14,6 +14,13 @@
 
         <insert tableName="user">
             <column name="id" valueNumeric="2"/>
+            <column name="fio" value="net_admin"/>
+            <column name="login" value="net_admin"/>
+            <column name="pwd" value="password"/>
+        </insert>
+
+        <insert tableName="user">
+            <column name="id" valueNumeric="3"/>
             <column name="fio" value="KFMN_FIO"/>
             <column name="login" value="KFMN_LOGIN"/>
             <column name="pwd" value="KFMN_PWD"/>
@@ -40,11 +47,33 @@
         </insert>
         <insert tableName="user_roles">
             <column name="userId" valueNumeric="2"/>
+            <column name="roleId" value="NETWORK_ADMIN"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="userId" valueNumeric="3"/>
             <column name="roleId" value="USER"/>
         </insert>
 
         <insert tableName="user_location">
             <column name="userId" valueNumeric="1"/>
+            <column name="locationId" value="-1"/>
+        </insert>
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="2"/>
+            <column name="locationId" value="-1"/>
+        </insert>
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="3"/>
+            <column name="locationId" value="-1"/>
+        </insert>
+
+        <insert tableName="router">
+            <column name="id" value="2"/>
+            <column name="ip" value="KFMN_IP"/>
+            <column name="ssid" value="KFMN_SSID"/>
+            <column name="pwd" value="KFMN_PWD"/>
+            <column name="adminLogin" value="KFMN_ROUTER_LOGIN"/>
+            <column name="adminPwd" value="KFMN_ROUTER_PWD"/>
             <column name="locationId" value="-1"/>
         </insert>
     </changeSet>

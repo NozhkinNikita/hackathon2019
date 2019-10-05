@@ -15,4 +15,6 @@ public class Location {
     private String name;
 
     private List<User> users;
+
+    private List<Router> routers;
 }

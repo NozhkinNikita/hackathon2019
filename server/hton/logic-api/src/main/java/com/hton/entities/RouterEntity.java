@@ -31,9 +31,11 @@ public class RouterEntity implements BaseEntity {
 
     private String adminPwd;
 
+    private String locationId;
+
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "ip", "ssid", "pwd", "adminLogin", "adminPwd");
+        return Arrays.asList("id", "ip", "ssid", "pwd", "adminLogin", "adminPwd", "locationId");
     }
 
     @Override

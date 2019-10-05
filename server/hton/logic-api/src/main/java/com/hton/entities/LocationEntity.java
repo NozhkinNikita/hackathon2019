@@ -29,8 +29,9 @@ public class LocationEntity implements BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<UserEntity> users;
 
-//    @OneToMany(mappedBy = "location_id")
-//    private List<RouterEntity> routers;
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = RouterEntity.class, mappedBy = "locationId")
+//    @JoinTable(name = "router", joinColumns = {@JoinColumn(name = "id", nullable = false, updatable = false)})
+    private List<RouterEntity> routers;
 
     @Override
     public List<String> getBaseFields() {
@@ -39,6 +40,6 @@ public class LocationEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("users");
+        return Arrays.asList("users", "routers");
     }
 }

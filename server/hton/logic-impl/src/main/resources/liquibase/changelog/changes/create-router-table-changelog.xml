@@ -12,6 +12,7 @@
             <column name="pwd" type="NVARCHAR"/>
             <column name="adminLogin" type="NVARCHAR"/>
             <column name="adminPwd" type="NVARCHAR"/>
+            <column name="locationId" type="NVARCHAR"/>
         </createTable>
 
         <addNotNullConstraint tableName="router" columnName="id" columnDataType="NVARCHAR"/>
@@ -26,5 +27,11 @@
         <rollback>
             <dropTable tableName="router"/>
         </rollback>
+
+        <addForeignKeyConstraint baseTableName="router"
+                                 baseColumnNames="locationId"
+                                 constraintName="fk_router_location"
+                                 referencedTableName="location"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(value = WebMvcConfig.ADMIN_PATH)
+@RequestMapping(value = WebMvcConfig.ADMIN_ROUTER_PATH)
 public class RouterController {
 
     @Autowired
