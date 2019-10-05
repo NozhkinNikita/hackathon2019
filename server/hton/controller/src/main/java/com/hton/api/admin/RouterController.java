@@ -1,11 +1,11 @@
-package com.hton.api.security;
+package com.hton.api.admin;
 
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
-import com.hton.domain.User;
-import com.hton.entities.UserEntity;
+import com.hton.domain.Router;
+import com.hton.entities.RouterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping(value = WebMvcConfig.SECURITY_USERS_PATH)
-public class UserController {
+@RequestMapping(value = WebMvcConfig.ADMIN_PATH)
+public class RouterController {
 
     @Autowired
-    private CommonDao<User, UserEntity> userDao;
+    private CommonDao<Router, RouterEntity> routerDao;
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(userDao.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(routerDao.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
-        userDao.remove(id);
+        routerDao.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -41,18 +41,19 @@ public class UserController {
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
         SimpleCondition condition = new SimpleCondition.Builder().setSearchField("id")
                 .setSearchCondition(SearchCondition.NOT_NULL).build();
-        return new ResponseEntity<>(userDao.getByCondition(condition), HttpStatus.OK);
+        return new ResponseEntity<>(routerDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        userDao.save(user);
+    public ResponseEntity<?> createUser(@RequestBody Router router) {
+        routerDao.save(router);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
-        userDao.update(user);
+    public ResponseEntity<?> updateUser(@RequestBody Router router) {
+        routerDao.update(router);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

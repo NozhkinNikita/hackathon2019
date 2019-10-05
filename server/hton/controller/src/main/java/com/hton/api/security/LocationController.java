@@ -1,13 +1,11 @@
 package com.hton.api.security;
 
 import com.hton.api.WebMvcConfig;
-import com.hton.converters.Converter;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Location;
-import com.hton.domain.User;
 import com.hton.entities.LocationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

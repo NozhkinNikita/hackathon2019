@@ -6,6 +6,7 @@
 
     <include file="changes/create-user-table-changelog.xml" relativeToChangelogFile="true"/>
     <include file="changes/create-location-table-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-router-table-changelog.xml" relativeToChangelogFile="true"/>
     <include file="init-test-data/insert-user-table-changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
 
