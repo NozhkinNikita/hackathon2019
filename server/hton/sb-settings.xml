@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"
+          xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <mirrors>
+        <mirror>
+            <mirrorOf>sbt-central</mirrorOf>
+            <name>repo</name>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/central</url>
+            <id>uni-sbt-central</id>
+        </mirror>
+
+        <mirror>
+            <mirrorOf>repository-release</mirrorOf>
+            <name>repo</name>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/Platform_release</url>
+            <id>uni-repository-release</id>
+        </mirror>
+
+        <mirror>
+            <mirrorOf>repository-snapshots</mirrorOf>
+            <name>repo</name>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/Platform_snapshot</url>
+            <id>uni-repository-snapshots</id>
+        </mirror>
+
+        <mirror>
+            <mirrorOf>central</mirrorOf>
+            <name>repo</name>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/central</url>
+            <id>uni-central</id>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>nexus-platform-repos</id>
+            <pluginRepositories>
+                <pluginRepository>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/central</url>
+                    <id>nexus-central-plugin-repo</id>
+                </pluginRepository>
+                <pluginRepository>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/Platform_snapshot/</url>
+                    <id>nexus-snapshot-plugin-repo</id>
+                </pluginRepository>
+                <pluginRepository>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/Platform_release/</url>
+                    <id>nexus-release-plugin-repo</id>
+                </pluginRepository>
+                <pluginRepository>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/Platform_thirdparty</url>
+                    <id>nexus-platform-plugin-thirdparthy</id>
+                </pluginRepository>
+              	<pluginRepository>
+                    <id>internal</id>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/groups/PPRB_dev_group/</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <repositories>
+                <repository>
+                    <id>PPRB_dev_group</id>
+                    <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/groups/PPRB_dev_group/</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>nexus-platform-repos</activeProfile>
+    </activeProfiles>
+
+    <servers>
+        <server>
+            <id>PPRB_dev_group</id>
+            <username>CI_CI00749314</username>
+            <password>3141++Bglm</password>
+        </server>
+        <server>
+            <id>internal</id>
+            <username>CI_CI00749314</username>
+            <password>3141++Bglm</password>
+        </server>
+        <server>
+            <id>nexus-central-plugin-repo</id>
+            <username>CI_CI00749314</username>
+            <password>3141++Bglm</password>
+        </server>
+        <server>
+            <id>nexus-snapshot-plugin-repo</id>
+            <username>CI_CI00749314</username>
+            <password>3141++Bglm</password>
+        </server>
+        <server>
+            <id>nexus-release-plugin-repo</id>
+            <username>CI_CI00749314</username>
+            <password>3141++Bglm</password>
+        </server>
+    </servers>
+</settings>

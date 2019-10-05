@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="Filip J. Fry" id="routerData-table-creation">
+        <createTable tableName="routerData">
+            <column name="id" type="NVARCHAR"/>
+            <column name="ssid" type="NVARCHAR"/>
+            <column name="bssid" type="NVARCHAR"/>
+            <column name="chanel" type="INT"/>
+            <column name="rssi" type="FLOAT8"/>
+            <column name="routerId" type="NVARCHAR"/>
+            <column name="pointId" type="NVARCHAR"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="routerData" columnName="id" columnDataType="NVARCHAR"/>
+        <addPrimaryKey tableName="routerData" columnNames="id" constraintName="routerData_pkey"/>
+
+        <addNotNullConstraint tableName="routerData" columnName="ssid" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="routerData" columnName="bssid" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="routerData" columnName="chanel" columnDataType="INT"/>
+        <addNotNullConstraint tableName="routerData" columnName="rssi" columnDataType="FLOAT8"/>
+
+        <addForeignKeyConstraint baseTableName="routerData"
+                                 baseColumnNames="routerId"
+                                 constraintName="fk_routerData_router"
+                                 referencedTableName="router"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="routerData"
+                                 baseColumnNames="pointId"
+                                 constraintName="fk_routerData_point"
+                                 referencedTableName="point"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+        <rollback>
+            <dropTable tableName="routerData"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
