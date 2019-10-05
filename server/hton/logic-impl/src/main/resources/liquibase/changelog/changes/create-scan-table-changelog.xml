@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="Filip J. Fry" id="scan-table-creation">
+        <createTable tableName="scan">
+            <column name="id" type="NVARCHAR"/>
+            <column name="begin" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="end" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="status" type="NVARCHAR"/>
+            <column name="userId" type="NVARCHAR"/>
+            <column name="deviceId" type="NVARCHAR"/>
+            <column name="pointId" type="NVARCHAR"/>
+        </createTable>
+
+        <addNotNullConstraint tableName="scan" columnName="id" columnDataType="NVARCHAR"/>
+        <addPrimaryKey tableName="scan" columnNames="id" constraintName="scan_pkey"/>
+
+        <addNotNullConstraint tableName="scan" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        <addNotNullConstraint tableName="scan" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        <addNotNullConstraint tableName="scan" columnName="status" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="scan" columnName="pointId" columnDataType="NVARCHAR"/>
+
+        <addForeignKeyConstraint baseTableName="scan"
+                                 baseColumnNames="scanId"
+                                 constraintName="fk_scan_point"
+                                 referencedTableName="point"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="scan"
+                                 baseColumnNames="scanId"
+                                 constraintName="fk_scan_user"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableName="scan"
+                                 baseColumnNames="scanId"
+                                 constraintName="fk_scan_device"
+                                 referencedTableName="device"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+
+        <rollback>
+            <dropTable tableName="point"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

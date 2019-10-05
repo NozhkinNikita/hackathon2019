@@ -1,3 +1,0 @@
-# Cloudable Spring Run listeners
-org.springframework.boot.SpringApplicationRunListener=\
-com.hton.config.HtonPropertiesLoader

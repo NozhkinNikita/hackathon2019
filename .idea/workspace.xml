@@ -2,74 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6abeedd4-c711-4ed8-a55b-b597effc4267" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/hackathon2019.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/android/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/common/common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/common/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/common/src/main/java/com/hton/config/HtonPropertiesLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/config/datasource.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/config/liquibase.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/controller.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/api/WebMvcConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/api/security/LocationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/api/security/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/config/PasswordEncoder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/config/ServerConfigurator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/java/com/hton/config/UserDetailsServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/resources/META-INF/spring.factories" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/controller/src/main/resources/keyStore/ssl-server.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/logic-api.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/converters/Converter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/CommonDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/DataWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/DataWriterImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/exceptions/DataWriterException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/ComplexCondition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/Condition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/Operation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/SearchCondition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/SimpleCondition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/dao/filters/SortDirection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/domain/Location.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/domain/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/BaseEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/DeviceEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/LocationEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/PointEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/RoleEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/RouterDataEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/RouterEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/ScanEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/ScanStatus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-api/src/main/java/com/hton/entities/UserEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/logic-impl.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/java/com/hton/converters/LocationConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/java/com/hton/converters/UserConverter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/java/com/hton/dao/LocationDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/java/com/hton/dao/UserDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changelog-master.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-device-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-location-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-point-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-router-data-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-router-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-scan-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/changes/create-user-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/logic-impl/src/main/resources/liquibase/changelog/init-test-data/insert-user-table-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/parent.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/server/hton/sb-settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/hton/web/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/hton/config/HtonPropertiesLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/datasource.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/liquibase.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/api/WebMvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/api/security/LocationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/api/security/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/config/PasswordEncoder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/config/ServerConfigurator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/java/com/hton/config/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/resources/META-INF/spring.factories" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/src/main/resources/keyStore/ssl-server.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/converters/Converter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/CommonDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/DataWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/DataWriterImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/exceptions/DataWriterException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/ComplexCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/Condition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/Operation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/SearchCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/SimpleCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/dao/filters/SortDirection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/domain/Location.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/domain/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/DeviceEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/LocationEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/PointEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/RoleEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/RouterDataEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/RouterEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/ScanEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/ScanStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logic-api/src/main/java/com/hton/entities/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/hton/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/hton/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/hton/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/hton/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/hton/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/hton/common/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/server/hton/controller/target/" />
     <ignored path="$PROJECT_DIR$/server/hton/logic-api/target/" />
@@ -98,11 +75,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/hackathon2019.iml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -113,15 +85,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/hton/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="161" column="19" selection-start-line="161" selection-start-column="19" selection-end-line="161" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/hton/common/pom.xml">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -129,38 +92,20 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server/hton" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="parent" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="parent" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
-        </path>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="parent" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
-        </path>
-      </expand>
+      <expand />
       <select />
     </treeState>
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/hackathon2019.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-      </list>
-    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="240" />
@@ -179,143 +124,21 @@
           <expand>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="logic-api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="logic-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="hton" type="462c0819:PsiDirectoryNode" />
-              <item name="logic-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
               <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
               <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
               <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
@@ -323,8 +146,6 @@
             </path>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
               <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
@@ -333,14 +154,22 @@
             </path>
             <path>
               <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hackathon2019" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
               <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="hton" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hackathon2019" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hton" type="462c0819:PsiDirectoryNode" />
+              <item name="logic-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="hton" type="462c0819:PsiDirectoryNode" />
+              <item name="converters" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -351,14 +180,16 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/hton/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -382,21 +213,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570264727788</updated>
-      <workItem from="1570264729104" duration="845000" />
+      <workItem from="1570264729104" duration="1431000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="845000" />
+    <option name="totallyTimeSpent" value="1431000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Web" side_tool="true" />
       <window_info id="Designer" />
       <window_info id="UI Designer" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -407,7 +238,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -424,6 +255,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/server/hton" />
+    </ignored-roots>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/server/hton/pom.xml">
@@ -452,5 +288,80 @@
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>hackathon2019</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
