@@ -1,8 +1,0 @@
-datasource.properties.yaml.path: ./config/datasource.yml
-liquibase.properties.yaml.path: ./config/liquibase.yml
-server:
-  port: 8443
-  keyPassword: changeit
-  keyStore: keyStore/ssl-server.jks
-  keyStoreProvider: SUN
-  keyStoreType: JKS
