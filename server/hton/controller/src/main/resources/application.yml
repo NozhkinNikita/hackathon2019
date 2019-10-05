@@ -1,5 +1,5 @@
-datasource.properties.yaml.path: ./config/datasource.yml
-liquibase.properties.yaml.path: ./config/liquibase.yml
+datasource.properties.yaml.path: ./server/hton/config/datasource.yml
+liquibase.properties.yaml.path: ./server/hton/config/liquibase.yml
 server:
   port: 8443
   keyPassword: changeit
