@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.ADMIN.name())
+                .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
                 .and()
                 .csrf().disable()
                 .formLogin().loginPage("/login").permitAll()

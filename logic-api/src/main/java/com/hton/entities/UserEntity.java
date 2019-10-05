@@ -1,19 +1,11 @@
 package com.hton.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -21,6 +13,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "locations")
+@ToString(exclude = "locations")
 public class UserEntity implements BaseEntity {
     @Id
     private String id;
@@ -36,10 +30,14 @@ public class UserEntity implements BaseEntity {
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "roleId", nullable = false, updatable = false)})
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<RoleEntity> roles;
-//
-//    @OneToMany(mappedBy = "user_id")
-//    private List<LocationEntity> locations;
+
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
+    @JoinTable(name = "user_location",
+            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)})
+    private List<LocationEntity> locations;
 
     @Override
     public List<String> getBaseFields() {
@@ -48,6 +46,6 @@ public class UserEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Collections.singletonList("roleEntities");
+        return Arrays.asList("roleEntities", "locations");
     }
 }

@@ -1,14 +1,10 @@
 package com.hton.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,12 +13,21 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "users")
+@ToString(exclude = "users")
 public class LocationEntity implements BaseEntity {
 
     @Id
     private String id;
 
     private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
+    @JoinTable(name = "user_location",
+            joinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<UserEntity> users;
 
 //    @OneToMany(mappedBy = "location_id")
 //    private List<RouterEntity> routers;
@@ -34,6 +39,6 @@ public class LocationEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return new ArrayList<>();
+        return Arrays.asList("users");
     }
 }

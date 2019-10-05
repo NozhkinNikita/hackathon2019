@@ -3,6 +3,8 @@ package com.hton.api.security;
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
+import com.hton.dao.filters.SearchCondition;
+import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.User;
 import com.hton.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,8 @@ public class UserController {
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
-        Condition condition = null;
+        SimpleCondition condition = new SimpleCondition.Builder().setSearchField("id")
+                .setSearchCondition(SearchCondition.NOT_NULL).build();
         return new ResponseEntity<>(userDao.getByCondition(condition), HttpStatus.OK);
     }
 

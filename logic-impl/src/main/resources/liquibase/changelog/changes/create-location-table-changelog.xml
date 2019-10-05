@@ -17,5 +17,21 @@
         <rollback>
             <dropTable tableName="location"/>
         </rollback>
+
+        <createTable tableName="user_location">
+            <column name="userId" type="NVARCHAR"/>
+            <column name="locationId" type="NVARCHAR"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_location"
+                                 baseColumnNames="userId"
+                                 constraintName="fk_user_location"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_location"
+                                 baseColumnNames="locationId"
+                                 constraintName="fk_location_user"
+                                 referencedTableName="location"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

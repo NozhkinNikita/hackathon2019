@@ -32,6 +32,10 @@
         <addNotNullConstraint tableName="role" columnName="id" columnDataType="NVARCHAR"/>
         <addPrimaryKey tableName="role" columnNames="id" constraintName="role_pkey"/>
 
+        <rollback>
+            <dropTable tableName="role"/>
+        </rollback>
+
         <createTable tableName="user_roles">
             <column name="userId" type="NVARCHAR"/>
             <column name="roleId" type="NVARCHAR"/>
@@ -47,5 +51,9 @@
                                  constraintName="fk_role_user"
                                  referencedTableName="role"
                                  referencedColumnNames="id"/>
+
+        <rollback>
+            <dropTable tableName="user_roles"/>
+        </rollback>
     </changeSet>
 </databaseChangeLog>

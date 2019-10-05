@@ -3,11 +3,7 @@ package com.hton.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hton.entities.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(exclude = "locations")
+@ToString(exclude = "locations")
 public class User {
 
     private String id;
@@ -29,4 +27,6 @@ public class User {
     private String pwd;
 
     private List<Role> roles;
+
+    private List<Location> locations;
 }

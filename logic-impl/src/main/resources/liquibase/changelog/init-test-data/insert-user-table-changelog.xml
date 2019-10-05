@@ -25,7 +25,10 @@
         </insert>
 
         <insert tableName="role">
-            <column name="id" value="ADMIN"/>
+            <column name="id" value="SECUTITY_ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="NETWORK_ADMIN"/>
         </insert>
         <insert tableName="role">
             <column name="id" value="USER"/>
@@ -33,11 +36,16 @@
 
         <insert tableName="user_roles">
             <column name="userId" valueNumeric="1"/>
-            <column name="roleId" value="ADMIN"/>
+            <column name="roleId" value="SECUTITY_ADMIN"/>
         </insert>
         <insert tableName="user_roles">
             <column name="userId" valueNumeric="2"/>
             <column name="roleId" value="USER"/>
+        </insert>
+
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="1"/>
+            <column name="locationId" value="-1"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
