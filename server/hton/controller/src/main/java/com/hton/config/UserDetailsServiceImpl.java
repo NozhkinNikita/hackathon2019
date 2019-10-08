@@ -37,7 +37,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             List<GrantedAuthority> authorities = user.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.name()))
                     .collect(Collectors.toList());
-            return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPwd(), authorities);
+            return new org.springframework.security.core.userdetails.User(
+                    user.getLogin(),
+                    user.getPwd(),
+                    user.getEnabled(),
+                    user.getEnabled(),
+                    user.getEnabled(),
+                    user.getEnabled(),
+                    authorities);
         } else {
             throw new BadCredentialsException("Wrong user name");
         }

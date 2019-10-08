@@ -10,6 +10,7 @@
             <column name="fio" type="NVARCHAR"/>
             <column name="login" type="NVARCHAR"/>
             <column name="pwd" type="NVARCHAR"/>
+            <column name="enabled" type="BOOLEAN"/>
         </createTable>
 
         <addNotNullConstraint tableName="user" columnName="id" columnDataType="NVARCHAR"/>
@@ -20,6 +21,7 @@
         <addUniqueConstraint tableName="user" columnNames="login"/>
 
         <addNotNullConstraint tableName="user" columnName="pwd" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="user" columnName="enabled" columnDataType="NVARCHAR"/>
 
         <rollback>
             <dropTable tableName="user"/>

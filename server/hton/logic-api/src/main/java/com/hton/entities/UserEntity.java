@@ -26,6 +26,8 @@ public class UserEntity implements BaseEntity {
 
     private String pwd;
 
+    private Boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},

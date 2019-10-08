@@ -18,6 +18,7 @@ public class ConvertUtils {
             user.setFio(entity.getFio());
             user.setLogin(entity.getLogin());
             user.setPwd(entity.getPwd());
+            user.setEnabled(entity.getEnabled());
             user.setRoles(entity.getRoles().stream().map(RoleEntity::getRole).collect(Collectors.toList()));
         }
         return user;
@@ -40,6 +41,7 @@ public class ConvertUtils {
             entity.setFio(domain.getFio());
             entity.setLogin(domain.getLogin());
             entity.setPwd(domain.getPwd());
+            entity.setEnabled(domain.getEnabled());
             entity.setRoles(domain.getRoles().stream().map(RoleEntity::new).collect(Collectors.toList()));
         }
         return entity;

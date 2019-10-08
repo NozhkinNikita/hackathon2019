@@ -10,6 +10,7 @@
             <column name="fio" value="admin"/>
             <column name="login" value="admin"/>
             <column name="pwd" value="password"/>
+            <column name="enabled" value="true"/>
         </insert>
 
         <insert tableName="user">
@@ -17,6 +18,7 @@
             <column name="fio" value="net_admin"/>
             <column name="login" value="net_admin"/>
             <column name="pwd" value="password"/>
+            <column name="enabled" value="true"/>
         </insert>
 
         <insert tableName="user">
@@ -24,6 +26,7 @@
             <column name="fio" value="KFMN_FIO"/>
             <column name="login" value="KFMN_LOGIN"/>
             <column name="pwd" value="KFMN_PWD"/>
+            <column name="enabled" value="true"/>
         </insert>
 
         <insert tableName="location">
