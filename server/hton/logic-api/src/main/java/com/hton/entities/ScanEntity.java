@@ -19,6 +19,8 @@ import java.util.List;
 public class ScanEntity {
     @Id
     private String id;
+    
+    private String name;
 
     private LocalDateTime begin;
 
