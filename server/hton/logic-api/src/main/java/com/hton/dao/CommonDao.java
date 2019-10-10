@@ -2,7 +2,6 @@ package com.hton.dao;
 
 import com.hton.converters.Converter;
 import com.hton.dao.filters.Condition;
-
 import com.hton.entities.BaseEntity;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.query.criteria.internal.PathSource;
@@ -17,7 +16,6 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.LockModeType;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Tuple;
 import javax.persistence.TupleElement;
@@ -57,11 +55,27 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     public D getById(String id) {
         EntityManager em = emf.createEntityManager();
         E e = em.find(getEntityClass(), id);
-        return converter.toDomainObject(e);
+        D d;
+        try {
+            d = converter.getDomainClass().newInstance();
+            converter.toDomainObject(e, d);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException(ex);
+        }
+        return d;
     }
 
     public List<D> getByCondition(Condition condition) {
-        return executeCondition(condition, null).stream().map(e -> converter.toDomainObject(e)).collect(Collectors.toList());
+        return executeCondition(condition, null).stream().map(e -> {
+            D d;
+            try {
+                d = converter.getDomainClass().newInstance();
+            } catch (Exception ex) {
+                throw new IllegalArgumentException(ex);
+            }
+            converter.toDomainObject(e, d);
+            return d;
+        }).collect(Collectors.toList());
     }
 
     private List<E> executeCondition(Condition condition, EntityManager entityManager) {
@@ -478,12 +492,15 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public void update(D domain) {
-        E entity = converter.toEntityObject(domain);
         EntityManager em = emf.createEntityManager();
         try {
+            E entity = getEntityClass().newInstance();
+            converter.toEntityObject(domain, entity);
             EntityTransaction transaction = openTransaction(em);
             em.merge(entity);
             commitTransaction(transaction);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException(ex);
         } finally {
             if (em != null) {
                 em.close();
@@ -492,12 +509,15 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public void save(D domain) {
-        E entity = converter.toEntityObject(domain);
         EntityManager em = emf.createEntityManager();
         try {
+            E entity = getEntityClass().newInstance();
+            converter.toEntityObject(domain, entity);
             EntityTransaction transaction = openTransaction(em);
             em.persist(entity);
             commitTransaction(transaction);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException(ex);
         } finally {
             if (em != null) {
                 em.close();

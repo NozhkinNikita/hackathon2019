@@ -30,7 +30,6 @@ public class LocationEntity implements BaseEntity {
     private List<UserEntity> users;
 
     @OneToMany(fetch = FetchType.EAGER, targetEntity = RouterEntity.class, mappedBy = "locationId")
-//    @JoinTable(name = "router", joinColumns = {@JoinColumn(name = "id", nullable = false, updatable = false)})
     private List<RouterEntity> routers;
 
     @Override

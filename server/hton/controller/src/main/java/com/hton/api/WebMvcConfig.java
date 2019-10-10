@@ -13,4 +13,7 @@ public class WebMvcConfig {
 
     public static final String ADMIN_ROUTER_PATH = ADMIN_PATH + "/routers";
     public static final String ADMIN_LOCATION_PATH = ADMIN_PATH + "/location";
+
+    public static final String USER_SCAN_PATH = USER_PATH + "/scans";
+    public static final String USER_POINT_PATH = USER_PATH + "/points";
 }

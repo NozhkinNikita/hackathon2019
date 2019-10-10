@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="Filip J. Fry" id="3">
+        <insert tableName="device">
+            <column name="id" value="-1"/>
+            <column name="model" value="UNICORN_ANDROID"/>
+            <column name="osVersion" value="UNICORN-1.0"/>
+            <column name="manufacturer" value="evenly warmed chicken"/>
+            <column name="brand" value="UNICORN IN A COAT Co"/>
+            <column name="deviceId" value="UNICORN_deviceId"/>
+            <column name="device" value="UNICORN Djigurdalion Plus"/>
+            <column name="mac" value="UN:IC:OR:N"/>
+            <column name="ipV4" value="127.0.0.0"/>
+            <column name="release" value="Un"/>
+            <column name="product" value="Rainbow"/>
+            <column name="serial" value="serial"/>
+            <column name="user" value="mr Horse in coat"/>
+            <column name="host" value="localhost"/>
+        </insert>
+
+        <insert tableName="scan">
+            <column name="id" value="-1"/>
+            <column name="begin" value="2019-10-08 21:50:49"/>
+            <column name="end" value="2019-10-08 21:56:49"/>
+            <column name="status" value="DRAFT"/>
+            <column name="userId" value="3"/>
+            <column name="deviceId" value="-1"/>
+        </insert>
+
+        <insert tableName="point">
+            <column name="id" value="-1"/>
+            <column name="name" value="stable"/>
+            <column name="begin" value="2019-10-08 21:51:00"/>
+            <column name="end" value="2019-10-08 21:51:10"/>
+            <column name="isRepeat" value="false"/>
+            <column name="scanId" value="-1"/>
+        </insert>
+
+        <insert tableName="routerData">
+            <column name="id" value="-1"/>
+            <column name="ssid" value="unicorn_wi-fi"/>
+            <column name="bssid" value="unicorn_wi-fi"/>
+            <column name="channel" value="1"/>
+            <column name="rssi" value="3.14"/>
+            <column name="routerId" value="-1"/>
+            <column name="pointId" value="-1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

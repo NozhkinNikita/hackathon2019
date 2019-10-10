@@ -71,7 +71,7 @@
         </insert>
 
         <insert tableName="router">
-            <column name="id" value="2"/>
+            <column name="id" value="-1"/>
             <column name="ip" value="KFMN_IP"/>
             <column name="ssid" value="KFMN_SSID"/>
             <column name="pwd" value="KFMN_PWD"/>

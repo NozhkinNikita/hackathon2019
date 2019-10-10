@@ -24,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private BasicAuthEntryPoint basicAuthEntryPoint;
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -41,14 +44,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //HTTP Basic authentication
                 .httpBasic()
+                .authenticationEntryPoint(basicAuthEntryPoint)
                 .and()
                 .authorizeRequests()
                 .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
                 .antMatchers(WebMvcConfig.ADMIN_PATH + "/**").hasRole(Role.NETWORK_ADMIN.name())
+                .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/login")
+                .usernameParameter("username").passwordParameter("password")
                 .permitAll()
                 .and()
                 .logout()

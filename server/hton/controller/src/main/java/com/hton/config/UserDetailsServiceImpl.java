@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -37,14 +36,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             List<GrantedAuthority> authorities = user.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority(ROLE_PREFIX + role.name()))
                     .collect(Collectors.toList());
-            return new org.springframework.security.core.userdetails.User(
+            return new com.hton.config.UserDetails(
                     user.getLogin(),
                     user.getPwd(),
                     user.getEnabled(),
                     user.getEnabled(),
                     user.getEnabled(),
                     user.getEnabled(),
-                    authorities);
+                    authorities,
+                    user.getRoles());
         } else {
             throw new BadCredentialsException("Wrong user name");
         }

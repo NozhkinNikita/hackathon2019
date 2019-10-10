@@ -4,19 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
-//@Entity
-//@Table(name = "SCAN")
+@Entity
+@Table(name = "scan")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScanEntity {
+public class ScanEntity implements BaseEntity {
     @Id
     private String id;
 
@@ -24,13 +31,27 @@ public class ScanEntity {
 
     private LocalDateTime end;
 
+    @Enumerated(EnumType.STRING)
     private ScanStatus status;
 
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
+    @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
-    @OneToOne(mappedBy = "device_id")
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class)
+    @JoinColumn(name = "deviceId", nullable = false)
     private DeviceEntity device;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "point_id")
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = PointEntity.class, mappedBy = "scanId")
     private List<PointEntity> points;
+
+    @Override
+    public List<String> getBaseFields() {
+        return Arrays.asList("id", "begin", "end", "status");
+    }
+
+    @Override
+    public List<String> getJoinFields() {
+        return Arrays.asList("user", "device", "points");
+    }
 }
