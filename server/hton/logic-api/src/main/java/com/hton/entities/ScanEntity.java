@@ -26,6 +26,8 @@ import java.util.List;
 public class ScanEntity implements BaseEntity {
     @Id
     private String id;
+    
+    private String name;
 
     private LocalDateTime begin;
 
