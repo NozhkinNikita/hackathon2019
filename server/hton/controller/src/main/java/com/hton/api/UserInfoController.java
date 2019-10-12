@@ -1,6 +1,5 @@
 package com.hton.api;
 
-import com.hton.config.UserDetailsServiceImpl;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
