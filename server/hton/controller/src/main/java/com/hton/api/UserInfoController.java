@@ -33,6 +33,5 @@ public class UserInfoController {
                 .setSearchValue(login)
                 .build();
         return new ResponseEntity<>(userDao.getByCondition(condition).stream().findFirst().orElse(null), HttpStatus.OK);
-//        return new ResponseEntity<>("Hello", HttpStatus.OK);
     }
 }
