@@ -27,8 +27,6 @@ public class ScanEntity implements BaseEntity {
     @Id
     private String id;
     
-    private String name;
-
     private LocalDateTime begin;
 
     private LocalDateTime end;

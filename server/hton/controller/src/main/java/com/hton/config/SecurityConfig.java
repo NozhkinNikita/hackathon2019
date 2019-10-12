@@ -5,12 +5,15 @@ import com.hton.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 
 import javax.sql.DataSource;
 
@@ -24,8 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private BasicAuthEntryPoint basicAuthEntryPoint;
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -44,17 +52,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //HTTP Basic authentication
                 .httpBasic()
-                .authenticationEntryPoint(basicAuthEntryPoint)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/user-info").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name(), Role.SECUTITY_ADMIN.name())
                 .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
                 .antMatchers(WebMvcConfig.ADMIN_PATH + "/**").hasRole(Role.NETWORK_ADMIN.name())
                 .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .csrf().disable()
+                .addFilter(authenticationFilter())
                 .formLogin()
                 .loginPage("/login")
-                .usernameParameter("username").passwordParameter("password")
                 .permitAll()
                 .and()
                 .logout()
@@ -73,5 +81,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
+    }
+
+    @Bean
+    public CustomAuthenticationFilter authenticationFilter() throws Exception {
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        filter.setAuthenticationManager(authenticationManagerBean());
+        filter.setAuthenticationSuccessHandler((request, response, authentication) ->
+                redirectStrategy.sendRedirect(request, response, WebMvcConfig.USER_INFO_PATH));
+        return filter;
     }
 }
