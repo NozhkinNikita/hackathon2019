@@ -17,7 +17,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected String obtainPassword(HttpServletRequest request) {
         String password;
 
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if ("application/json;charset=UTF-8".equals(request.getHeader("Content-Type")) ||
+                "application/json".equals(request.getHeader("Content-Type"))) {
             password = this.jsonPassword;
         } else {
             password = super.obtainPassword(request);
@@ -30,7 +31,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected String obtainUsername(HttpServletRequest request) {
         String username;
 
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if ("application/json;charset=UTF-8".equals(request.getHeader("Content-Type")) ||
+                "application/json".equals(request.getHeader("Content-Type"))) {
             username = this.jsonUsername;
         } else {
             username = super.obtainUsername(request);
@@ -41,7 +43,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        if ("application/json".equals(request.getHeader("Content-Type"))) {
+        if ("application/json;charset=UTF-8".equals(request.getHeader("Content-Type")) ||
+                "application/json".equals(request.getHeader("Content-Type"))) {
             try {
                 /*
                  * HttpServletRequest can be read only once
