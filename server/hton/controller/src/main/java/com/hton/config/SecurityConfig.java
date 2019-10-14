@@ -12,11 +12,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.cors.CorsConfiguration;
-import org.springframework.security.web.cors.CorsConfigurationSource;
-import org.springframework.security.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
 
@@ -63,7 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .csrf().disable()
-                .and()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .addFilter(authenticationFilter())
