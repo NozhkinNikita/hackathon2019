@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.cors.CorsConfiguration;
+import org.springframework.security.web.cors.CorsConfigurationSource;
+import org.springframework.security.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 
@@ -60,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .csrf().disable()
+                .and()
+                .cors().configurationSource(corsConfigurationSource())
                 .addFilter(authenticationFilter())
                 .formLogin()
                 .loginPage("/login")
@@ -90,5 +95,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationSuccessHandler((request, response, authentication) ->
                 redirectStrategy.sendRedirect(request, response, WebMvcConfig.USER_INFO_PATH));
         return filter;
+    }
+    
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 }
