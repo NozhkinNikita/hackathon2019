@@ -62,22 +62,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //HTTP Basic authentication
                 .httpBasic()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/user-info").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name(), Role.SECUTITY_ADMIN.name())
-                .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
-                .antMatchers(WebMvcConfig.ADMIN_PATH + "/**").hasRole(Role.NETWORK_ADMIN.name())
-                .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
-                .and()
-                .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
-                .addFilter(authenticationFilter())
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
+//                .antMatchers("/user-info").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name(), Role.SECUTITY_ADMIN.name())
+//                .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
+//                .antMatchers(WebMvcConfig.ADMIN_PATH + "/**").hasRole(Role.NETWORK_ADMIN.name())
+//                .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
+//                .and()
+//                .csrf().disable()
+//                .cors().configurationSource(corsConfigurationSource())
+//                .and()
+//                .addFilter(authenticationFilter())
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
     }
 
     @Bean
