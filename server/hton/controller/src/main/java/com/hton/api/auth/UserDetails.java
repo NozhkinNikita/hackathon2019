@@ -1,4 +1,4 @@
-package com.hton.config;
+package com.hton.api.auth;
 
 import com.hton.entities.Role;
 import lombok.Data;

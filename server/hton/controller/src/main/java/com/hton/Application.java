@@ -30,6 +30,7 @@ import java.net.URL;
 @SpringBootApplication(scanBasePackages = {
         "com.hton.api",
         "com.hton.config",
+        "com.hton.config.jwt",
         "com.hton.converters",
         "com.hton.dao"
 })

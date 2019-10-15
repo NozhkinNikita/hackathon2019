@@ -1,4 +1,4 @@
-package com.hton.config;
+package com.hton.api.auth;
 
 import lombok.Data;
 

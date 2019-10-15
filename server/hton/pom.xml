@@ -29,6 +29,7 @@
         <spring.starter.web.version>2.1.8.RELEASE</spring.starter.web.version>
         <spring.starter.jetty.version>2.1.4.RELEASE</spring.starter.jetty.version>
         <spring.starter.security.version>2.0.5.RELEASE</spring.starter.security.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <spring.context.version>5.0.9.RELEASE</spring.context.version>
         <spring.starter.data.jpa.version>2.0.5.RELEASE</spring.starter.data.jpa.version>
 
@@ -103,11 +104,10 @@
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.starter.security.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.vrsion}</version>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
 
             <!-- Spring -->
@@ -145,6 +145,11 @@
             </dependency>
 
             <!-- Commons -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.vrsion}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>

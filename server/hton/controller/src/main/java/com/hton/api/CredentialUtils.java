@@ -1,6 +1,6 @@
 package com.hton.api;
 
-import com.hton.config.UserDetails;
+import com.hton.api.auth.UserDetails;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
