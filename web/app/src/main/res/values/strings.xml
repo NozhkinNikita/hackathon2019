@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WifiStart</string>
+    <string name="title_activity_main_screen">MainScreenActivity</string>
+</resources>
