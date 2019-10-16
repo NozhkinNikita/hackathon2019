@@ -1,9 +1,11 @@
 package com.hton.api.user;
 
 import com.hton.api.CredentialUtils;
+import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.ComplexCondition;
+import com.hton.dao.filters.Condition;
 import com.hton.dao.filters.Operation;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
@@ -68,8 +70,8 @@ public class ScanController {
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
-        SimpleCondition condition = new SimpleCondition.Builder().setSearchField("id")
-                .setSearchCondition(SearchCondition.NOT_NULL).build();
+        String login = credentialUtils.getCredentialLogin();
+        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
         return new ResponseEntity<>(scanDao.getByCondition(condition), HttpStatus.OK);
     }
 

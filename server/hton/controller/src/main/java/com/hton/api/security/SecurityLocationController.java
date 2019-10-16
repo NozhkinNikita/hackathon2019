@@ -1,10 +1,9 @@
 package com.hton.api.security;
 
+import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
-import com.hton.dao.filters.SearchCondition;
-import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Location;
 import com.hton.entities.LocationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Qualifier("securityLocationController")
@@ -34,12 +34,8 @@ public class SecurityLocationController {
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<?> getAll() {
-        Condition condition = new SimpleCondition.Builder()
-                .setSearchField("id")
-                .setSearchCondition(SearchCondition.NOT_EQUALS)
-                .setSearchValue("0")
-                .build();
+    public ResponseEntity<?> getLocations(@RequestParam(required = false) String filter) {
+        Condition condition = FilterUtils.parseFilter(filter);
         return new ResponseEntity<>(locationDao.getByCondition(condition), HttpStatus.OK);
     }
 
