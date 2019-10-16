@@ -1,6 +1,8 @@
 package com.hton.api.admin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hton.api.CredentialUtils;
+import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.ComplexCondition;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Qualifier("adminLocationController")
@@ -31,6 +34,8 @@ public class AdminLocationController {
 
     @Autowired
     private CredentialUtils credentialUtils;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity getLocation(@PathVariable("id") String id) {
@@ -55,22 +60,10 @@ public class AdminLocationController {
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getLocations(@RequestParam(required = false) String filter) {
         String login = credentialUtils.getCredentialLogin();
-        Condition condition = new ComplexCondition.Builder()
-                .setOperation(Operation.AND)
-                .setConditions(
-                        new SimpleCondition.Builder()
-                                .setSearchField("id")
-                                .setSearchCondition(SearchCondition.NOT_EQUALS)
-                                .setSearchValue("0")
-                                .build(),
-                        new SimpleCondition.Builder()
-                                .setSearchField("users.login")
-                                .setSearchCondition(SearchCondition.EQUALS)
-                                .setSearchValue(login)
-                                .build()
-                ).build();
+        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+
         return new ResponseEntity<>(locationDao.getByCondition(condition), HttpStatus.OK);
     }
 

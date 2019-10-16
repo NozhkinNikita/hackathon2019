@@ -1,5 +1,8 @@
 package com.hton.dao.filters;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.criteria.AbstractQuery;
@@ -14,6 +17,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ComplexCondition implements Condition, Serializable {
     private Operation operation;
     private Collection<Condition> conditions;
@@ -22,66 +28,6 @@ public class ComplexCondition implements Condition, Serializable {
     private Integer skip;
     private Integer take;
     private List<String> maskFields;
-
-    private ComplexCondition(final Operation operation, final Collection<Condition> conditions, final String sortField,
-                             final SortDirection sortDirection,
-                             final Integer skip, final Integer take, final List<String> maskFields) {
-        this.operation = operation;
-        this.conditions = conditions;
-        this.sortField = StringUtils.isBlank(sortField) ? "id" : sortField;
-        this.sortDirection = sortDirection == null ? SortDirection.ASC : sortDirection;
-        this.skip = skip == null || skip < 0 ? DEFAULT_SKIP : skip;
-        this.take = take == null || take <= 0 ? DEFAULT_TAKE : take > MAX_TAKE ? MAX_TAKE : take;
-        this.maskFields = maskFields == null ? Collections.EMPTY_LIST : maskFields;
-    }
-
-    public Operation getOperation() {
-        return operation;
-    }
-
-    public Collection<Condition> getConditions() {
-        return conditions;
-    }
-
-    @Override
-    public String getSortField() {
-        return sortField;
-    }
-
-    @Override
-    public SortDirection getSortDirection() {
-        return sortDirection;
-    }
-
-    @Override
-    public Integer getSkip() {
-        return skip;
-    }
-
-    @Override
-    public void setSkip(Integer skip) {
-        this.skip = skip;
-    }
-
-    @Override
-    public Integer getTake() {
-        return take;
-    }
-
-    @Override
-    public void setTake(Integer take) {
-        this.take = take;
-    }
-
-    @Override
-    public List<String> getMaskFields() {
-        return maskFields;
-    }
-
-    @Override
-    public void setMaskFields(List<String> fields) {
-        this.maskFields = fields;
-    }
 
     @Override
     public Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root root, AbstractQuery criteriaQuery) {
@@ -99,47 +45,6 @@ public class ComplexCondition implements Condition, Serializable {
                 throw new IllegalArgumentException(String.format("Предикат запроса %s не поддерживается", operation));
             }
         }
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final ComplexCondition that = (ComplexCondition) o;
-
-        if (operation != that.operation) return false;
-        if (conditions != null ? !conditions.equals(that.conditions) : that.conditions != null) return false;
-        if (sortField != null ? !sortField.equals(that.sortField) : that.sortField != null) return false;
-        if (sortDirection != that.sortDirection) return false;
-        if (skip != null ? !skip.equals(that.skip) : that.skip != null) return false;
-        if (take != null ? !take.equals(that.take) : that.take != null) return false;
-        return maskFields != null ? maskFields.equals(that.maskFields) : that.maskFields == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = operation != null ? operation.hashCode() : 0;
-        result = 31 * result + (conditions != null ? conditions.hashCode() : 0);
-        result = 31 * result + (sortField != null ? sortField.hashCode() : 0);
-        result = 31 * result + (sortDirection != null ? sortDirection.hashCode() : 0);
-        result = 31 * result + (skip != null ? skip.hashCode() : 0);
-        result = 31 * result + (take != null ? take.hashCode() : 0);
-        result = 31 * result + (maskFields != null ? maskFields.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ComplexCondition{" +
-                "operation=" + operation +
-                ", conditions=" + conditions +
-                ", sortField='" + sortField + '\'' +
-                ", sortDirection=" + sortDirection +
-                ", skip=" + skip +
-                ", take=" + take +
-                ", maskFields=" + maskFields +
-                '}';
     }
 
     public static class Builder {

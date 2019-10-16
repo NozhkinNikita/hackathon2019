@@ -1,9 +1,10 @@
 package com.hton.api.user;
 
+import com.hton.api.CredentialUtils;
+import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
 import com.hton.dao.CommonDao;
-import com.hton.dao.filters.SearchCondition;
-import com.hton.dao.filters.SimpleCondition;
+import com.hton.dao.filters.Condition;
 import com.hton.domain.Point;
 import com.hton.entities.PointEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class PointController {
     @Autowired
     private CommonDao<Point, PointEntity> pointDao;
 
+    @Autowired
+    private CredentialUtils credentialUtils;
+
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
         return new ResponseEntity<>(pointDao.getById(id), HttpStatus.OK);
@@ -39,8 +43,8 @@ public class PointController {
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
-        SimpleCondition condition = new SimpleCondition.Builder().setSearchField("id")
-                .setSearchCondition(SearchCondition.NOT_NULL).build();
+        String login = credentialUtils.getCredentialLogin();
+        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
