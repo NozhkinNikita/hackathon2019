@@ -35,11 +35,11 @@ public class UserEntity implements BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<RoleEntity> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
-    @JoinTable(name = "user_location",
-            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)})
-    private List<LocationEntity> locations;
+//    @ManyToMany(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
+//    @JoinTable(name = "user_location",
+//            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)})
+//    private List<LocationEntity> locations;
 
     @Override
     public List<String> getBaseFields() {
@@ -48,6 +48,6 @@ public class UserEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("roleEntities", "locations");
+        return Arrays.asList("roleEntities"/*, "locations"*/);
     }
 }

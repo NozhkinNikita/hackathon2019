@@ -8,18 +8,26 @@
         <createTable tableName="device">
             <column name="id" type="NVARCHAR"/>
             <column name="model" type="NVARCHAR"/>
-            <column name="softWareVersion" type="NVARCHAR"/>
+            <column name="osVersion" type="NVARCHAR"/>
+            <column name="manufacturer" type="NVARCHAR"/>
+            <column name="brand" type="NVARCHAR"/>
+            <column name="deviceId" type="NVARCHAR"/>
+            <column name="device" type="NVARCHAR"/>
             <column name="mac" type="NVARCHAR"/>
-            <column name="ip" type="NVARCHAR"/>
+            <column name="ipV4" type="NVARCHAR"/>
+            <column name="release" type="NVARCHAR"/>
+            <column name="product" type="NVARCHAR"/>
+            <column name="serial" type="NVARCHAR"/>
+            <column name="user" type="NVARCHAR"/>
+            <column name="host" type="NVARCHAR"/>
         </createTable>
 
         <addNotNullConstraint tableName="device" columnName="id" columnDataType="NVARCHAR"/>
         <addPrimaryKey tableName="device" columnNames="id" constraintName="device_pkey"/>
 
         <addNotNullConstraint tableName="device" columnName="model" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="device" columnName="softWareVersion" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="device" columnName="mac" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="device" columnName="ip" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="device" columnName="ipV4" columnDataType="NVARCHAR"/>
 
         <rollback>
             <dropTable tableName="point"/>

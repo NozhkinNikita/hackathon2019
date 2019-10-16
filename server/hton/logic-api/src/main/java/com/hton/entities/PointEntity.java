@@ -4,17 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-//@Entity
-//@Table(name = "POINT")
+@Entity
+@Table(name = "point")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointEntity {
+public class PointEntity implements BaseEntity {
 
     @Id
     private String id;
@@ -27,6 +32,18 @@ public class PointEntity {
 
     private Boolean isRepeat;
 
-    @OneToMany(mappedBy = "router_data_id")
+    private String scanId;
+
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = RouterDataEntity.class, mappedBy = "pointId")
     private List<RouterDataEntity> routerDates;
+
+    @Override
+    public List<String> getBaseFields() {
+        return Arrays.asList("id", "name", "begin", "end", "isRepeat");
+    }
+
+    @Override
+    public List<String> getJoinFields() {
+        return Collections.singletonList("routerDates");
+    }
 }

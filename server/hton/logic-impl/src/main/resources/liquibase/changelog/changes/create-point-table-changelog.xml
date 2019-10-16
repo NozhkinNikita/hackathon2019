@@ -11,7 +11,7 @@
             <column name="begin" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="end" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="isRepeat" type="BOOLEAN"/>
-            <column name="routerDataId" type="NVARCHAR"/>
+            <column name="scanId" type="NVARCHAR"/>
         </createTable>
 
         <addNotNullConstraint tableName="point" columnName="id" columnDataType="NVARCHAR"/>
@@ -21,6 +21,12 @@
         <addNotNullConstraint tableName="point" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
         <addNotNullConstraint tableName="point" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
         <addNotNullConstraint tableName="point" columnName="isRepeat" columnDataType="BOOLEAN"/>
+
+        <addForeignKeyConstraint baseTableName="point"
+                                 baseColumnNames="scanId"
+                                 constraintName="fk_point_scan"
+                                 referencedTableName="scan"
+                                 referencedColumnNames="id"/>
 
         <rollback>
             <dropTable tableName="point"/>

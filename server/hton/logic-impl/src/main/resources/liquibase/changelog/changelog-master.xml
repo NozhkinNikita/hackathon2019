@@ -7,6 +7,12 @@
     <include file="changes/create-user-table-changelog.xml" relativeToChangelogFile="true"/>
     <include file="changes/create-location-table-changelog.xml" relativeToChangelogFile="true"/>
     <include file="changes/create-router-table-changelog.xml" relativeToChangelogFile="true"/>
-    <include file="init-test-data/insert-user-table-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-device-table-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-scan-table-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-point-table-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-router-data-table-changelog.xml" relativeToChangelogFile="true"/>
+
+    <include file="init-test-data/insert-user-data-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="init-test-data/insert-scan-data-changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
 
