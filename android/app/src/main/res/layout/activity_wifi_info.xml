@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backFromWifiInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="?attr/actionModeCloseDrawable"
+        android:text="Назад"
+        android:tint="#D5D5D5"
+        android:visibility="gone"
+        app:backgroundTint="#187C13" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/wifiInfoList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:text="Загрузка ..." />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

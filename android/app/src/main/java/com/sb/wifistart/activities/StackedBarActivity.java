@@ -1,4 +1,4 @@
-package com.sb.wifistart;
+package com.sb.wifistart.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.sb.wifistart.R;
 
 import java.util.ArrayList;
 
