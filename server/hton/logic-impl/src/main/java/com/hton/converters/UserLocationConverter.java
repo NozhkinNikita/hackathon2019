@@ -47,6 +47,6 @@ public class UserLocationConverter extends Converter<UserLocation, UserLocationE
         UserEntity userEntity = new UserEntity();
         userConverter.toEntityObject(domain.getUser(), userEntity);
         entity.setUser(userEntity);
-        entity.setId(entity.getId());
+        entity.setId(domain.getId());
     }
 }

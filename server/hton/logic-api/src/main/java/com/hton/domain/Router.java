@@ -15,4 +15,6 @@ public class Router {
     private String adminLogin;
 
     private String adminPwd;
+
+    private String locationId;
 }

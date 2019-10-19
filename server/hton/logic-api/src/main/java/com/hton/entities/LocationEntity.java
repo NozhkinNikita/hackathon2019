@@ -15,8 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "users")
-@ToString(exclude = "users")
 public class LocationEntity implements BaseEntity {
 
     @Id
@@ -25,13 +23,6 @@ public class LocationEntity implements BaseEntity {
     private String id;
 
     private String name;
-
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
-    @JoinTable(name = "user_location",
-            joinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)})
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<UserEntity> users;
 
     @OneToMany(fetch = FetchType.LAZY, targetEntity = RouterEntity.class, mappedBy = "locationId")
     private List<RouterEntity> routers;
@@ -43,6 +34,6 @@ public class LocationEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("users", "routers");
+        return Arrays.asList(/*"users",*/ "routers");
     }
 }

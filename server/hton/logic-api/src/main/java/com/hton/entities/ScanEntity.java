@@ -37,23 +37,6 @@ public class ScanEntity implements BaseEntity {
     @JoinColumn(name = "userLocationId")
     private UserLocationEntity userLocation;
 
-//    @OneToOne(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
-//    @JoinTable(name = "user_location_scan",
-//            joinColumns = {@JoinColumn(name = "scanId")},
-//            inverseJoinColumns = {@JoinColumn(name = "userId")}
-//    )
-//    @JoinColumn(name = "userId", nullable = false)
-//    private UserEntity user;
-//
-//
-//
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
-//    @JoinTable(name = "user_location_scan",
-//            joinColumns = {@JoinColumn(name = "scanId")},
-//            inverseJoinColumns = {@JoinColumn(name = "locationId")}
-//    )
-//    private LocationEntity location;
-
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "deviceId", nullable = false)
     private DeviceEntity device;
