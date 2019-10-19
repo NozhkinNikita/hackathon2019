@@ -508,7 +508,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         }
     }
 
-    public void save(D domain) {
+    public D save(D domain) {
         EntityManager em = emf.createEntityManager();
         try {
             E entity = getEntityClass().newInstance();
@@ -516,6 +516,9 @@ public abstract class CommonDao<D, E extends BaseEntity> {
             EntityTransaction transaction = openTransaction(em);
             em.persist(entity);
             commitTransaction(transaction);
+            D res = converter.getDomainClass().newInstance();
+            converter.toDomainObject(entity, res);
+            return res;
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex);
         } finally {

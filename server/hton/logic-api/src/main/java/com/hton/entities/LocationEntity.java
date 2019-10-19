@@ -3,6 +3,7 @@ package com.hton.entities;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -18,6 +19,8 @@ import java.util.List;
 public class LocationEntity implements BaseEntity {
 
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     private String name;
