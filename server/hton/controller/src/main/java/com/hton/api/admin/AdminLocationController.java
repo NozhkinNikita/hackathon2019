@@ -60,7 +60,7 @@ public class AdminLocationController {
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getLocations(@RequestParam(required = false) String filter) {
         String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+        Condition condition = FilterUtils.getFilterWithLogin(filter, "users.login", login);
 
         return new ResponseEntity<>(locationDao.getByCondition(condition), HttpStatus.OK);
     }

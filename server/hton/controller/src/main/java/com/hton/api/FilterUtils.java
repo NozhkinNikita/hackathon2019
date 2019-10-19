@@ -29,11 +29,12 @@ public class FilterUtils {
         return condition;
     }
 
-    public static Condition getFilterWithLogin(String filter, String login) {
+    public static Condition getFilterWithLogin(String filter, String searchLoginField, String login) {
         Condition condition = FilterUtils.parseFilter(filter);
 
         SimpleCondition loginCondition = new SimpleCondition.Builder()
-                .setSearchField("users.login")
+//                .setSearchField("users.login")
+                .setSearchField(searchLoginField)
                 .setSearchCondition(SearchCondition.EQUALS)
                 .setSearchValue(login)
                 .build();
@@ -42,4 +43,6 @@ public class FilterUtils {
                 .setConditions(condition, loginCondition)
                 .build();
     }
+
+
 }

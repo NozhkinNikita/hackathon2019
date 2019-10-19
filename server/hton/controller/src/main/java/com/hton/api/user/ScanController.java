@@ -89,7 +89,7 @@ public class ScanController {
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
         String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+        Condition condition = FilterUtils.getFilterWithLogin(filter, "user.login", login);
         return new ResponseEntity<>(scanDao.getByCondition(condition), HttpStatus.OK);
     }
 
@@ -117,7 +117,6 @@ public class ScanController {
         if (locations.isEmpty()) {
             log.warn("Пользователь с логином " + login + " пытался создать сканирование в неразрешенной локации с id = " + newScan.getLocationId());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
         } else {
             Condition userCondition = new SimpleCondition.Builder()
                     .setSearchField("login")

@@ -43,8 +43,7 @@ public class PointController {
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
-        String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+        Condition condition = FilterUtils.parseFilter(filter);
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
