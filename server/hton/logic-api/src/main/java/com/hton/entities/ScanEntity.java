@@ -3,17 +3,9 @@ package com.hton.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ScanEntity implements BaseEntity {
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
     
     private LocalDateTime begin;
@@ -38,7 +32,7 @@ public class ScanEntity implements BaseEntity {
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "deviceId", nullable = false)
     private DeviceEntity device;
 

@@ -9,9 +9,11 @@ import com.hton.dao.filters.Condition;
 import com.hton.dao.filters.Operation;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
-import com.hton.domain.Scan;
-import com.hton.entities.Role;
-import com.hton.entities.ScanEntity;
+import com.hton.domain.*;
+import com.hton.entities.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +27,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = WebMvcConfig.USER_SCAN_PATH)
+@Slf4j
 public class ScanController {
 
     @Autowired
     private CommonDao<Scan, ScanEntity> scanDao;
+
+    @Autowired
+    private CommonDao<Location, LocationEntity> locationDao;
+
+    @Autowired
+    private CommonDao<User, UserEntity> userDao;
+
+    @Autowired
+    private CommonDao<Device, DeviceEntity> deviceDao;
 
     @Autowired
     private CredentialUtils credentialUtils;
@@ -78,14 +94,69 @@ public class ScanController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createScan(@RequestBody Scan scan) {
-        scanDao.save(scan);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity createScan(@RequestBody NewScan newScan) {
+        String login = credentialUtils.getCredentialLogin();
+
+        ComplexCondition condition = new ComplexCondition.Builder()
+                .setOperation(Operation.AND)
+                .setConditions(new SimpleCondition.Builder()
+                                .setSearchField("id")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(newScan.getLocationId())
+                                .build(),
+                        new SimpleCondition.Builder()
+                                .setSearchField("users.login")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(login)
+                                .build()
+                )
+                .build();
+
+        List<Location> locations = locationDao.getByCondition(condition);
+
+        if (locations.isEmpty()) {
+            log.warn("Пользователь с логином " + login + " пытался создать сканирование в неразрешенной локации с id = " + newScan.getLocationId());
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        } else {
+            Condition userCondition = new SimpleCondition.Builder()
+                    .setSearchField("login")
+                    .setSearchCondition(SearchCondition.EQUALS)
+                    .setSearchValue(login)
+                    .build();
+
+            List<User> users = userDao.getByCondition(userCondition);
+
+            if (users.isEmpty()) {
+                log.warn("Пользователь с логином " + login + " не найден");
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            } else {
+                Scan scan = new Scan();
+                scan.setBegin(LocalDateTime.now());
+                scan.setStatus(ScanStatus.DRAFT);
+                scan.setUser(users.get(0));
+                scan.setDevice(newScan.getDevice());
+                scan.setPoints(Collections.emptyList());
+
+                scanDao.save(scan);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        }
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateScan(@RequestBody Scan scan) {
-        scanDao.update(scan);
+    public ResponseEntity<?> test(@RequestBody NewScan newScan) {
+        Device device = new Device();
+        device.setModel("model");
+        device.setMac("qweqw");
+        device.setIpV4("3847327");
+        deviceDao.save(device);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @PutMapping(value = "/")
+//    public ResponseEntity<?> updateScan(@RequestBody Scan scan) {
+//        scanDao.update(scan);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

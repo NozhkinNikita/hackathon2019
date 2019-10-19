@@ -17,11 +17,10 @@
         <addNotNullConstraint tableName="scan" columnName="id" columnDataType="NVARCHAR"/>
         <addPrimaryKey tableName="scan" columnNames="id" constraintName="scan_pkey"/>
 
-        <addNotNullConstraint tableName="scan" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-        <addNotNullConstraint tableName="scan" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-        <addNotNullConstraint tableName="scan" columnName="status" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>
+        <!--<addNotNullConstraint tableName="scan" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="status" columnDataType="NVARCHAR"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>-->
 
         <addForeignKeyConstraint baseTableName="scan"
                                  baseColumnNames="userId"
