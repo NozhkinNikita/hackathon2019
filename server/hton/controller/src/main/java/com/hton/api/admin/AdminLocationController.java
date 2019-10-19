@@ -35,8 +35,6 @@ public class AdminLocationController {
     @Autowired
     private CredentialUtils credentialUtils;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity getLocation(@PathVariable("id") String id) {
         String login = credentialUtils.getCredentialLogin();

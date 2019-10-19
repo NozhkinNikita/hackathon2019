@@ -3,6 +3,7 @@ package com.hton.config.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -16,10 +17,10 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    @Value("${security.jwt.token.secret-key:secret-key}")
+    @Value("${security.jwt.token.secret-key}")
     private String secret;
 
-    @Value("${security.jwt.token.secret-key:expire-length}")
+    @Value("${security.jwt.token.expire-length}")
     private Long jwtTokenValidity;
 
     //retrieve username from jwt token

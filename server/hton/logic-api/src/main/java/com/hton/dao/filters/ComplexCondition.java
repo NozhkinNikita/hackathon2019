@@ -1,6 +1,5 @@
 package com.hton.dao.filters;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class ComplexCondition implements Condition, Serializable {
     private Operation operation;
     private Collection<Condition> conditions;
@@ -28,6 +26,18 @@ public class ComplexCondition implements Condition, Serializable {
     private Integer skip;
     private Integer take;
     private List<String> maskFields;
+
+    private ComplexCondition(final Operation operation, final Collection<Condition> conditions, final String sortField,
+                             final SortDirection sortDirection,
+                             final Integer skip, final Integer take, final List<String> maskFields) {
+        this.operation = operation;
+        this.conditions = conditions;
+        this.sortField = StringUtils.isBlank(sortField) ? "id" : sortField;
+        this.sortDirection = sortDirection == null ? SortDirection.ASC : sortDirection;
+        this.skip = skip == null || skip < 0 ? DEFAULT_SKIP : skip;
+        this.take = take == null || take <= 0 ? DEFAULT_TAKE : take > MAX_TAKE ? MAX_TAKE : take;
+        this.maskFields = maskFields == null ? Collections.EMPTY_LIST : maskFields;
+    }
 
     @Override
     public Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root root, AbstractQuery criteriaQuery) {

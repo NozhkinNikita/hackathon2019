@@ -1,8 +1,8 @@
 package com.hton.dao.filters;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.query.criteria.internal.path.ListAttributeJoin;
 import org.hibernate.query.criteria.internal.path.SingularAttributeJoin;
 
@@ -14,11 +14,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class SimpleCondition implements Condition, Serializable {
     private String searchField;
     private SearchCondition searchCondition;
@@ -29,8 +29,19 @@ public class SimpleCondition implements Condition, Serializable {
     private Integer take;
     private List<String> maskFields;
 
+    private SimpleCondition(String searchField, SearchCondition searchCondition, Object searchValue, String sortField, SortDirection sortDirection,
+                            Integer skip, Integer take, List<String> maskFields) {
+        this.searchField = searchField;
+        this.searchCondition = searchCondition;
+        this.searchValue = searchValue;
+        this.sortField = StringUtils.isBlank(sortField) ? "id" : sortField;
+        this.sortDirection = sortDirection == null ? SortDirection.ASC : sortDirection;
+        this.skip = skip == null || skip < 0 ? DEFAULT_SKIP : skip;
+        this.take = take == null || take <= 0 ? DEFAULT_TAKE : take > MAX_TAKE ? MAX_TAKE : take;
+        this.maskFields = maskFields == null ? Collections.EMPTY_LIST : maskFields;
+    }
+
     @Override
-    @SuppressWarnings("unchecked")
     public Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root root, AbstractQuery criteriaQuery) {
         String[] search = searchField.split("\\.");
         if (search.length > 1) {
@@ -51,7 +62,6 @@ public class SimpleCondition implements Condition, Serializable {
         }
     }
 
-    @SuppressWarnings("uncheckecd")
     private Predicate getPredicate(CriteriaBuilder criteriaBuilder, AbstractQuery criteriaQuery, From from, String queryField) {
         switch (searchCondition) {
             case NULL: {
