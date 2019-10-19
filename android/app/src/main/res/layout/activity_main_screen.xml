@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sb.wifistart.activities.MainScreenActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="242dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="You successfully logged in!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.115" />
+
+    <Button
+        android:id="@+id/showChartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Показать график"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <Button
+        android:id="@+id/newScan"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:backgroundTint="#187C13"
+        android:text="Новое сканирование"
+        android:textColor="#D5D5D5"
+        android:textSize="16pt"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/myScans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showChartButton"
+        app:layout_constraintVertical_bias="0.22000003" />
+
+    <Button
+        android:id="@+id/myScans"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:backgroundTint="#187C13"
+        android:text="Мои сканирования"
+        android:textColor="#D5D5D5"
+        android:textSize="16pt"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScan" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

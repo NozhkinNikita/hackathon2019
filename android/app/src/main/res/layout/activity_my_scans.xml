@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backFromMyScans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="?attr/actionModeCloseDrawable"
+        android:text="Назад"
+        android:tint="#D5D5D5"
+        android:visibility="gone"
+        app:backgroundTint="#187C13" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#00FFFFFF" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myScansList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
