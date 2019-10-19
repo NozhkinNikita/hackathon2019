@@ -21,7 +21,11 @@
         <createTable tableName="user_location">
             <column name="userId" type="NVARCHAR"/>
             <column name="locationId" type="NVARCHAR"/>
+            <column name="id" type="NVARCHAR"/>
         </createTable>
+
+        <addNotNullConstraint tableName="user_location" columnName="id" columnDataType="NVARCHAR"/>
+        <addPrimaryKey tableName="user_location" columnNames="id" constraintName="user_location_pkey"/>
 
         <addForeignKeyConstraint baseTableName="user_location"
                                  baseColumnNames="userId"

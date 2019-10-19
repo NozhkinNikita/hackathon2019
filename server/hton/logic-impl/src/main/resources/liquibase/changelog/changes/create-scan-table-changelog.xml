@@ -10,8 +10,8 @@
             <column name="begin" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="end" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="status" type="NVARCHAR"/>
-            <column name="userId" type="NVARCHAR"/>
             <column name="deviceId" type="NVARCHAR"/>
+            <column name="userLocationId" type="NVARCHAR"/>
         </createTable>
 
         <addNotNullConstraint tableName="scan" columnName="id" columnDataType="NVARCHAR"/>
@@ -22,17 +22,23 @@
         <!--<addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>-->
         <!--<addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>-->
 
-        <addForeignKeyConstraint baseTableName="scan"
-                                 baseColumnNames="userId"
-                                 constraintName="fk_scan_user"
-                                 referencedTableName="user"
-                                 referencedColumnNames="id"
-                                 onDelete="NO ACTION"/>
+<!--        <addForeignKeyConstraint baseTableName="scan"-->
+<!--                                 baseColumnNames="userId"-->
+<!--                                 constraintName="fk_scan_user"-->
+<!--                                 referencedTableName="user"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 onDelete="NO ACTION"/>-->
 
         <addForeignKeyConstraint baseTableName="scan"
                                  baseColumnNames="deviceId"
                                  constraintName="fk_scan_device"
                                  referencedTableName="device"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+        <addForeignKeyConstraint baseTableName="scan"
+                                 baseColumnNames="userLocationId"
+                                 constraintName="fk_scan_user_location"
+                                 referencedTableName="user_location"
                                  referencedColumnNames="id"
                                  onDelete="NO ACTION"/>
 

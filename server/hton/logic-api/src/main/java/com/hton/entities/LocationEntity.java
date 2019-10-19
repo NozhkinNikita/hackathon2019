@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class LocationEntity implements BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<UserEntity> users;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = RouterEntity.class, mappedBy = "locationId")
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = RouterEntity.class, mappedBy = "locationId")
     private List<RouterEntity> routers;
 
     @Override

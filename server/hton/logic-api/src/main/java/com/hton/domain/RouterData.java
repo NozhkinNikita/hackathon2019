@@ -14,5 +14,5 @@ public class RouterData {
 
     private Double rssi;
 
-    private Router ourRouter;
+    private String ourRouterId;
 }

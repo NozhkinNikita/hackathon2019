@@ -4,6 +4,7 @@ import com.hton.converters.Converter;
 import com.hton.dao.filters.Condition;
 import com.hton.entities.BaseEntity;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Transaction;
 import org.hibernate.query.criteria.internal.PathSource;
 import org.hibernate.query.criteria.internal.path.AbstractPathImpl;
 import org.hibernate.query.criteria.internal.path.ListAttributeJoin;
@@ -66,16 +67,25 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public List<D> getByCondition(Condition condition) {
-        return executeCondition(condition, null).stream().map(e -> {
-            D d;
-            try {
-                d = converter.getDomainClass().newInstance();
-            } catch (Exception ex) {
-                throw new IllegalArgumentException(ex);
-            }
-            converter.toDomainObject(e, d);
-            return d;
-        }).collect(Collectors.toList());
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        try {
+            return executeCondition(condition, em).stream().map(e -> {
+                D d;
+                try {
+                    d = converter.getDomainClass().newInstance();
+                } catch (Exception ex) {
+                    throw new IllegalArgumentException(ex);
+                }
+                converter.toDomainObject(e, d);
+                return d;
+            }).collect(Collectors.toList());
+        } catch (Exception e ) {
+          throw new IllegalArgumentException(e);
+        } finally {
+            transaction.rollback();
+        }
     }
 
     private List<E> executeCondition(Condition condition, EntityManager entityManager) {

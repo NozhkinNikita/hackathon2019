@@ -31,30 +31,30 @@ public class PointController {
     private CredentialUtils credentialUtils;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> getPointById(@PathVariable("id") String id) {
         return new ResponseEntity<>(pointDao.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> removePointById(@PathVariable("id") String id) {
         pointDao.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
+    public ResponseEntity<?> getPoints(@RequestParam(required = false) String filter) {
         Condition condition = FilterUtils.parseFilter(filter);
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createUser(@RequestBody Point point) {
+    public ResponseEntity<?> createPoint(@RequestBody Point point) {
         pointDao.save(point);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateUser(@RequestBody Point point) {
+    public ResponseEntity<?> updatePoint(@RequestBody Point point) {
         pointDao.update(point);
         return new ResponseEntity<>(HttpStatus.OK);
     }

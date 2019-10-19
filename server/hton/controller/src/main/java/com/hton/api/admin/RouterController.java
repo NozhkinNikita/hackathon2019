@@ -31,30 +31,30 @@ public class RouterController {
     private CredentialUtils credentialUtils;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> getRouterById(@PathVariable("id") String id) {
         return new ResponseEntity<>(routerDao.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> removeRouterById(@PathVariable("id") String id) {
         routerDao.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
+    public ResponseEntity<?> getRouters(@RequestParam(required = false) String filter) {
         Condition condition = FilterUtils.parseFilter(filter);
         return new ResponseEntity<>(routerDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createUser(@RequestBody Router router) {
+    public ResponseEntity<?> createRouter(@RequestBody Router router) {
         routerDao.save(router);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateUser(@RequestBody Router router) {
+    public ResponseEntity<?> updateRouter(@RequestBody Router router) {
         routerDao.update(router);
         return new ResponseEntity<>(HttpStatus.OK);
     }

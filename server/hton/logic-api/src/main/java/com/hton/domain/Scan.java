@@ -16,7 +16,7 @@ public class Scan {
 
     private ScanStatus status;
 
-    private User user;
+    private UserLocation userLocation;
 
     private Device device;
 

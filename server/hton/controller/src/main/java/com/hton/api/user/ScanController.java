@@ -88,8 +88,9 @@ public class ScanController {
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
-        String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, "user.login", login);
+//        String login = credentialUtils.getCredentialLogin();
+        User user = credentialUtils.getUserInfo();
+        Condition condition = FilterUtils.getFilterWithLogin(filter, "userLocation.userId", user.getId());
         return new ResponseEntity<>(scanDao.getByCondition(condition), HttpStatus.OK);
     }
 
@@ -133,7 +134,7 @@ public class ScanController {
                 Scan scan = new Scan();
                 scan.setBegin(LocalDateTime.now());
                 scan.setStatus(ScanStatus.DRAFT);
-                scan.setUser(users.get(0));
+//                scan.setUser(users.get(0));
                 scan.setDevice(newScan.getDevice());
                 scan.setPoints(Collections.emptyList());
 

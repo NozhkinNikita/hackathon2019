@@ -3,11 +3,11 @@ package com.hton.converters;
 import com.hton.domain.Device;
 import com.hton.domain.Point;
 import com.hton.domain.Scan;
-import com.hton.domain.User;
+import com.hton.domain.UserLocation;
 import com.hton.entities.DeviceEntity;
 import com.hton.entities.PointEntity;
 import com.hton.entities.ScanEntity;
-import com.hton.entities.UserEntity;
+import com.hton.entities.UserLocationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 public class ScanConverter extends Converter<Scan, ScanEntity> {
 
     @Autowired
-    private Converter<User, UserEntity> userConverter;
-
-    @Autowired
     private Converter<Device, DeviceEntity> deviceConverter;
 
     @Autowired
     private Converter<Point, PointEntity> pointConverter;
+
+    @Autowired
+    private UserLocationConverter userLocationConverter;
 
     @Override
     public Class<Scan> getDomainClass() {
@@ -37,9 +37,9 @@ public class ScanConverter extends Converter<Scan, ScanEntity> {
 
     @Override
     public void toDomainObject(ScanEntity entity, Scan domain) {
-        User user = new User();
-        userConverter.toDomainObject(entity.getUser(), user);
-        domain.setUser(user);
+        UserLocation userLocation = new UserLocation();
+        userLocationConverter.toDomainObject(entity.getUserLocation(), userLocation);
+        domain.setUserLocation(userLocation);
         Device device = new Device();
         deviceConverter.toDomainObject(entity.getDevice(), device);
         domain.setDevice(device);
@@ -53,9 +53,9 @@ public class ScanConverter extends Converter<Scan, ScanEntity> {
 
     @Override
     public void toEntityObject(Scan domain, ScanEntity entity) {
-        UserEntity userEntity = new UserEntity();
-        userConverter.toEntityObject(domain.getUser(), userEntity);
-        entity.setUser(userEntity);
+        UserLocationEntity userLocationEntity = new UserLocationEntity();
+        userLocationConverter.toEntityObject(domain.getUserLocation(), userLocationEntity);
+        entity.setUserLocation(userLocationEntity);
         DeviceEntity deviceEntity = new DeviceEntity();
         deviceConverter.toEntityObject(domain.getDevice(), deviceEntity);
         entity.setDevice(deviceEntity);
