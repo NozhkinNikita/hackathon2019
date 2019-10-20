@@ -6,8 +6,13 @@ import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.CreateScanRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.*;
-import com.hton.domain.*;
-import com.hton.entities.*;
+import com.hton.domain.Scan;
+import com.hton.domain.User;
+import com.hton.domain.UserLocation;
+import com.hton.entities.Role;
+import com.hton.entities.ScanEntity;
+import com.hton.entities.ScanStatus;
+import com.hton.entities.UserLocationEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller
@@ -31,9 +37,6 @@ public class ScanController {
 
     @Autowired
     private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
-
-    @Autowired
-    private CommonDao<Device, DeviceEntity> deviceDao;
 
     @Autowired
     private CredentialUtils credentialUtils;
@@ -65,12 +68,6 @@ public class ScanController {
         }
     }
 
-    @DeleteMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> removeScanById(@PathVariable("id") String id) {
-        scanDao.remove(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
         User user = credentialUtils.getUserInfo();
@@ -80,7 +77,66 @@ public class ScanController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity createScan(@RequestBody CreateScanRequest createScanRequest) {
+    public ResponseEntity createScan(@RequestBody CreateScanRequest request) {
+        Optional<UserLocation> result = validateLocation(request.getLocationId());
+
+        if (result.isPresent()) {
+            Scan scan = new Scan();
+            scan.setBegin(LocalDateTime.now());
+            scan.setStatus(ScanStatus.DRAFT);
+            scan.setUserLocation(result.get());
+            scan.setDevice(request.getDevice());
+            scan.setPoints(Collections.emptyList());
+
+            Scan savedScan = scanDao.save(scan);
+            CreateScanRequest scanRequest = new CreateScanRequest();
+            scanRequest.setBegin(savedScan.getBegin());
+            scanRequest.setId(savedScan.getId());
+
+            return new ResponseEntity<>(scanRequest, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> finishScan(@PathVariable("id") String id) {
+        Scan scan = scanDao.getById(id);
+
+        if (scan.getUserLocation() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            Optional<UserLocation> result = validateLocation(scan.getUserLocation().getLocation().getId());
+
+            if (result.isPresent()) {
+                scan.setStatus(ScanStatus.FINISHED);
+                scanDao.update(scan);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
+    @DeleteMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<?> removeScanById(@PathVariable("id") String id) {
+        Scan scan = scanDao.getById(id);
+
+        if (scan.getUserLocation() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            Optional<UserLocation> result = validateLocation(scan.getUserLocation().getLocation().getId());
+
+            if (result.isPresent()) {
+                scanDao.remove(id);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
+    private Optional<UserLocation> validateLocation(String locationId) {
         String login = credentialUtils.getCredentialLogin();
 
         ComplexCondition condition = new ComplexCondition.Builder()
@@ -88,7 +144,7 @@ public class ScanController {
                 .setConditions(new SimpleCondition.Builder()
                                 .setSearchField("location.id")
                                 .setSearchCondition(SearchCondition.EQUALS)
-                                .setSearchValue(createScanRequest.getLocationId())
+                                .setSearchValue(locationId)
                                 .build(),
                         new SimpleCondition.Builder()
                                 .setSearchField("user.login")
@@ -101,45 +157,10 @@ public class ScanController {
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
 
         if (userLocations.isEmpty()) {
-            log.warn("Пользователь с логином " + login + " пытался создать сканирование в неразрешенной локации с id = " + createScanRequest.getLocationId());
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            log.warn(String.format("Пользователь с логином %s пытался выполнить действие в неразрешенной локации с id: %s", login, locationId));
+            return Optional.empty();
         } else {
-            UserLocation userLocation = userLocations.get(0);
-
-            if (userLocation.getUser().getEnabled()) {
-                Scan scan = new Scan();
-                scan.setBegin(LocalDateTime.now());
-                scan.setStatus(ScanStatus.DRAFT);
-                scan.setUserLocation(userLocation);
-                scan.setDevice(createScanRequest.getDevice());
-                scan.setPoints(Collections.emptyList());
-
-                Scan savedScan = scanDao.save(scan);
-                CreateScanRequest dto = new CreateScanRequest();
-                dto.setBegin(savedScan.getBegin());
-                dto.setId(savedScan.getId());
-
-                return new ResponseEntity<>(dto, HttpStatus.CREATED);
-            } else {
-                log.warn("Пользователь с логином " + login + " заблокирован");
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+            return Optional.of(userLocations.get(0));
         }
     }
-
-    @PutMapping(value = "/")
-    public ResponseEntity<?> test(@RequestBody CreateScanRequest createScanRequest) {
-        Device device = new Device();
-        device.setModel("model");
-        device.setMac("qweqw");
-        device.setIpV4("3847327");
-        deviceDao.save(device);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-//    @PutMapping(value = "/")
-//    public ResponseEntity<?> updateScan(@RequestBody Scan scan) {
-//        scanDao.update(scan);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 }

@@ -38,45 +38,49 @@ public class ScanConverter extends Converter<Scan, ScanEntity> {
 
     @Override
     public void toDomainObject(ScanEntity entity, Scan domain) {
-        if (entity.getUserLocation() != null) {
-            UserLocation userLocation = new UserLocation();
-            userLocationConverter.toDomainObject(entity.getUserLocation(), userLocation);
-            domain.setUserLocation(userLocation);
+        if (entity != null) {
+            if (entity.getUserLocation() != null) {
+                UserLocation userLocation = new UserLocation();
+                userLocationConverter.toDomainObject(entity.getUserLocation(), userLocation);
+                domain.setUserLocation(userLocation);
+            }
+            if (entity.getDevice() != null) {
+                Device device = new Device();
+                deviceConverter.toDomainObject(entity.getDevice(), device);
+                domain.setDevice(device);
+            }
+            if (entity.getPoints() != null) {
+                domain.setPoints(entity.getPoints().stream().map(p -> {
+                    Point point = new Point();
+                    pointConverter.toDomainObject(p, point);
+                    return point;
+                }).collect(Collectors.toList()));
+            }
+            super.toDomainObject(entity, domain);
         }
-        if (entity.getDevice() != null) {
-            Device device = new Device();
-            deviceConverter.toDomainObject(entity.getDevice(), device);
-            domain.setDevice(device);
-        }
-        if (entity.getPoints() != null) {
-            domain.setPoints(entity.getPoints().stream().map(p -> {
-                Point point = new Point();
-                pointConverter.toDomainObject(p, point);
-                return point;
-            }).collect(Collectors.toList()));
-        }
-        super.toDomainObject(entity, domain);
     }
 
     @Override
     public void toEntityObject(Scan domain, ScanEntity entity) {
-        if (domain.getUserLocation() != null) {
-            UserLocationEntity userLocationEntity = new UserLocationEntity();
-            userLocationConverter.toEntityObject(domain.getUserLocation(), userLocationEntity);
-            entity.setUserLocation(userLocationEntity);
+        if (domain != null) {
+            if (domain.getUserLocation() != null) {
+                UserLocationEntity userLocationEntity = new UserLocationEntity();
+                userLocationConverter.toEntityObject(domain.getUserLocation(), userLocationEntity);
+                entity.setUserLocation(userLocationEntity);
+            }
+            if (domain.getDevice() != null) {
+                DeviceEntity deviceEntity = new DeviceEntity();
+                deviceConverter.toEntityObject(domain.getDevice(), deviceEntity);
+                entity.setDevice(deviceEntity);
+            }
+            if (domain.getPoints() != null) {
+                entity.setPoints(domain.getPoints().stream().map(p -> {
+                    PointEntity pointEntity = new PointEntity();
+                    pointConverter.toEntityObject(p, pointEntity);
+                    return pointEntity;
+                }).collect(Collectors.toList()));
+            }
+            super.toEntityObject(domain, entity);
         }
-        if (domain.getDevice() != null) {
-            DeviceEntity deviceEntity = new DeviceEntity();
-            deviceConverter.toEntityObject(domain.getDevice(), deviceEntity);
-            entity.setDevice(deviceEntity);
-        }
-        if (domain.getPoints() != null) {
-            entity.setPoints(domain.getPoints().stream().map(p -> {
-                PointEntity pointEntity = new PointEntity();
-                pointConverter.toEntityObject(p, pointEntity);
-                return pointEntity;
-            }).collect(Collectors.toList()));
-        }
-        super.toEntityObject(domain, entity);
     }
 }

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserToLocationRequest {
+
     private String userId;
+
     private String locationId;
 }
