@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 
+@CrossOrigin
 @Controller
 @RequestMapping(value = WebMvcConfig.USER_POINT_PATH)
 public class PointController {

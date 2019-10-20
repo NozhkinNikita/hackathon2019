@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 
+@CrossOrigin
 @Controller
 @Qualifier("adminLocationController")
 @RequestMapping(value = WebMvcConfig.ADMIN_LOCATION_PATH)

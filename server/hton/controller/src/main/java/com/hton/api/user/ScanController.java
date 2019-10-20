@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@CrossOrigin
 @Controller
 @RequestMapping(value = WebMvcConfig.USER_SCAN_PATH)
 @Slf4j

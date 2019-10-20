@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @Controller
 @RequestMapping(value = WebMvcConfig.SECURITY_USERS_PATH)
 public class UserController {
@@ -38,6 +39,7 @@ public class UserController {
     @Autowired
     private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
 
+    @CrossOrigin
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
         SimpleCondition condition = new SimpleCondition.Builder()

@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @Controller
 @Qualifier("securityLocationController")
 @RequestMapping(value = WebMvcConfig.SECURITY_LOCATION_PATH)
