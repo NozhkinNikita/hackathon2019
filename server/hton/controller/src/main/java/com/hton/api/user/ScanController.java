@@ -13,6 +13,7 @@ import com.hton.entities.Role;
 import com.hton.entities.ScanEntity;
 import com.hton.entities.ScanStatus;
 import com.hton.entities.UserLocationEntity;
+import com.hton.service.LocationValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,10 +37,10 @@ public class ScanController {
     private CommonDao<Scan, ScanEntity> scanDao;
 
     @Autowired
-    private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
+    private CredentialUtils credentialUtils;
 
     @Autowired
-    private CredentialUtils credentialUtils;
+    private LocationValidatorService locationValidatorService;
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getScanById(@PathVariable("id") String id) {
@@ -78,7 +79,8 @@ public class ScanController {
 
     @PostMapping(value = "/")
     public ResponseEntity createScan(@RequestBody CreateScanRequest request) {
-        Optional<UserLocation> result = validateLocation(request.getLocationId());
+        String login = credentialUtils.getCredentialLogin();
+        Optional<UserLocation> result = locationValidatorService.validateLocation(login, request.getLocationId());
 
         if (result.isPresent()) {
             Scan scan = new Scan();
@@ -106,7 +108,8 @@ public class ScanController {
         if (scan.getUserLocation() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            Optional<UserLocation> result = validateLocation(scan.getUserLocation().getLocation().getId());
+            String login = credentialUtils.getCredentialLogin();
+            Optional<UserLocation> result = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
 
             if (result.isPresent()) {
                 scan.setStatus(ScanStatus.FINISHED);
@@ -125,7 +128,8 @@ public class ScanController {
         if (scan.getUserLocation() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            Optional<UserLocation> result = validateLocation(scan.getUserLocation().getLocation().getId());
+            String login = credentialUtils.getCredentialLogin();
+            Optional<UserLocation> result = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
 
             if (result.isPresent()) {
                 scanDao.remove(id);
@@ -133,34 +137,6 @@ public class ScanController {
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-        }
-    }
-
-    private Optional<UserLocation> validateLocation(String locationId) {
-        String login = credentialUtils.getCredentialLogin();
-
-        ComplexCondition condition = new ComplexCondition.Builder()
-                .setOperation(Operation.AND)
-                .setConditions(new SimpleCondition.Builder()
-                                .setSearchField("location.id")
-                                .setSearchCondition(SearchCondition.EQUALS)
-                                .setSearchValue(locationId)
-                                .build(),
-                        new SimpleCondition.Builder()
-                                .setSearchField("user.login")
-                                .setSearchCondition(SearchCondition.EQUALS)
-                                .setSearchValue(login)
-                                .build()
-                )
-                .build();
-
-        List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
-
-        if (userLocations.isEmpty()) {
-            log.warn(String.format("Пользователь с логином %s пытался выполнить действие в неразрешенной локации с id: %s", login, locationId));
-            return Optional.empty();
-        } else {
-            return Optional.of(userLocations.get(0));
         }
     }
 }
