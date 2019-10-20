@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -35,25 +36,35 @@ public class UserLocationEntity implements BaseEntity {
     @Column(updatable = false, insertable = false)
     private String locationId;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
     @JoinColumn(name = "userId")
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            targetEntity = LocationEntity.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
     @JoinColumn(name = "locationId")
     private LocationEntity location;
 
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id");
+        return Collections.singletonList("id");
     }
 
     @Override
     public List<String> getJoinFields() {
         return Arrays.asList("user", "location");
+    }
+
+    public void setUser(UserEntity user) {
+        if (user != null) {
+            userId = user.getId();
+        }
+        this.user = user;
+    }
+
+    public void setLocation(LocationEntity location) {
+        if (location != null) {
+            locationId = location.getId();
+        }
+        this.location = location;
     }
 }

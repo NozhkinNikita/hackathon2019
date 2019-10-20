@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping(value = WebMvcConfig.USER_POINT_PATH)
 public class PointController {
@@ -44,13 +46,13 @@ public class PointController {
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getPoints(@RequestParam(required = false) String filter) {
         Condition condition = FilterUtils.parseFilter(filter);
+        condition.setMaskFields(Arrays.asList("id", "name", "begin", "end", "isRepeat"));
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
     public ResponseEntity<?> createPoint(@RequestBody Point point) {
-        pointDao.save(point);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(pointDao.save(point), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/")

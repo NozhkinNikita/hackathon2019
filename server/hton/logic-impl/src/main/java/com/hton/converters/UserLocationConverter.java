@@ -30,23 +30,31 @@ public class UserLocationConverter extends Converter<UserLocation, UserLocationE
 
     @Override
     public void toDomainObject(UserLocationEntity entity, UserLocation domain) {
-        Location location = new Location();
-        locationConverter.toDomainObject(entity.getLocation(), location);
-        domain.setLocation(location);
-        User user = new User();
-        userConverter.toDomainObject(entity.getUser(), user);
-        domain.setUser(user);
+        if (entity.getLocation() != null) {
+            Location location = new Location();
+            locationConverter.toDomainObject(entity.getLocation(), location);
+            domain.setLocation(location);
+        }
+        if (entity.getUser() != null) {
+            User user = new User();
+            userConverter.toDomainObject(entity.getUser(), user);
+            domain.setUser(user);
+        }
         domain.setId(entity.getId());
     }
 
     @Override
     public void toEntityObject(UserLocation domain, UserLocationEntity entity) {
-        LocationEntity locationEntity = new LocationEntity();
-        locationConverter.toEntityObject(domain.getLocation(), locationEntity);
-        entity.setLocation(locationEntity);
-        UserEntity userEntity = new UserEntity();
-        userConverter.toEntityObject(domain.getUser(), userEntity);
-        entity.setUser(userEntity);
+        if (domain.getLocation() != null) {
+            LocationEntity locationEntity = new LocationEntity();
+            locationConverter.toEntityObject(domain.getLocation(), locationEntity);
+            entity.setLocation(locationEntity);
+        }
+        if (domain.getUser() != null) {
+            UserEntity userEntity = new UserEntity();
+            userConverter.toEntityObject(domain.getUser(), userEntity);
+            entity.setUser(userEntity);
+        }
         entity.setId(domain.getId());
     }
 }

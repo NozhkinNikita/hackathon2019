@@ -1,4 +1,4 @@
-package com.hton.domain;
+package com.hton.api.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLocation {
-
-    private String id;
-
-    private User user;
-
-    private Location location;
+public class UserToLocationRequest {
+    private String userId;
+    private String locationId;
 }

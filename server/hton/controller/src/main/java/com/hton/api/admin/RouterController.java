@@ -49,8 +49,7 @@ public class RouterController {
 
     @PostMapping(value = "/")
     public ResponseEntity<?> createRouter(@RequestBody Router router) {
-        routerDao.save(router);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(routerDao.save(router), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/")

@@ -55,21 +55,23 @@ public abstract class CommonDao<D, E extends BaseEntity> {
 
     public D getById(String id) {
         EntityManager em = emf.createEntityManager();
-        E e = em.find(getEntityClass(), id);
         D d;
         try {
-            d = converter.getDomainClass().newInstance();
-            converter.toDomainObject(e, d);
-        } catch (Exception ex) {
-            throw new IllegalArgumentException(ex);
+            E e = em.find(getEntityClass(), id);
+            try {
+                d = converter.getDomainClass().newInstance();
+                converter.toDomainObject(e, d);
+            } catch (Exception ex) {
+                throw new IllegalArgumentException(ex);
+            }
+        } finally {
+            em.close();
         }
         return d;
     }
 
     public List<D> getByCondition(Condition condition) {
         EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         try {
             return executeCondition(condition, em).stream().map(e -> {
                 D d;
@@ -84,7 +86,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         } catch (Exception e ) {
           throw new IllegalArgumentException(e);
         } finally {
-            transaction.rollback();
+            em.close();
         }
     }
 
@@ -340,13 +342,25 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         String[] fieldSplit = joinName.split("\\.");
         if (fieldSplit.length > 1) {
             Join<E, ? extends BaseEntity> join = (Join<E, ? extends BaseEntity>) parentRoot.getJoins().stream()
-                    .filter(j -> ((ListAttributeJoin) j).getAttribute().getName().equals(fieldSplit[0])).findFirst()
+                    .filter(j -> {
+                        if (j.getClass().equals(ListAttributeJoin.class)) {
+                            return ((ListAttributeJoin) j).getAttribute().getName().equals(fieldSplit[0]);
+                        } else {
+                            return ((SingularAttributeJoin) j).getAttribute().getName().equals(fieldSplit[0]);
+                        }
+                    }).findFirst()
                     .orElseGet(() -> parentRoot.join(fieldSplit[0], JoinType.LEFT));
             String[] newFieldPath = Arrays.copyOfRange(fieldSplit, 1, fieldSplit.length);
             addSelections(result, getDeepSelections(newFieldPath, join), fields);
         } else if (!CollectionUtils.isEmpty(entity.getJoinFields()) && entity.getJoinFields().contains(joinName)) {
             Join<E, ? extends BaseEntity> join = (Join<E, ? extends BaseEntity>) parentRoot.getJoins().stream()
-                    .filter(j -> ((ListAttributeJoin) j).getAttribute().getName().equals(joinName)).findFirst()
+                    .filter(j -> {
+                        if (j.getClass().equals(ListAttributeJoin.class)) {
+                            return ((ListAttributeJoin) j).getAttribute().getName().equals(joinName);
+                        } else {
+                            return ((SingularAttributeJoin) j).getAttribute().getName().equals(joinName);
+                        }
+                    }).findFirst()
                     .orElseGet(() -> parentRoot.join(joinName, JoinType.LEFT));
 
             addSelections(result, join, fields);
@@ -482,21 +496,13 @@ public abstract class CommonDao<D, E extends BaseEntity> {
 
     public void remove(final String id) {
         EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
         try {
-            Object entity = em.find(getEntityClass(), id);
-            remove(entity);
+            E entity = em.find(getEntityClass(), id);
+            em.remove(entity);
         } finally {
-            em.close();
-        }
-    }
-
-    public void remove(final Object entity) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            if (entity != null) {
-                em.remove(em.contains(entity) ? entity : em.merge(entity));
-            }
-        } finally {
+            transaction.commit();
             em.close();
         }
     }

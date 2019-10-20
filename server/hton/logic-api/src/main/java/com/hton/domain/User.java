@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-//@EqualsAndHashCode(exclude = "locations")
-//@ToString(exclude = "locations")
 public class User {
 
     private String id;
@@ -33,6 +31,4 @@ public class User {
     private Boolean enabled;
 
     private List<Role> roles;
-
-//    private List<Location> locations;
 }

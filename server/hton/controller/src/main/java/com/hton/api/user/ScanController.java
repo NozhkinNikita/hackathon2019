@@ -3,6 +3,7 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
+import com.hton.api.requests.CreateScanRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.*;
 import com.hton.domain.*;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,13 +29,7 @@ public class ScanController {
     private CommonDao<Scan, ScanEntity> scanDao;
 
     @Autowired
-    private CommonDao<Location, LocationEntity> locationDao;
-
-    @Autowired
     private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
-
-    @Autowired
-    private CommonDao<User, UserEntity> userDao;
 
     @Autowired
     private CommonDao<Device, DeviceEntity> deviceDao;
@@ -43,7 +39,7 @@ public class ScanController {
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getScanById(@PathVariable("id") String id) {
-        String login = credentialUtils.getCredentialLogin();
+        User user = credentialUtils.getUserInfo();
 
         if (credentialUtils.getCredentialRoles().contains(Role.NETWORK_ADMIN)) {
             return new ResponseEntity<>(scanDao.getById(id), HttpStatus.OK);
@@ -56,9 +52,9 @@ public class ScanController {
                                     .setSearchValue(id)
                                     .build(),
                             new SimpleCondition.Builder()
-                                    .setSearchField("user.login")
+                                    .setSearchField("userLocation.userId")
                                     .setSearchCondition(SearchCondition.EQUALS)
-                                    .setSearchValue(login)
+                                    .setSearchValue(user.getId())
                                     .build()
                     )
                     .build();
@@ -78,11 +74,12 @@ public class ScanController {
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
         User user = credentialUtils.getUserInfo();
         Condition condition = FilterUtils.getFilterWithLogin(filter, "userLocation.userId", user.getId());
+        condition.setMaskFields(Arrays.asList("id", "begin", "end", "status"));
         return new ResponseEntity<>(scanDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity createScan(@RequestBody ScanDto scanDto) {
+    public ResponseEntity createScan(@RequestBody CreateScanRequest createScanRequest) {
         String login = credentialUtils.getCredentialLogin();
 
         ComplexCondition condition = new ComplexCondition.Builder()
@@ -90,7 +87,7 @@ public class ScanController {
                 .setConditions(new SimpleCondition.Builder()
                                 .setSearchField("location.id")
                                 .setSearchCondition(SearchCondition.EQUALS)
-                                .setSearchValue(scanDto.getLocationId())
+                                .setSearchValue(createScanRequest.getLocationId())
                                 .build(),
                         new SimpleCondition.Builder()
                                 .setSearchField("user.login")
@@ -103,7 +100,7 @@ public class ScanController {
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
 
         if (userLocations.isEmpty()) {
-            log.warn("Пользователь с логином " + login + " пытался создать сканирование в неразрешенной локации с id = " + scanDto.getLocationId());
+            log.warn("Пользователь с логином " + login + " пытался создать сканирование в неразрешенной локации с id = " + createScanRequest.getLocationId());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             UserLocation userLocation = userLocations.get(0);
@@ -113,11 +110,11 @@ public class ScanController {
                 scan.setBegin(LocalDateTime.now());
                 scan.setStatus(ScanStatus.DRAFT);
                 scan.setUserLocation(userLocation);
-                scan.setDevice(scanDto.getDevice());
+                scan.setDevice(createScanRequest.getDevice());
                 scan.setPoints(Collections.emptyList());
 
                 Scan savedScan = scanDao.save(scan);
-                ScanDto dto = new ScanDto();
+                CreateScanRequest dto = new CreateScanRequest();
                 dto.setBegin(savedScan.getBegin());
                 dto.setId(savedScan.getId());
 
@@ -130,7 +127,7 @@ public class ScanController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> test(@RequestBody ScanDto scanDto) {
+    public ResponseEntity<?> test(@RequestBody CreateScanRequest createScanRequest) {
         Device device = new Device();
         device.setModel("model");
         device.setMac("qweqw");

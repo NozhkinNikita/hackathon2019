@@ -28,11 +28,13 @@ public class PointConverter extends Converter<Point, PointEntity> {
     @Override
     public void toDomainObject(PointEntity entity, Point domain) {
         if (entity != null) {
-            domain.setRouterDates(entity.getRouterDates().stream().map(r -> {
-                RouterData routerData = new RouterData();
-                routerDataConverter.toDomainObject(r, routerData);
-                return routerData;
-            }).collect(Collectors.toList()));
+            if (entity.getRouterDates() != null) {
+                domain.setRouterDates(entity.getRouterDates().stream().map(r -> {
+                    RouterData routerData = new RouterData();
+                    routerDataConverter.toDomainObject(r, routerData);
+                    return routerData;
+                }).collect(Collectors.toList()));
+            }
             super.toDomainObject(entity, domain);
         }
     }
@@ -40,12 +42,13 @@ public class PointConverter extends Converter<Point, PointEntity> {
     @Override
     public void toEntityObject(Point domain, PointEntity entity) {
         if (domain != null) {
-            entity.setRouterDates(domain.getRouterDates().stream().map(r -> {
-                RouterDataEntity routerDataEntity = new RouterDataEntity();
-                routerDataConverter.toEntityObject(r, routerDataEntity);
-                return routerDataEntity;
-            })
-                    .collect(Collectors.toList()));
+            if (domain.getRouterDates() != null) {
+                entity.setRouterDates(domain.getRouterDates().stream().map(r -> {
+                    RouterDataEntity routerDataEntity = new RouterDataEntity();
+                    routerDataConverter.toEntityObject(r, routerDataEntity);
+                    return routerDataEntity;
+                }).collect(Collectors.toList()));
+            }
             super.toEntityObject(domain, entity);
         }
     }

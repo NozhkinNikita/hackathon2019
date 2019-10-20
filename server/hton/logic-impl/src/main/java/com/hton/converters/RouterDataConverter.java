@@ -16,14 +16,4 @@ public class RouterDataConverter extends Converter<RouterData, RouterDataEntity>
     public Class<RouterDataEntity> getEntityClass() {
         return RouterDataEntity.class;
     }
-
-    @Override
-    public void toDomainObject(RouterDataEntity entity, RouterData domain) {
-        super.toDomainObject(entity, domain);
-    }
-
-    @Override
-    public void toEntityObject(RouterData domain, RouterDataEntity entity) {
-        super.toEntityObject(domain, entity);
-    }
 }

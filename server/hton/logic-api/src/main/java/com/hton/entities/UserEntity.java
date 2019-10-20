@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@EqualsAndHashCode(exclude = "locations")
-//@ToString(exclude = "locations")
 public class UserEntity implements BaseEntity {
 
     @Id
@@ -39,19 +38,13 @@ public class UserEntity implements BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<RoleEntity> roles;
 
-//    @ManyToMany(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
-//    @JoinTable(name = "user_location",
-//            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
-//            inverseJoinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)})
-//    private List<LocationEntity> locations;
-
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "fio", "login", "pwd");
+        return Arrays.asList("id", "fio", "login", "pwd", "enabled");
     }
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("roleEntities"/*, "locations"*/);
+        return Collections.singletonList("roles");
     }
 }

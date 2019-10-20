@@ -1,28 +1,21 @@
-package com.hton.domain;
+package com.hton.api.requests;
 
-import com.hton.entities.ScanStatus;
+import com.hton.domain.Device;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scan {
+public class CreateScanRequest {
     private String id;
 
     private LocalDateTime begin;
 
-    private LocalDateTime end;
-
-    private ScanStatus status;
-
-    private UserLocation userLocation;
+    private String locationId;
 
     private Device device;
-
-    private List<Point> points;
 }

@@ -33,11 +33,13 @@ public class LocationConverter extends Converter<Location, LocationEntity> {
     @Override
     public void toDomainObject(LocationEntity entity, Location domain) {
         if (entity != null) {
-            domain.setRouters(entity.getRouters().stream().map(r -> {
-                Router router = new Router();
-                routerConverter.toDomainObject(r, router);
-                return router;
-            }).collect(Collectors.toList()));
+            if (entity.getRouters() != null) {
+                domain.setRouters(entity.getRouters().stream().map(r -> {
+                    Router router = new Router();
+                    routerConverter.toDomainObject(r, router);
+                    return router;
+                }).collect(Collectors.toList()));
+            }
             super.toDomainObject(entity, domain);
         }
     }
@@ -45,11 +47,13 @@ public class LocationConverter extends Converter<Location, LocationEntity> {
     @Override
     public void toEntityObject(Location domain, LocationEntity entity) {
         if (domain != null) {
-            entity.setRouters(domain.getRouters().stream().map(r -> {
-                RouterEntity router = new RouterEntity();
-                routerConverter.toEntityObject(r, router);
-                return router;
-            }).collect(Collectors.toList()));
+            if (domain.getRouters() != null) {
+                entity.setRouters(domain.getRouters().stream().map(r -> {
+                    RouterEntity router = new RouterEntity();
+                    routerConverter.toEntityObject(r, router);
+                    return router;
+                }).collect(Collectors.toList()));
+            }
             super.toEntityObject(domain, entity);
         }
     }
