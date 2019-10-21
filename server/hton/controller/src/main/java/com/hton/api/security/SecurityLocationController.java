@@ -1,6 +1,7 @@
 package com.hton.api.security;
 
 import com.hton.api.FilterUtils;
+import com.hton.api.UserLocationConditionHelper;
 import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.LocationUpdateRequest;
 import com.hton.api.requests.UserToLocationRequest;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,22 +97,8 @@ public class SecurityLocationController {
         locationDao.update(request.getLocaiotn());
 
         request.getUsers().forEach(user -> {
-            ComplexCondition condition = new ComplexCondition.Builder()
-                    .setOperation(Operation.AND)
-                    .setConditions(
-                            new SimpleCondition.Builder()
-                                    .setSearchField("userId")
-                                    .setSearchCondition(SearchCondition.EQUALS)
-                                    .setSearchValue(user.getId())
-                                    .build(),
-                            new SimpleCondition.Builder()
-                                    .setSearchField("locationId")
-                                    .setSearchCondition(SearchCondition.EQUALS)
-                                    .setSearchValue(request.getLocaiotn().getId())
-                                    .build()
-                    )
-                    .setMaskFields(Arrays.asList("id"))
-                    .build();
+            Condition condition = UserLocationConditionHelper
+                    .getUserLocationCondition(user.getId(), request.getLocaiotn().getId(), Collections.singletonList("id"));
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
             UserLocation userLocation = new UserLocation();
             userLocation.setUser(user);

@@ -1,12 +1,12 @@
 package com.hton.api.security;
 
 import com.hton.api.FilterUtils;
+import com.hton.api.UserLocationConditionHelper;
 import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.UserUpdateRequest;
 import com.hton.api.responses.UserLocationsResponse;
 import com.hton.dao.CommonDao;
-import com.hton.dao.filters.ComplexCondition;
-import com.hton.dao.filters.Operation;
+import com.hton.dao.filters.Condition;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Location;
@@ -97,22 +97,8 @@ public class UserController {
         request.getUser().setPwd(origUser.getPwd());
         userDao.update(request.getUser());
         request.getLocaiotns().forEach(l -> {
-            ComplexCondition condition = new ComplexCondition.Builder()
-                    .setOperation(Operation.AND)
-                    .setConditions(
-                            new SimpleCondition.Builder()
-                                    .setSearchField("userId")
-                                    .setSearchCondition(SearchCondition.EQUALS)
-                                    .setSearchValue(request.getUser().getId())
-                                    .build(),
-                            new SimpleCondition.Builder()
-                                    .setSearchField("locationId")
-                                    .setSearchCondition(SearchCondition.EQUALS)
-                                    .setSearchValue(l.getId())
-                                    .build()
-                    )
-                    .setMaskFields(Collections.singletonList("id"))
-                    .build();
+            Condition condition = UserLocationConditionHelper
+                    .getUserLocationCondition(request.getUser().getId(), l.getId(), Collections.singletonList("id"));
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
             UserLocation userLocation = new UserLocation();
             userLocation.setUser(request.getUser());
