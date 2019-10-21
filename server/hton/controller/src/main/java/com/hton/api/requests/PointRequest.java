@@ -11,7 +11,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatePointRequest {
+public class PointRequest {
+    private String id;
+
     private String name;
 
     private LocalDateTime begin;
@@ -20,5 +22,5 @@ public class CreatePointRequest {
 
     private String scanId;
 
-    private List<RouterData> routerDates;
+    private List<RouterData> routerDatas;
 }

@@ -5,5 +5,5 @@ import com.hton.domain.UserLocation;
 import java.util.Optional;
 
 public interface LocationValidatorService {
-    public Optional<UserLocation> validateLocation(String login, String locationId);
+    Optional<UserLocation> validateLocation(String login, String locationId);
 }

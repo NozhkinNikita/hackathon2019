@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateScanRequest {
+public class ScanCreateRequest {
     private String id;
 
     private LocalDateTime begin;

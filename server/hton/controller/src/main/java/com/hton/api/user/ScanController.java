@@ -3,28 +3,38 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
-import com.hton.api.requests.CreateScanRequest;
+import com.hton.api.requests.ScanCreateRequest;
 import com.hton.dao.CommonDao;
-import com.hton.dao.filters.*;
+import com.hton.dao.filters.ComplexCondition;
+import com.hton.dao.filters.Condition;
+import com.hton.dao.filters.Operation;
+import com.hton.dao.filters.SearchCondition;
+import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Scan;
 import com.hton.domain.User;
 import com.hton.domain.UserLocation;
 import com.hton.entities.Role;
 import com.hton.entities.ScanEntity;
 import com.hton.entities.ScanStatus;
-import com.hton.entities.UserLocationEntity;
 import com.hton.service.LocationValidatorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -78,24 +88,24 @@ public class ScanController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity createScan(@RequestBody CreateScanRequest request) {
+    public ResponseEntity createScan(@RequestBody ScanCreateRequest request) {
         String login = credentialUtils.getCredentialLogin();
-        Optional<UserLocation> result = locationValidatorService.validateLocation(login, request.getLocationId());
+        Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, request.getLocationId());
 
-        if (result.isPresent()) {
+        if (userLocation.isPresent()) {
             Scan scan = new Scan();
             scan.setBegin(LocalDateTime.now());
             scan.setStatus(ScanStatus.DRAFT);
-            scan.setUserLocation(result.get());
+            scan.setUserLocation(userLocation.get());
             scan.setDevice(request.getDevice());
             scan.setPoints(Collections.emptyList());
 
             Scan savedScan = scanDao.save(scan);
-            CreateScanRequest scanRequest = new CreateScanRequest();
-            scanRequest.setBegin(savedScan.getBegin());
-            scanRequest.setId(savedScan.getId());
+            ScanCreateRequest result = new ScanCreateRequest();
+            result.setBegin(savedScan.getBegin());
+            result.setId(savedScan.getId());
 
-            return new ResponseEntity<>(scanRequest, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

@@ -18,5 +18,7 @@ public class RouterData {
 
     private Double rssi;
 
+    private String pointId;
+
     private String ourRouterId;
 }

@@ -28,8 +28,8 @@ public class PointConverter extends Converter<Point, PointEntity> {
     @Override
     public void toDomainObject(PointEntity entity, Point domain) {
         if (entity != null) {
-            if (entity.getRouterDates() != null) {
-                domain.setRouterDates(entity.getRouterDates().stream().map(r -> {
+            if (entity.getRouterDatas() != null) {
+                domain.setRouterDatas(entity.getRouterDatas().stream().map(r -> {
                     RouterData routerData = new RouterData();
                     routerDataConverter.toDomainObject(r, routerData);
                     return routerData;
@@ -42,8 +42,8 @@ public class PointConverter extends Converter<Point, PointEntity> {
     @Override
     public void toEntityObject(Point domain, PointEntity entity) {
         if (domain != null) {
-            if (domain.getRouterDates() != null) {
-                entity.setRouterDates(domain.getRouterDates().stream().map(r -> {
+            if (domain.getRouterDatas() != null) {
+                entity.setRouterDatas(domain.getRouterDatas().stream().map(r -> {
                     RouterDataEntity routerDataEntity = new RouterDataEntity();
                     routerDataConverter.toEntityObject(r, routerDataEntity);
                     return routerDataEntity;

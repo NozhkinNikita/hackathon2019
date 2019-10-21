@@ -33,10 +33,14 @@ public class FilterUtils {
         Condition condition = FilterUtils.parseFilter(filter);
 
         SimpleCondition loginCondition = new SimpleCondition.Builder()
-//                .setSearchField("users.login")
                 .setSearchField(searchLoginField)
                 .setSearchCondition(SearchCondition.EQUALS)
                 .setSearchValue(login)
+                .setSkip(condition.getSkip())
+                .setTake(condition.getTake())
+                .setSortDirection(condition.getSortDirection())
+                .setSortField(condition.getSortField())
+                .setMaskFields(condition.getMaskFields())
                 .build();
         return new ComplexCondition.Builder()
                 .setOperation(Operation.AND)

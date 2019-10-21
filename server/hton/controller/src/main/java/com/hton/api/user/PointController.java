@@ -3,7 +3,7 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
-import com.hton.api.requests.CreatePointRequest;
+import com.hton.api.requests.PointRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
 import com.hton.domain.Point;
@@ -16,10 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 @CrossOrigin
@@ -54,12 +61,12 @@ public class PointController {
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getPoints(@RequestParam(required = false) String filter) {
         Condition condition = FilterUtils.parseFilter(filter);
-        condition.setMaskFields(Arrays.asList("id", "name", "begin", "end", "isRepeat"));
+        condition.setMaskFields(Arrays.asList("id", "name", "begin", "end", "isRepeat", "scanId"));
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createPoint(@RequestBody CreatePointRequest request) {
+    public ResponseEntity<?> createPoint(@RequestBody PointRequest request) {
         Scan scan = scanDao.getById(request.getScanId());
 
         if (scan.getUserLocation() == null) {
@@ -67,22 +74,25 @@ public class PointController {
         } else {
             String login = credentialUtils.getCredentialLogin();
 
-            Optional<UserLocation> result = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
+            Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
 
-            if (result.isPresent()) {
-
+            if (userLocation.isPresent()) {
+                //TODO dikma убери из request все поля кроме имя и ид сканирования, переименуй -> CreatePointRequest
                 Point point = new Point();
                 point.setBegin(request.getBegin());
                 point.setEnd(request.getEnd());
                 point.setName(request.getName());
                 point.setIsRepeat(false);
-                // TODO dikma не сохраняется идентификатор сканирования
                 point.setScanId(request.getScanId());
-                // TODO dikma временно
-                point.setRouterDates(Collections.emptyList());
+                // TODO dikma точки будут сохраняться в методе com.hton.api.user.PointController.updatePoint
+//                point.setRouterDatas(request.getRouterDatas());
 
-                pointDao.save(point);
-                return new ResponseEntity<>(HttpStatus.OK);
+                Point savedPoint = pointDao.save(point);
+
+                PointRequest result = new PointRequest();
+                result.setId(savedPoint.getId());
+
+                return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

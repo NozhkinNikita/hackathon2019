@@ -1,7 +1,9 @@
 package com.hton.api.security;
 
 import com.hton.api.FilterUtils;
+import com.hton.api.UserLocationConditionHelper;
 import com.hton.api.WebMvcConfig;
+import com.hton.api.requests.LocationUpdateRequest;
 import com.hton.api.requests.UserToLocationRequest;
 import com.hton.api.responses.LocationUsersResponse;
 import com.hton.dao.CommonDao;
@@ -21,9 +23,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,8 +86,26 @@ public class SecurityLocationController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateLocation(@RequestBody Location location) {
-        locationDao.update(location);
+    public ResponseEntity<?> updateLocation(@RequestBody LocationUpdateRequest request) {
+
+        if (request == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (request.getLocation() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        locationDao.update(request.getLocation());
+
+        request.getUsers().forEach(user -> {
+            Condition condition = UserLocationConditionHelper
+                    .getUserLocationCondition(user.getId(), request.getLocation().getId(), Collections.singletonList("id"));
+            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+            UserLocation userLocation = new UserLocation();
+            userLocation.setUser(user);
+            userLocation.setLocation(request.getLocation());
+            userLocationDao.save(userLocation);
+
+        });
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

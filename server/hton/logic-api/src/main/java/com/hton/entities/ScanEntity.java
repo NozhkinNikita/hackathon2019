@@ -3,10 +3,20 @@ package com.hton.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +41,6 @@ public class ScanEntity implements BaseEntity {
     private ScanStatus status;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = UserLocationEntity.class)
-//    @JoinTable(name = "user_location",
-//            joinColumns = {@JoinColumn(name = "id")}
-//    )
     @JoinColumn(name = "userLocationId")
     private UserLocationEntity userLocation;
 
