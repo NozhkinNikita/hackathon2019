@@ -91,10 +91,10 @@ public class SecurityLocationController {
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (request.getLocaiotn() == null) {
+        if (request.getLocation() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        locationDao.update(request.getLocaiotn());
+        locationDao.update(request.getLocation());
 
         request.getUsers().forEach(user -> {
             Condition condition = UserLocationConditionHelper
@@ -102,7 +102,7 @@ public class SecurityLocationController {
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
             UserLocation userLocation = new UserLocation();
             userLocation.setUser(user);
-            userLocation.setLocation(request.getLocaiotn());
+            userLocation.setLocation(request.getLocation());
             userLocationDao.save(userLocation);
 
         });

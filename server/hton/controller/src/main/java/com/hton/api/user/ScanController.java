@@ -3,7 +3,7 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
-import com.hton.api.requests.CreateScanRequest;
+import com.hton.api.requests.ScanCreateRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.ComplexCondition;
 import com.hton.dao.filters.Condition;
@@ -88,24 +88,24 @@ public class ScanController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity createScan(@RequestBody CreateScanRequest request) {
+    public ResponseEntity createScan(@RequestBody ScanCreateRequest request) {
         String login = credentialUtils.getCredentialLogin();
-        Optional<UserLocation> result = locationValidatorService.validateLocation(login, request.getLocationId());
+        Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, request.getLocationId());
 
-        if (result.isPresent()) {
+        if (userLocation.isPresent()) {
             Scan scan = new Scan();
             scan.setBegin(LocalDateTime.now());
             scan.setStatus(ScanStatus.DRAFT);
-            scan.setUserLocation(result.get());
+            scan.setUserLocation(userLocation.get());
             scan.setDevice(request.getDevice());
             scan.setPoints(Collections.emptyList());
 
             Scan savedScan = scanDao.save(scan);
-            CreateScanRequest scanRequest = new CreateScanRequest();
-            scanRequest.setBegin(savedScan.getBegin());
-            scanRequest.setId(savedScan.getId());
+            ScanCreateRequest result = new ScanCreateRequest();
+            result.setBegin(savedScan.getBegin());
+            result.setId(savedScan.getId());
 
-            return new ResponseEntity<>(scanRequest, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

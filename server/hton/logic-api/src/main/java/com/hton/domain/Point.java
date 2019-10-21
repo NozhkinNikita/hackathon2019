@@ -23,5 +23,5 @@ public class Point {
 
     private String scanId;
 
-    private List<RouterData> routerDates;
+    private List<RouterData> routerDatas;
 }

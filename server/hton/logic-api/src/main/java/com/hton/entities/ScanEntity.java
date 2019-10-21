@@ -41,9 +41,6 @@ public class ScanEntity implements BaseEntity {
     private ScanStatus status;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = UserLocationEntity.class)
-//    @JoinTable(name = "user_location",
-//            joinColumns = {@JoinColumn(name = "id")}
-//    )
     @JoinColumn(name = "userLocationId")
     private UserLocationEntity userLocation;
 
