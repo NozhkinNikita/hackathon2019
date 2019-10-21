@@ -98,7 +98,7 @@ public class SecurityLocationController {
 
         request.getUsers().forEach(user -> {
             Condition condition = UserLocationConditionHelper
-                    .getUserLocationCondition(user.getId(), request.getLocaiotn().getId(), Collections.singletonList("id"));
+                    .getUserLocationCondition(user.getId(), request.getLocation().getId(), Collections.singletonList("id"));
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
             UserLocation userLocation = new UserLocation();
             userLocation.setUser(user);
