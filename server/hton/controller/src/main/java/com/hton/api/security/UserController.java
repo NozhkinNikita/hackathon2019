@@ -18,9 +18,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,9 +88,6 @@ public class UserController {
     @PutMapping(value = "/")
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request) {
         User origUser = userDao.getById(request.getUser().getId());
-        if (request == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         if (request.getUser() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -105,7 +111,7 @@ public class UserController {
                                     .setSearchValue(l.getId())
                                     .build()
                     )
-                    .setMaskFields(Arrays.asList("id"))
+                    .setMaskFields(Collections.singletonList("id"))
                     .build();
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
             UserLocation userLocation = new UserLocation();
