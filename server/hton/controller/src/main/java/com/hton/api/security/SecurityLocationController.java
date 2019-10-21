@@ -2,6 +2,7 @@ package com.hton.api.security;
 
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
+import com.hton.api.requests.LocationUpdateRequest;
 import com.hton.api.requests.UserToLocationRequest;
 import com.hton.api.responses.LocationUsersResponse;
 import com.hton.dao.CommonDao;
@@ -74,8 +75,40 @@ public class SecurityLocationController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateLocation(@RequestBody Location location) {
-        locationDao.update(location);
+    public ResponseEntity<?> updateLocation(@RequestBody LocationUpdateRequest request) {
+
+        if (request == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (request.getLocaiotn() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        locationDao.update(request.getLocaiotn());
+
+        request.getUsers().forEach(user -> {
+            ComplexCondition condition = new ComplexCondition.Builder()
+                    .setOperation(Operation.AND)
+                    .setConditions(
+                            new SimpleCondition.Builder()
+                                    .setSearchField("userId")
+                                    .setSearchCondition(SearchCondition.EQUALS)
+                                    .setSearchValue(user.getId())
+                                    .build(),
+                            new SimpleCondition.Builder()
+                                    .setSearchField("locationId")
+                                    .setSearchCondition(SearchCondition.EQUALS)
+                                    .setSearchValue(request.getLocaiotn().getId())
+                                    .build()
+                    )
+                    .setMaskFields(Arrays.asList("id"))
+                    .build();
+            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+            UserLocation userLocation = new UserLocation();
+            userLocation.setUser(user);
+            userLocation.setLocation(request.getLocaiotn());
+            userLocationDao.save(userLocation);
+
+        });
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
