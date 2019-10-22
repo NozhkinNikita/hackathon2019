@@ -6,12 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.os.Parcelable;
 
-import com.sb.wifistart.activities.WifiInfoActivity;
-import com.sb.wifistart.dto.RouterData;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;

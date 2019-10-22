@@ -3,7 +3,6 @@ package com.sb.wifistart.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.ScanResult;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -12,8 +11,6 @@ import androidx.annotation.Nullable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sb.wifistart.R;
 import com.sb.wifistart.receiver.WifiReceiver;
-
-import java.util.List;
 
 public class WifiInfoActivity extends Activity {
 

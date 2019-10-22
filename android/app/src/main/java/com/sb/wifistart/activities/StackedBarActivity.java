@@ -24,15 +24,6 @@ public class StackedBarActivity extends AppCompatActivity {
 
     private BarChart stackedChart;
 
-    // Using example
-    private ArrayList<BarEntry> defValues() {
-        ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(0, new float[]{2, 4.5f, 3}));
-        dataVals.add(new BarEntry(1, new float[]{2, 7f, 3}));
-        dataVals.add(new BarEntry(3, new float[]{2, 6.5f, 6}));
-        return dataVals;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
