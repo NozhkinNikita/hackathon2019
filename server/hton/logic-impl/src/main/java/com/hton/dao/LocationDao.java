@@ -33,4 +33,9 @@ public class LocationDao extends CommonDao<Location, LocationEntity> {
             em.close();
         }
     }
+
+    @Override
+    public void update(Location domain, List<String> removeIds) {
+        // do nothing
+    }
 }

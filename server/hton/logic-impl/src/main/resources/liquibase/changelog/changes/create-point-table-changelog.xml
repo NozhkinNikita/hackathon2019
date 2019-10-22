@@ -18,8 +18,8 @@
         <addPrimaryKey tableName="point" columnNames="id" constraintName="point_pkey"/>
 
         <addNotNullConstraint tableName="point" columnName="name" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="point" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-        <addNotNullConstraint tableName="point" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        <!--<addNotNullConstraint tableName="point" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>-->
+        <!--<addNotNullConstraint tableName="point" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>-->
         <addNotNullConstraint tableName="point" columnName="isRepeat" columnDataType="BOOLEAN"/>
 
         <addForeignKeyConstraint baseTableName="point"

@@ -47,12 +47,13 @@ public abstract class CommonDao<D, E extends BaseEntity> {
 
     public abstract Class<E> getEntityClass();
     public abstract void remove(String id, List<String> joinIds);
+    public abstract void update(D domain, List<String> removeIds);
 
     @PersistenceUnit
     private EntityManagerFactory emf;
 
     @Autowired
-    private Converter<D, E> converter;
+    protected Converter<D, E> converter;
 
     public D getById(String id) {
         EntityManager em = emf.createEntityManager();

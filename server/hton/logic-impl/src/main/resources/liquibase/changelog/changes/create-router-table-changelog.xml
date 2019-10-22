@@ -9,6 +9,7 @@
             <column name="id" type="NVARCHAR"/>
             <column name="ip" type="NVARCHAR"/>
             <column name="ssid" type="NVARCHAR"/>
+            <column name="bssid" type="NVARCHAR"/>
             <column name="pwd" type="NVARCHAR"/>
             <column name="adminLogin" type="NVARCHAR"/>
             <column name="adminPwd" type="NVARCHAR"/>
@@ -20,6 +21,7 @@
 
         <addNotNullConstraint tableName="router" columnName="ip" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="router" columnName="ssid" columnDataType="NVARCHAR"/>
+        <addNotNullConstraint tableName="router" columnName="bssid" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="router" columnName="pwd" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="router" columnName="adminLogin" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="router" columnName="adminPwd" columnDataType="NVARCHAR"/>

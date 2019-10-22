@@ -17,4 +17,9 @@ public class DeviceDao extends CommonDao<Device, DeviceEntity> {
     public void remove(String id, List<String> joinIds) {
         // do nothing
     }
+
+    @Override
+    public void update(Device domain, List<String> removeIds) {
+        // do nothing
+    }
 }

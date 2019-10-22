@@ -17,4 +17,9 @@ public class RouterDao extends CommonDao<Router, RouterEntity> {
     public void remove(String id, List<String> joinIds) {
         // do nothing
     }
+
+    @Override
+    public void update(Router domain, List<String> removeIds) {
+        // do nothing
+    }
 }
