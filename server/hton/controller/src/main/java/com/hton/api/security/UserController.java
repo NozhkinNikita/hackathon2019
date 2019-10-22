@@ -75,10 +75,10 @@ public class UserController {
                 .setSearchField("userId")
                 .setSearchCondition(SearchCondition.EQUALS)
                 .setSearchValue(id)
+                .setMaskFields(Collections.singletonList("id"))
                 .build();
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
-        userLocations.forEach(ul -> userLocationDao.remove(ul.getId()));
-        userDao.remove(id);
+        userDao.remove(id, userLocations.stream().map(UserLocation::getId).collect(Collectors.toList()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

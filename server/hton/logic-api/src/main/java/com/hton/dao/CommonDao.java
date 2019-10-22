@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 public abstract class CommonDao<D, E extends BaseEntity> {
 
     public abstract Class<E> getEntityClass();
+    public abstract void remove(String id, List<String> joinIds);
 
     @PersistenceUnit
     private EntityManagerFactory emf;
@@ -480,6 +481,10 @@ public abstract class CommonDao<D, E extends BaseEntity> {
         }
     }
 
+    protected EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
     private EntityTransaction openTransaction(EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         if (!transaction.isActive()) {
@@ -495,7 +500,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public void remove(final String id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
@@ -508,7 +513,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public void update(D domain) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
             E entity = getEntityClass().newInstance();
             converter.toEntityObject(domain, entity);
@@ -525,7 +530,7 @@ public abstract class CommonDao<D, E extends BaseEntity> {
     }
 
     public D save(D domain) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = getEntityManager();
         try {
             E entity = getEntityClass().newInstance();
             converter.toEntityObject(domain, entity);
