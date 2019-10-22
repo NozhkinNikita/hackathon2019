@@ -1,8 +1,12 @@
 package com.hton.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Router {
     private String id;
 
@@ -15,4 +19,6 @@ public class Router {
     private String adminLogin;
 
     private String adminPwd;
+
+    private String locationId;
 }

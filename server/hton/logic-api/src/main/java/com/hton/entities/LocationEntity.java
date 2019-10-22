@@ -1,11 +1,18 @@
 package com.hton.entities;
 
-import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -13,23 +20,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "users")
-@ToString(exclude = "users")
 public class LocationEntity implements BaseEntity {
 
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
-    @JoinTable(name = "user_location",
-            joinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)})
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<UserEntity> users;
-
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = RouterEntity.class, mappedBy = "locationId")
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = RouterEntity.class, mappedBy = "locationId")
     private List<RouterEntity> routers;
 
     @Override
@@ -39,6 +39,6 @@ public class LocationEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("users", "routers");
+        return Collections.singletonList("routers");
     }
 }

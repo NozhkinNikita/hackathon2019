@@ -57,19 +57,6 @@
             <column name="roleId" value="USER"/>
         </insert>
 
-        <insert tableName="user_location">
-            <column name="userId" valueNumeric="1"/>
-            <column name="locationId" value="-1"/>
-        </insert>
-        <insert tableName="user_location">
-            <column name="userId" valueNumeric="2"/>
-            <column name="locationId" value="-1"/>
-        </insert>
-        <insert tableName="user_location">
-            <column name="userId" valueNumeric="3"/>
-            <column name="locationId" value="-1"/>
-        </insert>
-
         <insert tableName="router">
             <column name="id" value="-1"/>
             <column name="ip" value="KFMN_IP"/>

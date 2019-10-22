@@ -3,11 +3,14 @@ package com.hton.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +27,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScanEntity implements BaseEntity {
+
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
     
     private LocalDateTime begin;
@@ -34,15 +40,15 @@ public class ScanEntity implements BaseEntity {
     @Enumerated(EnumType.STRING)
     private ScanStatus status;
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
-    @JoinColumn(name = "userId", nullable = false)
-    private UserEntity user;
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = UserLocationEntity.class)
+    @JoinColumn(name = "userLocationId")
+    private UserLocationEntity userLocation;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DeviceEntity.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "deviceId", nullable = false)
     private DeviceEntity device;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = PointEntity.class, mappedBy = "scanId")
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = PointEntity.class, mappedBy = "scanId")
     private List<PointEntity> points;
 
     @Override
@@ -52,6 +58,6 @@ public class ScanEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("user", "device", "points");
+        return Arrays.asList("device", "points", "userLocation");
     }
 }

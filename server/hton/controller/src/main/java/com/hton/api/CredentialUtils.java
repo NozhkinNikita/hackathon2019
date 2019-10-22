@@ -1,6 +1,6 @@
 package com.hton.api;
 
-import com.hton.api.auth.UserDetails;
+import com.hton.config.UserDetails;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
@@ -23,7 +23,7 @@ public class CredentialUtils {
     public String getCredentialLogin() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
-        if (principal instanceof UserDetails) {
+        if (principal.getClass().equals(UserDetails.class)) {
             username = ((UserDetails)principal).getUsername();
         } else {
             username = principal.toString();
@@ -34,7 +34,7 @@ public class CredentialUtils {
     public List<Role> getCredentialRoles() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Role> roles = Collections.EMPTY_LIST;
-        if (principal instanceof UserDetails) {
+        if (principal.getClass().equals(UserDetails.class)) {
             roles = ((UserDetails)principal).getRoles();
         }
         return roles;

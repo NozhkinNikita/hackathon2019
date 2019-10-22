@@ -1,5 +1,5 @@
-datasource.properties.yaml.path: ./config/datasource.yml
-liquibase.properties.yaml.path: ./config/liquibase.yml
+#datasource.properties.yaml.path: ./config/datasource.yml
+#liquibase.properties.yaml.path: ./config/liquibase.yml
 server:
   port: 8443
   keyPassword: changeit
@@ -9,5 +9,22 @@ server:
 security:
   jwt:
     token:
-      secret-key: secret-key
-      expire-length: 3000000 # 5 minutes duration by default: 50 minutes * 60 seconds * 1000 miliseconds
+      secretKey: secret-key
+      expireLength: 300000
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:TestDB
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.HSQLDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  liquibase:
+    change-log: classpath:/liquibase/changelog/changelog-master.xml
+
+logging.level.org.hibernate.SQL: DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE

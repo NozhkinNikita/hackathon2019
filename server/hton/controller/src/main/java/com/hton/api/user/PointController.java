@@ -3,14 +3,20 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
+import com.hton.api.requests.PointRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
 import com.hton.domain.Point;
+import com.hton.domain.Scan;
+import com.hton.domain.UserLocation;
 import com.hton.entities.PointEntity;
+import com.hton.entities.ScanEntity;
+import com.hton.service.LocationValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+import java.util.Optional;
+
+@CrossOrigin
 @Controller
 @RequestMapping(value = WebMvcConfig.USER_POINT_PATH)
 public class PointController {
@@ -28,34 +38,70 @@ public class PointController {
     private CommonDao<Point, PointEntity> pointDao;
 
     @Autowired
+    private CommonDao<Scan, ScanEntity> scanDao;
+
+    @Autowired
+    private LocationValidatorService locationValidatorService;
+
+    @Autowired
     private CredentialUtils credentialUtils;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> getPointById(@PathVariable("id") String id) {
         return new ResponseEntity<>(pointDao.getById(id), HttpStatus.OK);
     }
 
+    // TODO dikma когд нам нужно удалять точки?
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
+    public ResponseEntity<?> removePointById(@PathVariable("id") String id) {
         pointDao.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
-        String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+    public ResponseEntity<?> getPoints(@RequestParam(required = false) String filter) {
+        Condition condition = FilterUtils.parseFilter(filter);
+        condition.setMaskFields(Arrays.asList("id", "name", "begin", "end", "isRepeat", "scanId"));
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createUser(@RequestBody Point point) {
-        pointDao.save(point);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<?> createPoint(@RequestBody PointRequest request) {
+        Scan scan = scanDao.getById(request.getScanId());
+
+        if (scan.getUserLocation() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            String login = credentialUtils.getCredentialLogin();
+
+            Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
+
+            if (userLocation.isPresent()) {
+                //TODO dikma убери из request все поля кроме имя и ид сканирования, переименуй -> CreatePointRequest
+                Point point = new Point();
+                point.setBegin(request.getBegin());
+                point.setEnd(request.getEnd());
+                point.setName(request.getName());
+                point.setIsRepeat(false);
+                point.setScanId(request.getScanId());
+                // TODO dikma точки будут сохраняться в методе com.hton.api.user.PointController.updatePoint
+//                point.setRouterDatas(request.getRouterDatas());
+
+                Point savedPoint = pointDao.save(point);
+
+                PointRequest result = new PointRequest();
+                result.setId(savedPoint.getId());
+
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updateUser(@RequestBody Point point) {
+    public ResponseEntity<?> updatePoint(@RequestBody Point point) {
+        // TODO dikma будет изменена сигнатура
         pointDao.update(point);
         return new ResponseEntity<>(HttpStatus.OK);
     }

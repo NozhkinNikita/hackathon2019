@@ -1,6 +1,5 @@
 package com.hton.api.admin;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+
+@CrossOrigin
 @Controller
 @Qualifier("adminLocationController")
 @RequestMapping(value = WebMvcConfig.ADMIN_LOCATION_PATH)
@@ -34,8 +37,6 @@ public class AdminLocationController {
 
     @Autowired
     private CredentialUtils credentialUtils;
-
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity getLocation(@PathVariable("id") String id) {
@@ -62,7 +63,8 @@ public class AdminLocationController {
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getLocations(@RequestParam(required = false) String filter) {
         String login = credentialUtils.getCredentialLogin();
-        Condition condition = FilterUtils.getFilterWithLogin(filter, login);
+        Condition condition = FilterUtils.getFilterWithLogin(filter, "users.login", login);
+        condition.setMaskFields(Arrays.asList("id", "name"));
 
         return new ResponseEntity<>(locationDao.getByCondition(condition), HttpStatus.OK);
     }

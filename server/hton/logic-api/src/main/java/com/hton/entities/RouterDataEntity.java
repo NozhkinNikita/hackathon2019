@@ -3,9 +3,11 @@ package com.hton.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RouterDataEntity implements BaseEntity {
+
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     private String ssid;
@@ -33,17 +38,15 @@ public class RouterDataEntity implements BaseEntity {
 
     private String pointId;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = RouterEntity.class)
-    @JoinColumn(name = "routerId")
-    private RouterEntity ourRouter;
+    private String ourRouterId;
 
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "ssid", "bssid", "canal", "rssi");
+        return Arrays.asList("id", "ssid", "bssid", "canal", "rssi", "ourRouterId");
     }
 
     @Override
     public List<String> getJoinFields() {
-        return Collections.singletonList("ourRouter");
+        return Collections.EMPTY_LIST;
     }
 }

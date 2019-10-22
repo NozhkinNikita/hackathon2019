@@ -10,30 +10,35 @@
             <column name="begin" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="end" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
             <column name="status" type="NVARCHAR"/>
-            <column name="userId" type="NVARCHAR"/>
             <column name="deviceId" type="NVARCHAR"/>
+            <column name="userLocationId" type="NVARCHAR"/>
         </createTable>
 
         <addNotNullConstraint tableName="scan" columnName="id" columnDataType="NVARCHAR"/>
         <addPrimaryKey tableName="scan" columnNames="id" constraintName="scan_pkey"/>
 
-        <addNotNullConstraint tableName="scan" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-        <addNotNullConstraint tableName="scan" columnName="end" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-        <addNotNullConstraint tableName="scan" columnName="status" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>
-        <addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>
+        <!--<addNotNullConstraint tableName="scan" columnName="begin" columnDataType="TIMESTAMP(6) WITHOUT TIME ZONE"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="status" columnDataType="NVARCHAR"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="userId" columnDataType="NVARCHAR"/>-->
+        <!--<addNotNullConstraint tableName="scan" columnName="deviceId" columnDataType="NVARCHAR"/>-->
 
-        <addForeignKeyConstraint baseTableName="scan"
-                                 baseColumnNames="userId"
-                                 constraintName="fk_scan_user"
-                                 referencedTableName="user"
-                                 referencedColumnNames="id"
-                                 onDelete="NO ACTION"/>
+<!--        <addForeignKeyConstraint baseTableName="scan"-->
+<!--                                 baseColumnNames="userId"-->
+<!--                                 constraintName="fk_scan_user"-->
+<!--                                 referencedTableName="user"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 onDelete="NO ACTION"/>-->
 
         <addForeignKeyConstraint baseTableName="scan"
                                  baseColumnNames="deviceId"
                                  constraintName="fk_scan_device"
                                  referencedTableName="device"
+                                 referencedColumnNames="id"
+                                 onDelete="NO ACTION"/>
+        <addForeignKeyConstraint baseTableName="scan"
+                                 baseColumnNames="userLocationId"
+                                 constraintName="fk_scan_user_location"
+                                 referencedTableName="user_location"
                                  referencedColumnNames="id"
                                  onDelete="NO ACTION"/>
 

@@ -26,8 +26,10 @@ public class UserConverter extends Converter<User, UserEntity> {
     @Override
     public void toDomainObject(UserEntity entity, User user) {
         if (entity != null) {
-            user.setRoles(entity.getRoles().stream().map(r -> roleConverter.toDomainObject(r))
-                    .collect(Collectors.toList()));
+            if (entity.getRoles() != null) {
+                user.setRoles(entity.getRoles().stream().map(r -> roleConverter.toDomainObject(r))
+                        .collect(Collectors.toList()));
+            }
             super.toDomainObject(entity, user);
         }
     }
@@ -35,8 +37,10 @@ public class UserConverter extends Converter<User, UserEntity> {
     @Override
     public void toEntityObject(User domain, UserEntity entity) {
         if (domain != null) {
-            entity.setRoles(domain.getRoles().stream().map(r -> roleConverter.toEntityObject(r))
-                    .collect(Collectors.toList()));
+            if (domain.getRoles() != null) {
+                entity.setRoles(domain.getRoles().stream().map(r -> roleConverter.toEntityObject(r))
+                        .collect(Collectors.toList()));
+            }
             super.toEntityObject(domain, entity);
         }
     }

@@ -1,17 +1,15 @@
 package com.hton.converters;
 
-import com.hton.domain.Router;
 import com.hton.domain.RouterData;
+import com.hton.domain.User;
 import com.hton.entities.RouterDataEntity;
-import com.hton.entities.RouterEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hton.entities.UserEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class RouterDataConverter extends Converter<RouterData, RouterDataEntity> {
-
-    @Autowired
-    private Converter<Router, RouterEntity> routerConverter;
 
     @Override
     public Class<RouterData> getDomainClass() {
@@ -26,9 +24,6 @@ public class RouterDataConverter extends Converter<RouterData, RouterDataEntity>
     @Override
     public void toDomainObject(RouterDataEntity entity, RouterData domain) {
         if (entity != null) {
-            Router router = new Router();
-            routerConverter.toDomainObject(entity.getOurRouter(), router);
-            domain.setOurRouter(router);
             super.toDomainObject(entity, domain);
         }
     }
@@ -36,9 +31,6 @@ public class RouterDataConverter extends Converter<RouterData, RouterDataEntity>
     @Override
     public void toEntityObject(RouterData domain, RouterDataEntity entity) {
         if (domain != null) {
-            RouterEntity routerEntity = new RouterEntity();
-            routerConverter.toEntityObject(domain.getOurRouter(), routerEntity);
-            entity.setOurRouter(routerEntity);
             super.toEntityObject(domain, entity);
         }
     }

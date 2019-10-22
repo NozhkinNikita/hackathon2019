@@ -32,7 +32,8 @@ import java.net.URL;
         "com.hton.config",
         "com.hton.config.jwt",
         "com.hton.converters",
-        "com.hton.dao"
+        "com.hton.dao",
+        "com.hton.service"
 })
 @EntityScan("com.hton.entities")
 @EnableConfigurationProperties

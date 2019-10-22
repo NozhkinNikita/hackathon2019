@@ -1,20 +1,19 @@
 package com.hton.domain;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "users")
-@ToString(exclude = "users")
+@NoArgsConstructor
 public class Location {
     private String id;
 
     private String name;
-
-    private List<User> users;
 
     private List<Router> routers;
 }

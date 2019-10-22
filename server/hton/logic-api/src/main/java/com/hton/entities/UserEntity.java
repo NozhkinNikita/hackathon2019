@@ -1,11 +1,23 @@
 package com.hton.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -13,10 +25,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "locations")
-@ToString(exclude = "locations")
 public class UserEntity implements BaseEntity {
+
     @Id
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     private String fio;
@@ -35,19 +48,13 @@ public class UserEntity implements BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<RoleEntity> roles;
 
-//    @ManyToMany(fetch = FetchType.EAGER, targetEntity = LocationEntity.class)
-//    @JoinTable(name = "user_location",
-//            joinColumns = {@JoinColumn(name = "userId", nullable = false, updatable = false)},
-//            inverseJoinColumns = {@JoinColumn(name = "locationId", nullable = false, updatable = false)})
-//    private List<LocationEntity> locations;
-
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "fio", "login", "pwd");
+        return Arrays.asList("id", "fio", "login", "pwd", "enabled");
     }
 
     @Override
     public List<String> getJoinFields() {
-        return Arrays.asList("roleEntities"/*, "locations"*/);
+        return Collections.singletonList("roles");
     }
 }

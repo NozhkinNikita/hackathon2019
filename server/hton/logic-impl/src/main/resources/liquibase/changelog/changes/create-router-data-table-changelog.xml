@@ -11,7 +11,7 @@
             <column name="bssid" type="NVARCHAR"/>
             <column name="channel" type="INT"/>
             <column name="rssi" type="FLOAT8"/>
-            <column name="routerId" type="NVARCHAR"/>
+            <column name="ourRouterId" type="NVARCHAR"/>
             <column name="pointId" type="NVARCHAR"/>
         </createTable>
 
@@ -22,13 +22,6 @@
         <addNotNullConstraint tableName="routerData" columnName="bssid" columnDataType="NVARCHAR"/>
         <addNotNullConstraint tableName="routerData" columnName="channel" columnDataType="INT"/>
         <addNotNullConstraint tableName="routerData" columnName="rssi" columnDataType="FLOAT8"/>
-
-        <addForeignKeyConstraint baseTableName="routerData"
-                                 baseColumnNames="routerId"
-                                 constraintName="fk_routerData_router"
-                                 referencedTableName="router"
-                                 referencedColumnNames="id"
-                                 onDelete="CASCADE"/>
 
         <addForeignKeyConstraint baseTableName="routerData"
                                  baseColumnNames="pointId"

@@ -22,13 +22,29 @@
             <column name="host" value="localhost"/>
         </insert>
 
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="1"/>
+            <column name="locationId" value="-1"/>
+            <column name="id" value="-1"/>
+        </insert>
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="2"/>
+            <column name="locationId" value="-1"/>
+            <column name="id" value="-2"/>
+        </insert>
+        <insert tableName="user_location">
+            <column name="userId" valueNumeric="3"/>
+            <column name="locationId" value="-1"/>
+            <column name="id" value="-3"/>
+        </insert>
+
         <insert tableName="scan">
             <column name="id" value="-1"/>
             <column name="begin" value="2019-10-08 21:50:49"/>
             <column name="end" value="2019-10-08 21:56:49"/>
             <column name="status" value="DRAFT"/>
-            <column name="userId" value="3"/>
             <column name="deviceId" value="-1"/>
+            <column name="userLocationId" value="-3"/>
         </insert>
 
         <insert tableName="point">
@@ -46,7 +62,7 @@
             <column name="bssid" value="unicorn_wi-fi"/>
             <column name="channel" value="1"/>
             <column name="rssi" value="3.14"/>
-            <column name="routerId" value="-1"/>
+            <column name="ourRouterId" value="-1"/>
             <column name="pointId" value="-1"/>
         </insert>
     </changeSet>
