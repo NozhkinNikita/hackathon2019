@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sb.wifistart.R;
+import com.sb.wifistart.httprequests.LoginRequest;
 import com.sb.wifistart.httprequests.UserApi;
 
 import java.security.cert.CertificateException;
@@ -123,7 +124,7 @@ public class LoginFormActivity extends AppCompatActivity {
 
         UserApi yourUsersApi = restAdapter.create(UserApi.class);
 
-        Call call = yourUsersApi.login(login.getText().toString(), password.getText().toString());
+        Call call = yourUsersApi.login(new LoginRequest(login.getText().toString(), password.getText().toString()));
 
         call.enqueue(new Callback() {
             @Override

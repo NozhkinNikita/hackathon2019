@@ -2,6 +2,7 @@ package com.sb.wifistart.httprequests;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
@@ -18,9 +19,10 @@ public interface UserApi {
     public SomeUserModel fetchUser(@Path("user") String user);*/
 
     //or if there are some special cases you can process your response manually
-    @FormUrlEncoded
-    @Headers({"Accept: application/json; charset=utf-8"})
+    @Headers({
+            "Content-Type:application/json"
+    })
     @POST("/login")
-    Call<Object> login(@Field("username") String username, @Field("password") String password);
+    Call<UserResponse> login(@Body LoginRequest loginRequest);
 
 }
