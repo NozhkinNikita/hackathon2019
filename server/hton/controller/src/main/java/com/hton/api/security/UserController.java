@@ -71,6 +71,13 @@ public class UserController {
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
+        SimpleCondition condition = new SimpleCondition.Builder()
+                .setSearchField("userId")
+                .setSearchCondition(SearchCondition.EQUALS)
+                .setSearchValue(id)
+                .build();
+        List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
+        userLocations.forEach(ul -> userLocationDao.remove(ul.getId()));
         userDao.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
