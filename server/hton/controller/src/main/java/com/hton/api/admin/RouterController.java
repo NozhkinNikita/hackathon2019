@@ -57,13 +57,24 @@ public class RouterController {
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getRouterById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(routerDao.getById(id), HttpStatus.OK);
+        ResponseEntity validationResponse = validateRouterId(id);
+        if (validationResponse.getStatusCode() != HttpStatus.OK) {
+            return validationResponse;
+        } else {
+            return new ResponseEntity<>(routerDao.getById(id), HttpStatus.OK);
+        }
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> removeRouterById(@PathVariable("id") String id) {
-        routerDao.remove(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity validationResponse = validateRouterId(id);
+        if (validationResponse.getStatusCode() != HttpStatus.OK) {
+            return validationResponse;
+        } else {
+            routerDao.remove(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
     }
 
     @GetMapping(value = "/", produces = "application/json")
@@ -144,6 +155,27 @@ public class RouterController {
 
         Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, router.getLocationId());
         return new ResponseEntity<>(userLocation, HttpStatus.OK);
+    }
+
+    private ResponseEntity<?> validateRouterId(String routerId) {
+        String userLogin = credentialUtils.getCredentialLogin();
+        SimpleCondition locationCondition = new SimpleCondition.Builder()
+                .setSearchField("routers.id")
+                .setSearchCondition(SearchCondition.EQUALS)
+                .setSearchValue(routerId)
+                .build();
+
+        Location location = locationDao.getByCondition(locationCondition).stream().findFirst().orElse(null);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<UserLocation> userLocation = locationValidatorService.validateLocation(userLogin, location.getId());
+
+        if (!userLocation.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
