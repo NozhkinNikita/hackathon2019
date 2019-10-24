@@ -114,16 +114,17 @@ public class UserController {
         }
         request.getUser().setPwd(origUser.getPwd());
         userDao.update(request.getUser());
-        request.getLocaiotns().forEach(l -> {
-            Condition condition = UserLocationConditionHelper
-                    .getUserLocationCondition(request.getUser().getId(), l.getId(), Collections.singletonList("id"));
-            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
-            UserLocation userLocation = new UserLocation();
-            userLocation.setUser(request.getUser());
-            userLocation.setLocation(l);
-            userLocationDao.save(userLocation);
-
-        });
+        if (request.getLocaiotns() != null) {
+            request.getLocaiotns().forEach(l -> {
+                Condition condition = UserLocationConditionHelper
+                        .getUserLocationCondition(request.getUser().getId(), l.getId(), Collections.singletonList("id"));
+                userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+                UserLocation userLocation = new UserLocation();
+                userLocation.setUser(request.getUser());
+                userLocation.setLocation(l);
+                userLocationDao.save(userLocation);
+            });
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
