@@ -14,28 +14,30 @@
 <template>
     <div class="content">
         <div class="md-layout">
-
-
             <div
                     class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
             >
-                <md-card class="md-card-plain">
+
+                <md-card>
                     <md-card-header data-background-color="green">
                         <h4 class="title">Locations</h4>
                         <!--                        <p class="category">Here is a subtitle for this table</p>-->
                     </md-card-header>
                     <md-card-content>
-                        <ordered-table :locations="locations"></ordered-table>
+                        <location-table :locations="locations" table-header-color="green"></location-table>
+
+                        <LocationAdd v-on:toggle="toggleHeader()"></LocationAdd>
                     </md-card-content>
                 </md-card>
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
 
-    import {SimpleTable, OrderedTable} from "@/components";
+    import {SimpleTable, OrderedTable, LocationTable, LocationAdd} from "@/components";
     import {EditProfileForm, UserCard} from "@/pages";
 
     export default {
@@ -43,7 +45,8 @@
             EditProfileForm,
             UserCard,
             OrderedTable,
-            SimpleTable
+            LocationTable,
+            LocationAdd
         },
 
         methods: {
@@ -58,7 +61,7 @@
                 // }, 5000);
 
 
-                this.$http.get(this.$hostname + '/api/security/location/', {
+                this.$http.get(this.$hostname + '/api/security/locations/', {
                     headers: {
                         Authorization: "Kfmn " + localStorage.getItem("jwt")
                     }
@@ -77,6 +80,9 @@
                     });
 
             },
+            toggleHeader() {
+                this.getLocations();
+            }
 
         },
         mounted() {

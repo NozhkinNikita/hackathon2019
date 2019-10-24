@@ -2,20 +2,19 @@
     <div>
         <!--        v-model="users"-->
         <!--        :users.sync="users"-->
+        {{locations}}
         <md-table
-                v-model="users"
+                v-model="locations"
 
 
                 :table-header-color="tableHeaderColor">
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!--                <md-table-cell md-label="Id">{{ item.id }}</md-table-cell>-->
-                <md-table-cell md-label="Login">{{ item.login }}</md-table-cell>
-                <md-table-cell md-label="Name">{{ item.fio }}</md-table-cell>
-                <md-table-cell md-label="Roles">{{ printRoles(item.roles)}}</md-table-cell>
-                <md-table-cell md-label="Enabled">{{ item.enabled }}</md-table-cell>
+                <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
+                <md-table-cell md-label="Routers">{{ item.routers }}</md-table-cell>
                 <md-table-cell md-label="Action">
-                    <user-crud :user-id="item.id" :locations="locations" v-on:toggle="toggleHeader()"></user-crud>
-                    <md-button class="md-danger" @click="deleteUser(item.id)" v-if="!isMe(item.login)">Delete</md-button>
+                    <location-crud :location-id="item.id" :users="users" v-on:toggle="toggleHeader()"></location-crud>
+                    <md-button class="md-danger" @click="deleteLocation(item.id)">Delete</md-button>
 
                 </md-table-cell>
             </md-table-row>
@@ -26,17 +25,17 @@
 <script>
 
 
-    import UserCrud from "../Modals/UserCrud";
+    import LocationCrud from "../Modals/LocationCrud";
 
     export default {
-        name: "simple-table",
-        components: {UserCrud},
+        name: "location-table",
+        components: {LocationCrud},
         props: {
             tableHeaderColor: {
                 type: String,
                 default: ""
             },
-            users: {
+            locations: {
                 type: Array,
                 default: [],
             }
@@ -44,34 +43,17 @@
         data() {
             return {
                 selected: [],
-                locations: [],
             };
         },
 
 
         methods: {
 
-            isMe(login){
-                let user = JSON.parse(localStorage.getItem('user'));
-                return user === login
-            },
-            printRoles(roles) {
 
-                return roles.map(role => this.mapUserRole(role)).join(", ");
-            },
-
-            mapUserRole(role) {
-                var roles = [];
-                roles["USER"] = "пользователь";
-                roles["SECUTITY_ADMIN"] = "админ безопасности";
-                roles["NETWORK_ADMIN"] = "админ сети";
-                return roles[role];
-            },
-
-            deleteUser(userId) {
+            deleteLocation(locationId) {
 
                 console.log("delete");
-                this.$http.delete(this.$hostname + '/api/security/users/' + userId,
+                this.$http.delete(this.$hostname + '/api/security/locations/' + locationId,
 
                     {
                         headers: {
@@ -84,7 +66,7 @@
                     .then(response => {
                         console.log("userssssssssssssssssssssssssssss");
                         console.log(response);
-                        this.getUsers();
+                        this.getLocations();
 
                     })
                     .catch(function (error) {
@@ -162,12 +144,12 @@
             },
 
             toggleHeader() {
-                this.getUsers();
+                this.getLocations();
             }
 
         },
         mounted() {
-            this.getLocations();
+            this.getUsers();
         },
     };
 </script>
