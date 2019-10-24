@@ -44,8 +44,8 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointHolder>
         Point point = points.get(position);
 
         holder.name.setText(point.getName());
-//        holder.begin.setText(point.getBegin().toString());
-//        holder.end.setText(point.getEnd().toString());
+        holder.begin.setText(point.getBegin());
+        holder.end.setText(point.getEnd());
     }
 
     class PointHolder extends RecyclerView.ViewHolder {

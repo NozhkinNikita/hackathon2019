@@ -1,11 +1,11 @@
 package com.sb.wifistart.dto;
 
+import java.util.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,8 +13,8 @@ import java.util.List;
 public class Scan {
 
     private String id;
-    private LocalDateTime begin;
-    private LocalDateTime end;
+    private String begin;
+    private String end;
     private ScanStatus status;
 
     //    ToDo Uncomment in future
