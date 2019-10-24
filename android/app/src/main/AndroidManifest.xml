@@ -22,10 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.StackedBarActivity" />
         <activity android:name=".activities.MainScreenActivity" />
         <activity android:name=".activities.MyScansActivity" />
         <activity android:name=".activities.WifiInfoActivity" />
+        <activity android:name=".activities.ScanPointsActivity"/>
     </application>
 
 </manifest>

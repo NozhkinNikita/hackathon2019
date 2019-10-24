@@ -30,14 +30,14 @@ public interface UserApi {
     @Headers({
             "Content-Type:application/json"
     })
-    @GET("/api/security/location/")
+    @GET("/api/security/locations/")
     Call<List<LocationResponse>> getLocations();
 
     @Headers({
             "Content-Type:application/json"
     })
-    @GET("/api/user/scans/")
-    Call<CreateScanResponse> createScan();
+    @POST("/api/user/scans/")
+    Call<CreateScanResponse> createScan(@Body CreateScanRequest createScanRequest);
 
     @Headers({
             "Content-Type:application/json"
