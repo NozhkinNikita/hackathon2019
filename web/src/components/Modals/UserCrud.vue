@@ -29,7 +29,7 @@
             </md-dialog-actions>
         </md-dialog>
 
-        <md-button class="md-success md-raised" @click="showDialog = true">Edit</md-button>
+        <md-button class="md-success md-raised" @click="open">Edit</md-button>
     </div>
 </template>
 
@@ -53,6 +53,7 @@
 
             close() {
                 this.showDialog = false;
+                this.$emit('toggle');
             },
 
             save() {
@@ -146,10 +147,13 @@
 
             },
 
+            open(){
+                this.showDialog = true;
+                this.getUser(this.userId)
+            }
+
         },
-        mounted() {
-            this.getUser(this.userId);
-        },
+
 
 
     }
