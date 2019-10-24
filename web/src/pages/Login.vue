@@ -12,7 +12,7 @@
 
 
                 <md-field>
-                    <label>Login {{this.$hostname}}</label>
+                    <label>Login</label>
                     <md-input v-model="login.email" autofocus></md-input>
                 </md-field>
 
