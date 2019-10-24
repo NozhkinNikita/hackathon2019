@@ -1,8 +1,5 @@
 package com.sb.wifistart.service;
 
-import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
-import com.sb.wifistart.httprequests.Api;
-import com.sb.wifistart.httprequests.Request;
 import com.sb.wifistart.httprequests.UserApi;
 
 import lombok.Data;
@@ -11,7 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Data
-public class RestAdapter<T> {
+public class RestAdapter {
 
     private String baseUrl;
     private GsonConverterFactory gsonConverterFactory;

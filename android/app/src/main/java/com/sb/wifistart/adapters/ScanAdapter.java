@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +43,7 @@ public class ScanAdapter extends RecyclerView.Adapter<ScanAdapter.ScanHolder> {
     public void onBindViewHolder(@NonNull ScanHolder holder, int position) {
         Scan scan = scans.get(position);
 
-        holder.button.setText(scan.hashCode());
+        holder.scanInfoLayout.findViewById().setText(scan.hashCode());
         holder.button.setOnClickListener(view -> {
             if(holder.visible) {
                 holder.scanPoints.setVisibility(View.GONE);
@@ -59,13 +60,13 @@ public class ScanAdapter extends RecyclerView.Adapter<ScanAdapter.ScanHolder> {
 
     class ScanHolder extends RecyclerView.ViewHolder
     {
-        Button button;
+        LinearLayout scanInfoLayout;
         RecyclerView scanPoints;
         boolean visible;
 
         public ScanHolder(View itemView) {
             super(itemView);
-            this.button = (Button) itemView.findViewById(R.id.scanItem);
+            this.scanInfoLayout = (LinearLayout) itemView.findViewById(R.id.scanItem);
             this.scanPoints = (RecyclerView) itemView.findViewById(R.id.scanPoints);
         }
     }
