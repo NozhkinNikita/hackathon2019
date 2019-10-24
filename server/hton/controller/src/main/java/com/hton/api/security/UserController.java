@@ -14,12 +14,14 @@ import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Location;
 import com.hton.domain.User;
 import com.hton.domain.UserLocation;
+import com.hton.entities.LocationEntity;
 import com.hton.entities.UserEntity;
 import com.hton.entities.UserLocationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +48,9 @@ public class UserController {
     @Autowired
     private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
 
+    @Autowired
+    private CommonDao<Location, LocationEntity> locationDao;
+
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> getUserById(@PathVariable("id") String id) {
@@ -61,15 +66,15 @@ public class UserController {
                 .setMaskFields(Arrays.asList(
                         "id",
                         "user.id", "user.fio", "user.login", "user.enabled", "user.roles.id",
-                        "location.id", "location.name"
+                        "location.id"
                 ))
                 .build();
 
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
 
-        List<Location> locations = userLocations.stream()
-                .map(UserLocation::getLocation).collect(Collectors.toList());
-        return new ResponseEntity<>(new UserLocationsResponse(user, locations), HttpStatus.OK);
+        List<String> locationIds = userLocations.stream()
+                .map(ul -> ul.getLocation().getId()).collect(Collectors.toList());
+        return new ResponseEntity<>(new UserLocationsResponse(user, locationIds), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
@@ -101,6 +106,9 @@ public class UserController {
 
     @PostMapping(value = "/")
     public ResponseEntity<?> createUser(@RequestBody User user) {
+        if (CollectionUtils.isEmpty(user.getRoles())) {
+            return new ResponseEntity<>("Roles are empty", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(userDao.save(user), HttpStatus.CREATED);
     }
 
@@ -115,16 +123,27 @@ public class UserController {
         }
         request.getUser().setPwd(origUser.getPwd());
         userDao.update(request.getUser());
-        if (request.getLocaiotns() != null) {
-            request.getLocaiotns().forEach(l -> {
+        if (!CollectionUtils.isEmpty(request.getLocationIds())) {
+            request.getLocationIds().forEach(locationId -> {
                 Condition condition = UserLocationConditionHelper
-                        .getUserLocationCondition(request.getUser().getId(), l.getId(), Collections.singletonList("id"));
+                        .getUserLocationCondition(request.getUser().getId(), locationId, Collections.singletonList("id"));
                 userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
-                UserLocation userLocation = new UserLocation();
-                userLocation.setUser(request.getUser());
-                userLocation.setLocation(l);
-                userLocationDao.save(userLocation);
+                Location location = locationDao.getById(locationId);
+                if (location != null) {
+                    UserLocation userLocation = new UserLocation();
+                    userLocation.setUser(request.getUser());
+                    userLocation.setLocation(location);
+                    userLocationDao.save(userLocation);
+                }
             });
+        } else {
+            Condition condition = new SimpleCondition.Builder()
+                    .setSearchField("userId")
+                    .setSearchCondition(SearchCondition.EQUALS)
+                    .setSearchValue(request.getUser().getId())
+                    .setMaskFields(Collections.singletonList("id"))
+                    .build();
+            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
