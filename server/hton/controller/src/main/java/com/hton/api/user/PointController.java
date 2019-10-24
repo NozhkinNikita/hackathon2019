@@ -34,7 +34,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -92,8 +94,9 @@ public class PointController {
                                 .build()
                 )
                 .build();
-        return new ResponseEntity<>(scanDao.getByCondition(condition).stream()
-                .map(Scan::getPoints).collect(Collectors.toList()), HttpStatus.OK);
+        Set<Point> points = new HashSet<>();
+        scanDao.getByCondition(condition).forEach(scan -> points.addAll(scan.getPoints()));
+        return new ResponseEntity<>(points, HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
