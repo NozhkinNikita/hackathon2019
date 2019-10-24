@@ -10,7 +10,7 @@ public class UserApiHolder {
     private static UserApi userApi;
     private static String baseUrl = "https://172.30.14.91:8443";
 
-    private static UserApi getUserApi() {
+    public static UserApi getUserApi() {
         if (userApi != null) {
             return userApi;
         } else {

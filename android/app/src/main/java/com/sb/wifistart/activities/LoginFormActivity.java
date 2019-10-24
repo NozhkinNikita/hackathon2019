@@ -19,6 +19,7 @@ import com.sb.wifistart.httprequests.TokenInterceptor;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.httprequests.UserResponse;
 import com.sb.wifistart.service.RestAdapter;
+import com.sb.wifistart.service.UserApiHolder;
 
 import java.security.cert.CertificateException;
 
@@ -74,9 +75,7 @@ public class LoginFormActivity extends AppCompatActivity {
     }
 
     public void postData() {
-        RestAdapter restAdapter = new RestAdapter("https://192.168.43.40:8443",
-                GsonConverterFactory.create(), UnsafeOkHttpClient.getUnsafeOkHttpClient());
-        UserApi yourUsersApi = restAdapter.getUserApi();
+        UserApi yourUsersApi = UserApiHolder.getUserApi();
 
         Call call = yourUsersApi.login(new LoginRequest(login.getText().toString(), password.getText().toString()));
 
