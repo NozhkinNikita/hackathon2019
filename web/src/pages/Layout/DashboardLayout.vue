@@ -4,17 +4,13 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/user">
+      <sidebar-link to="/users">
         <md-icon>person</md-icon>
         <p>Users</p>
       </sidebar-link>
       <sidebar-link to="/locations">
         <md-icon>my_location</md-icon>
         <p>Locations</p>
-      </sidebar-link>
-      <sidebar-link to="/routers">
-        <md-icon class="router-icon">routers</md-icon>
-        <p>Routers</p>
       </sidebar-link>
     </side-bar>
 

@@ -2,7 +2,6 @@
     <div>
         <!--        v-model="users"-->
         <!--        :users.sync="users"-->
-        {{locations}}
         <md-table
                 v-model="locations"
 
@@ -43,6 +42,7 @@
         data() {
             return {
                 selected: [],
+                users: [],
             };
         },
 

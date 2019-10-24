@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
             next({name: 'Users'})
         }
     } else {
-        next()
+        next();
     }
 })
 
