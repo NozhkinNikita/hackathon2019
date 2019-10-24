@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class CreateScanResponse {
     private String id;
 
-    private LocalDateTime begin;
+    private String begin;
 
     private String locationId;
 
