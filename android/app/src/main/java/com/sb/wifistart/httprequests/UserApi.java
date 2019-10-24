@@ -1,12 +1,11 @@
 package com.sb.wifistart.httprequests;
 
+import com.sb.wifistart.dto.Scan;
+
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -37,6 +36,6 @@ public interface UserApi {
     @Headers({
             "Content-Type:application/json"
     })
-    @GET("/security/scans")
-    Call<ScanResponse> getScans();
+    @GET("/api/user/scans/")
+    Call<List<Scan>> getScans();
 }

@@ -11,17 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sb.wifistart.R;
 import com.sb.wifistart.adapters.ScanAdapter;
-import com.sb.wifistart.httprequests.ScanResponse;
+import com.sb.wifistart.dto.Scan;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.service.UserApiHolder;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyScansActivity extends Activity {
+
+    RecyclerView myScansListView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,10 +33,8 @@ public class MyScansActivity extends Activity {
         FloatingActionButton back = (FloatingActionButton) findViewById(R.id.backFromMyScans);
         back.setOnClickListener(view -> startActivity(new Intent(MyScansActivity.this, MainScreenActivity.class)));
 
-        RecyclerView myScansListView = (RecyclerView) findViewById(R.id.myScansList);
+        myScansListView = (RecyclerView) findViewById(R.id.myScansList);
         myScansListView.setLayoutManager(new LinearLayoutManager(this));
-        ScanAdapter scanAdapter = new ScanAdapter(this, new ArrayList<>());
-        myScansListView.setAdapter(scanAdapter);
 
         postData();
     }
@@ -50,20 +50,27 @@ public class MyScansActivity extends Activity {
                  */
                 System.out.println("on response login");
                 if (response.body() != null) {
-                    ScanResponse scanResponse = (ScanResponse) response.body();
+                    List<Scan> scanResponse = (List<Scan>) response.body();
+                    if (scanResponse.size() == 0) {
+                        System.out.println("There are no scans");
+                    } else {
+                        ScanAdapter scanAdapter = new ScanAdapter(getApplicationContext(), scanResponse);
+                        myScansListView.setAdapter(scanAdapter);
+                    }
                 } else {
 //                    info.setText("No of attempts remaining: " + counter);
 //                    // ToDo Do the same in NewScan activity
 //                    if (counter == 0) {
 //                        loginBtn.setEnabled(false);
 //                    }
-                    System.out.println("There are no scans");
+                    System.out.println("Bad response");
                 }
             }
+
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                System.out.println("on failure login");
+                System.out.println("Fail on scan operation");
                 /*
                 Error callback
                 */
