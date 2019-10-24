@@ -13,7 +13,6 @@
       </a>
 
       <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
         target="_blank"
         class="simple-text logo-normal"
       >
@@ -47,7 +46,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Vue MD"
+      default: "Wi-Fi scanner"
     },
     backgroundImage: {
       type: String,

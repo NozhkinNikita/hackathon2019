@@ -59,16 +59,23 @@ public class UserController {
             return new ResponseEntity<>("User with id: " + id + " not found", HttpStatus.NOT_FOUND);
         }
 
-        SimpleCondition condition = new SimpleCondition.Builder()
-                .setSearchField("userId")
-                .setSearchCondition(SearchCondition.EQUALS)
-                .setSearchValue(id)
-                .setMaskFields(Arrays.asList(
-                        "id",
+        ComplexCondition condition = new ComplexCondition.Builder().setOperation(Operation.AND)
+                .setConditions(
+                        new SimpleCondition.Builder()
+                                .setSearchField("userId")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(id)
+                                .build(),
+                        new SimpleCondition.Builder()
+                                .setSearchField("actualRelation")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(true)
+                                .build()
+                ).setMaskFields(Arrays.asList(
+                        "id", "actualRelation",
                         "user.id", "user.fio", "user.login", "user.enabled", "user.roles.id",
                         "location.id"
-                ))
-                .build();
+                )).build();
 
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
 
@@ -85,6 +92,14 @@ public class UserController {
         }
         user.setEnabled(false);
         userDao.update(user);
+        userLocationDao.getByCondition(new SimpleCondition.Builder()
+                .setSearchField("userId")
+                .setSearchCondition(SearchCondition.EQUALS)
+                .setSearchValue(id)
+                .build()).forEach(ul -> {
+                    ul.setActualRelation(false);
+                    userLocationDao.update(ul);
+        });
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -121,29 +136,36 @@ public class UserController {
         if (origUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        Condition condition = new SimpleCondition.Builder()
+                .setSearchField("userId")
+                .setSearchCondition(SearchCondition.EQUALS)
+                .setSearchValue(request.getUser().getId())
+                .build();
+
         request.getUser().setPwd(origUser.getPwd());
         userDao.update(request.getUser());
         if (!CollectionUtils.isEmpty(request.getLocationIds())) {
             request.getLocationIds().forEach(locationId -> {
-                Condition condition = UserLocationConditionHelper
-                        .getUserLocationCondition(request.getUser().getId(), locationId, Collections.singletonList("id"));
-                userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+                userLocationDao.getByCondition(condition).stream().filter(ul ->
+                        !request.getLocationIds().contains(ul.getLocation().getId())).forEach(ul -> {
+                    ul.setActualRelation(false);
+                    userLocationDao.update(ul);
+                });
                 Location location = locationDao.getById(locationId);
                 if (location != null) {
                     UserLocation userLocation = new UserLocation();
                     userLocation.setUser(request.getUser());
                     userLocation.setLocation(location);
+                    userLocation.setActualRelation(true);
                     userLocationDao.save(userLocation);
                 }
             });
         } else {
-            Condition condition = new SimpleCondition.Builder()
-                    .setSearchField("userId")
-                    .setSearchCondition(SearchCondition.EQUALS)
-                    .setSearchValue(request.getUser().getId())
-                    .setMaskFields(Collections.singletonList("id"))
-                    .build();
-            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+            userLocationDao.getByCondition(condition).forEach(ul -> {
+                ul.setActualRelation(false);
+                userLocationDao.update(ul);
+            });
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

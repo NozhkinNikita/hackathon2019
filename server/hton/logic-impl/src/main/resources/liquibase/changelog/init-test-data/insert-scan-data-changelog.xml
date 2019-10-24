@@ -26,16 +26,19 @@
             <column name="userId" valueNumeric="1"/>
             <column name="locationId" value="-1"/>
             <column name="id" value="-1"/>
+            <column name="actualRelation" value="true"/>
         </insert>
         <insert tableName="user_location">
             <column name="userId" valueNumeric="2"/>
             <column name="locationId" value="-1"/>
             <column name="id" value="-2"/>
+            <column name="actualRelation" value="true"/>
         </insert>
         <insert tableName="user_location">
             <column name="userId" valueNumeric="3"/>
             <column name="locationId" value="-1"/>
             <column name="id" value="-3"/>
+            <column name="actualRelation" value="true"/>
         </insert>
 
         <insert tableName="scan">

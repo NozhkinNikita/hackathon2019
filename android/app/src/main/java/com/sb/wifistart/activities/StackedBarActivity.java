@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.sb.wifistart.R;
+import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.dto.Device;
 import com.sb.wifistart.httprequests.CreateScanRequest;
+import com.sb.wifistart.httprequests.CreateScanResponse;
 import com.sb.wifistart.httprequests.LocationResponse;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.service.UserApiHolder;
@@ -63,8 +65,9 @@ public class StackedBarActivity extends AppCompatActivity {
                              */
                             System.out.println("on get locations");
                             if (response.body() != null) {
-                                List<LocationResponse> locationResponses = (List<LocationResponse>) response.body();
-                                StackedBarActivity.setLocationResponses(locationResponses);
+                                CreateScanResponse createScanResponse = (CreateScanResponse) response.body();
+                                CommonVarsHolder.locationName = locationSpinner.getSelectedItem().toString();
+                                CommonVarsHolder.locationStartDate = createScanResponse.getBegin();
 
                                 Intent chartIntent = new Intent(StackedBarActivity.this, NewScanActivity.class);
                                 startActivity(chartIntent);

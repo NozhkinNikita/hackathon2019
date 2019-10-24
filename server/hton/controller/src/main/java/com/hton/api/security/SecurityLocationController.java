@@ -1,7 +1,6 @@
 package com.hton.api.security;
 
 import com.hton.api.FilterUtils;
-import com.hton.api.UserLocationConditionHelper;
 import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.LocationUpdateRequest;
 import com.hton.api.requests.UserToLocationRequest;
@@ -18,6 +17,7 @@ import com.hton.domain.UserLocation;
 import com.hton.entities.LocationEntity;
 import com.hton.entities.UserEntity;
 import com.hton.entities.UserLocationEntity;
+import com.hton.service.LocationValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -35,8 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -54,19 +54,30 @@ public class SecurityLocationController {
     @Autowired
     private CommonDao<UserLocation, UserLocationEntity> userLocationDao;
 
+    @Autowired
+    private LocationValidatorService locationValidatorService;
+
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity getLocation(@PathVariable("id") String id) {
-        SimpleCondition condition = new SimpleCondition.Builder()
-                .setSearchField("locationId")
-                .setSearchCondition(SearchCondition.EQUALS)
-                .setSearchValue(id)
-                .build();
+        Location location = locationDao.getById(id);
+        if (location == null) {
+            return new ResponseEntity<>("Location with id: " + id + " not found", HttpStatus.NOT_FOUND);
+        }
+        ComplexCondition condition = new ComplexCondition.Builder().setOperation(Operation.AND)
+                .setConditions(
+                        new SimpleCondition.Builder()
+                                .setSearchField("locationId")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(id)
+                                .build(),
+                        new SimpleCondition.Builder()
+                                .setSearchField("actualRelation")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(true)
+                                .build()
+                ).build();
 
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
-        Location location = userLocations.stream().findFirst().map(UserLocation::getLocation).orElse(null);
-        if (location == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
 
         List<String> userIds = userLocations.stream()
                 .map(ul -> ul.getUser().getId()).collect(Collectors.toList());
@@ -96,27 +107,42 @@ public class SecurityLocationController {
         }
         locationDao.update(request.getLocation());
 
+        Condition condition = new SimpleCondition.Builder()
+                .setSearchField("locationId")
+                .setSearchCondition(SearchCondition.EQUALS)
+                .setSearchValue(request.getLocation().getId())
+                .build();
         if (!CollectionUtils.isEmpty(request.getUserIds())) {
             request.getUserIds().forEach(userId -> {
-                Condition condition = UserLocationConditionHelper
-                        .getUserLocationCondition(userId, request.getLocation().getId(), Collections.singletonList("id"));
-                userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+                userLocationDao.getByCondition(condition).stream().filter(ul ->
+                        !request.getUserIds().contains(ul.getUser().getId()))
+                        .forEach(ul -> {
+                            ul.setActualRelation(false);
+                            userLocationDao.update(ul);
+                        });
                 User user = userDao.getById(userId);
                 if (user != null) {
-                    UserLocation userLocation = new UserLocation();
-                    userLocation.setUser(user);
-                    userLocation.setLocation(request.getLocation());
-                    userLocationDao.save(userLocation);
+                    Optional<UserLocation> userLocationOpt = locationValidatorService.validateLocation(user.getLogin(),
+                            request.getLocation().getId());
+                    UserLocation userLocation;
+                    if (userLocationOpt.isPresent()) {
+                        userLocation = userLocationOpt.get();
+                        userLocation.setActualRelation(true);
+                        userLocationDao.update(userLocation);
+                    } else {
+                        userLocation = new UserLocation();
+                        userLocation.setUser(user);
+                        userLocation.setLocation(request.getLocation());
+                        userLocation.setActualRelation(true);
+                        userLocationDao.save(userLocation);
+                    }
                 }
             });
-        }  else {
-            Condition condition = new SimpleCondition.Builder()
-                    .setSearchField("locationlId")
-                    .setSearchCondition(SearchCondition.EQUALS)
-                    .setSearchValue(request.getLocation().getId())
-                    .setMaskFields(Collections.singletonList("id"))
-                    .build();
-            userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+        } else {
+            userLocationDao.getByCondition(condition).forEach(ul -> {
+                ul.setActualRelation(false);
+                userLocationDao.update(ul);
+            });
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -127,7 +153,7 @@ public class SecurityLocationController {
                 .setSearchField("userId")
                 .setSearchCondition(SearchCondition.EQUALS)
                 .setSearchValue(id)
-                .setMaskFields(Collections.singletonList("id"))
+                .setMaskFields(Arrays.asList("id"))
                 .build();
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
         locationDao.remove(id, userLocations.stream().map(UserLocation::getId).collect(Collectors.toList()));
