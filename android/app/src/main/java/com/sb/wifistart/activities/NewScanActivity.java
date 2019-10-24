@@ -34,7 +34,7 @@ public class NewScanActivity extends AppCompatActivity {
         locationStartDate = findViewById(R.id.locationStartDate);
 
         locationName.setText(CommonVarsHolder.locationName);
-        locationStartDate.setText(CommonVarsHolder.locationStartDate);
+        locationStartDate.setText(CommonVarsHolder.locationStartDate.replace("T"," "));
 
         addItemsOnSpinner();
 
