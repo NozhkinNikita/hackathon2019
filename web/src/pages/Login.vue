@@ -3,9 +3,11 @@
         <md-content class="md-elevation-3">
 
             <div class="title">
-                <img src="https://vuematerial.io/assets/logo-color.png">
-                <div class="md-title">Vue Material</div>
-                <div class="md-body-1">Build beautiful apps with Material Design and Vue.js</div>
+<!--                <img src="https://vuematerial.io/assets/logo-color.png">-->
+<!--                <img src="http://woocomp.ru/assets/uploads/2016/10/wi-fi.png">-->
+                <img src="@/assets/img/wi-fi.png">
+                <div class="md-title">Wi-Fi scanner</div>
+                <div class="md-body-1">дверь мне запили</div>
             </div>
 
             <div class="form">
@@ -24,7 +26,7 @@
 
             <div class="actions md-layout md-alignment-center-space-between">
                 <!--        <a href="/resetpassword">Reset password</a>-->
-                <md-button type="submit" class="md-raised md-primary" @click="auth">Log in</md-button>
+                <md-button type="submitlet user = JSON.parse(localStorage.getItem('user'))" class="md-raised md-primary" @click="auth">Log in</md-button>
             </div>
 
             <div class="loading-overlay" v-if="loading">
@@ -88,9 +90,9 @@
                                 this.$router.push(this.$route.params.nextUrl)
                             } else {
                                 if (is_admin == 1) {
-                                    this.$router.push('dashboard')
+                                    this.$router.push('users')
                                 } else {
-                                    this.$router.push('dashboard')
+                                    this.$router.push('routers')
                                 }
                             }
                         }

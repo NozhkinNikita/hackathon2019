@@ -14,4 +14,6 @@ public class UserLocation {
     private User user;
 
     private Location location;
+
+    private Boolean actualRelation;
 }

@@ -41,6 +41,7 @@ public class UserLocationConverter extends Converter<UserLocation, UserLocationE
             domain.setUser(user);
         }
         domain.setId(entity.getId());
+        domain.setActualRelation(entity.getActualRelation());
     }
 
     @Override
@@ -56,5 +57,6 @@ public class UserLocationConverter extends Converter<UserLocation, UserLocationE
             entity.setUser(userEntity);
         }
         entity.setId(domain.getId());
+        entity.setActualRelation(domain.getActualRelation());
     }
 }

@@ -22,6 +22,7 @@
             <column name="userId" type="NVARCHAR"/>
             <column name="locationId" type="NVARCHAR"/>
             <column name="id" type="NVARCHAR"/>
+            <column name="actualRelation" type="BOOLEAN"/>
         </createTable>
 
         <addNotNullConstraint tableName="user_location" columnName="id" columnDataType="NVARCHAR"/>
