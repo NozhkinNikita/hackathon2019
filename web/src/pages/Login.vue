@@ -24,7 +24,7 @@
 
             <div class="actions md-layout md-alignment-center-space-between">
                 <!--        <a href="/resetpassword">Reset password</a>-->
-                <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
+                <md-button type="submit" class="md-raised md-primary" @click="auth">Log in</md-button>
             </div>
 
             <div class="loading-overlay" v-if="loading">

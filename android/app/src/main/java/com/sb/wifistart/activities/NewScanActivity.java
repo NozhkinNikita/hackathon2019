@@ -1,6 +1,5 @@
 package com.sb.wifistart.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,18 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.mikephil.charting.charts.BarChart;
 import com.sb.wifistart.R;
 import com.sb.wifistart.httprequests.LocationResponse;
-import com.sb.wifistart.httprequests.UserApi;
-import com.sb.wifistart.service.UserApiHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class StackedBarActivity extends AppCompatActivity {
+public class NewScanActivity extends AppCompatActivity {
 
     private BarChart stackedChart;
     private Spinner locationSpinner;
@@ -35,41 +27,13 @@ public class StackedBarActivity extends AppCompatActivity {
         locationResponses = stlocationResponses;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stacked_bar);
 
         addItemsOnSpinner();
-
-        Button startScan = findViewById(R.id.startScan);
-        startScan.setOnClickListener(view -> {
-                    UserApi userApi = UserApiHolder.getUserApi();
-                    Call call = userApi.createScan();
-
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onResponse(Call call, Response response) {
-                            /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of WResponse POJO class
-                             */
-                            System.out.println("on get locations");
-                            if (response.body() != null) {
-                                List<LocationResponse> locationResponses = (List<LocationResponse>) response.body();
-                                StackedBarActivity.setLocationResponses(locationResponses);
-
-                                Intent chartIntent = new Intent(StackedBarActivity.this, NewScanActivity.class);
-                                startActivity(chartIntent);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call call, Throwable t) {
-                            System.out.println("on failure get locations");
-                        }
-                    });
-                }
-        );
-
 
         /*WifiReceiver wifiReceiver = new WifiReceiverImpl(getApplicationContext());
         wifiReceiver.registerReceiver(getApplicationContext());

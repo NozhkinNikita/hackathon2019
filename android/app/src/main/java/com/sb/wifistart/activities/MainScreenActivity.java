@@ -45,6 +45,7 @@ public class MainScreenActivity extends AppCompatActivity {
                             System.out.println("on get locations");
                             if (response.body() != null) {
                                 List<LocationResponse> locationResponses = (List<LocationResponse>) response.body();
+                                StackedBarActivity.setLocationResponses(locationResponses);
                             } else {
                             }
                             Intent chartIntent = new Intent(MainScreenActivity.this, StackedBarActivity.class);
@@ -56,7 +57,6 @@ public class MainScreenActivity extends AppCompatActivity {
                             System.out.println("on failure get locations");
                         }
                     });
-
                 }
         );
     }
