@@ -117,7 +117,7 @@ public class LoginFormActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = getUnsafeOkHttpClient();
 
         Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://192.168.1.37:8443")
+                .baseUrl("https://172.30.14.62:8443")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
