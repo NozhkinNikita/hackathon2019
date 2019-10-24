@@ -15,5 +15,5 @@ public class LocationUsersResponse {
 
     private Location location;
 
-    private List<User> users;
+    private List<String> userIds;
 }

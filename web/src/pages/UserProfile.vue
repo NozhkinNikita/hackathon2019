@@ -26,7 +26,7 @@
                     <md-card-content>
                         <simple-table :users="users" table-header-color="green"></simple-table>
 
-                        <user-add></user-add>
+                        <user-add v-on:toggle="toggleHeader()"></user-add>
                     </md-card-content>
                 </md-card>
             </div>
@@ -86,7 +86,9 @@
                     });
 
             },
-
+            toggleHeader(){
+                this.getUsers();
+            }
         },
         mounted() {
             this.getUsers();

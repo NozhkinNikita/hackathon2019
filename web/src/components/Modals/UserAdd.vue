@@ -12,6 +12,11 @@
                 </md-field>
 
                 <md-field>
+                    <label>Password</label>
+                    <md-input type="password" v-model="user.pwd"></md-input>
+                </md-field>
+
+                <md-field>
                     <label>Name</label>
                     <md-input v-model="user.fio"></md-input>
                 </md-field>
@@ -19,9 +24,9 @@
                 <md-field>
                     <label for="movies">Roles</label>
                     <md-select v-model="user.roles" name="movies" id="movies" multiple>
-                        <md-option value="SECUTITY_ADMIN">SECUTITY_ADMIN</md-option>
-                        <md-option value="USER">USER</md-option>
-                        <md-option value="NETWORK_ADMIN">NETWORK_ADMIN</md-option>
+                        <md-option value="SECUTITY_ADMIN">Админ безопасности</md-option>
+                        <md-option value="USER">Пользователь</md-option>
+                        <md-option value="NETWORK_ADMIN">Админ сети</md-option>
                     </md-select>
                 </md-field>
 
@@ -31,7 +36,7 @@
 
             </md-dialog-content>
             <md-dialog-actions>
-                <md-button class="md-success" @click="add">Add</md-button>
+                <md-button class="md-success" @click="add" :disabled="isDisabledAddButton()">Add</md-button>
             </md-dialog-actions>
         </md-dialog>
 
@@ -59,16 +64,21 @@
                 fio: "",
                 roles: [],
                 enabled: true,
-                pwd: "123"
-
+                pwd: ""
             },
             locations: [],
         }),
 
         methods: {
 
+
+
             close() {
                 this.showDialog = false;
+            },
+
+            isDisabledAddButton() {
+                return !this.user.roles.length > 0
             },
 
             add() {
@@ -90,6 +100,14 @@
                     .then(response => {
                         console.log("userssssssssssssssssssssssssssss");
                         console.log(response);
+                        this.user = {
+                            login: "",
+                            fio: "",
+                            roles: [],
+                            enabled: true,
+                            pwd: ""
+                        };
+                        this.$emit('toggle');
 
                     })
                     .catch(function (error) {

@@ -1,6 +1,9 @@
 package com.hton.api;
 
-public class WebMvcConfig {
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+public class WebMvcConfig implements WebMvcConfigurer {
 
     public static final String ROOT_PATH = "/api";
 
@@ -19,4 +22,15 @@ public class WebMvcConfig {
     public static final String USER_SCAN_PATH = USER_PATH + "/scans";
     public static final String USER_POINT_PATH = USER_PATH + "/points";
     public static final String USER_LOCATION_PATH = USER_PATH + "/locations";
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+
+        registry.addMapping("/**")
+                .allowedOrigins(
+                        "http://localhost:3000", "http://localhost:8080")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+                .allowCredentials(true)
+        ;
+    }
 }

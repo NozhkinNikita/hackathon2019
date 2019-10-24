@@ -15,5 +15,5 @@ public class UserLocationsResponse {
 
     private User user;
 
-    private List<Location> locations;
+    private List<String> locationIds;
 }
