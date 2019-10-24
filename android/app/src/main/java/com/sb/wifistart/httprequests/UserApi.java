@@ -37,6 +37,12 @@ public interface UserApi {
     @Headers({
             "Content-Type:application/json"
     })
+    @GET("/api/user/scans/")
+    Call<CreateScanResponse> createScan();
+
+    @Headers({
+            "Content-Type:application/json"
+    })
     @GET("/security/scans")
     Call<ScanResponse> getScans();
 }
