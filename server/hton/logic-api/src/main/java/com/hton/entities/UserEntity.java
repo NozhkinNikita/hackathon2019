@@ -17,7 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -28,8 +27,8 @@ import java.util.List;
 public class UserEntity implements BaseEntity {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     private String fio;
@@ -55,6 +54,6 @@ public class UserEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Collections.singletonList("roles");
+        return Arrays.asList("roles");
     }
 }

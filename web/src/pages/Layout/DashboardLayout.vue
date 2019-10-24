@@ -12,10 +12,6 @@
         <md-icon>my_location</md-icon>
         <p>Locations</p>
       </sidebar-link>
-      <sidebar-link to="/routers">
-        <md-icon class="router-icon">routers</md-icon>
-        <p>Routers</p>
-      </sidebar-link>
     </side-bar>
 
     <div class="main-panel">

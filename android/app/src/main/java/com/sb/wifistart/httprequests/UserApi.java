@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface UserApi {
 
@@ -44,4 +45,10 @@ public interface UserApi {
     })
     @GET("/api/user/scans/")
     Call<List<Scan>> getScans();
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/user/scans/{scanId}")
+    Call<Scan> getScan(@Path("scanId") String scanId);
 }

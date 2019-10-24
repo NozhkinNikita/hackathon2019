@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -154,7 +153,7 @@ public class SecurityLocationController {
                 .setSearchField("userId")
                 .setSearchCondition(SearchCondition.EQUALS)
                 .setSearchValue(id)
-                .setMaskFields(Collections.singletonList("id"))
+                .setMaskFields(Arrays.asList("id"))
                 .build();
         List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
         locationDao.remove(id, userLocations.stream().map(UserLocation::getId).collect(Collectors.toList()));

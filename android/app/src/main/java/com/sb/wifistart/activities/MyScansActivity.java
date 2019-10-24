@@ -14,6 +14,7 @@ import com.sb.wifistart.R;
 import com.sb.wifistart.dto.Scan;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.service.UserApiHolder;
+import com.sb.wifistart.utils.TableContentHelper;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class MyScansActivity extends Activity {
                     scans.sort((o1, o2) -> -o1.getBegin().compareToIgnoreCase(o2.getBegin()));
 
                     if (scans.size() == 0) {
-                        System.out.println("There are no scans");
+                        myScansListView.addView(TableContentHelper.getRowWithEmptyMessage(getApplicationContext(), 3));
                     } else {
                         scans.forEach(scan -> {
                             TableRow row = new TableRow(getApplicationContext());
@@ -61,15 +62,15 @@ public class MyScansActivity extends Activity {
                             TextView scanStatus = new TextView(getApplicationContext());
 
                             scanBeginDate.setText(scan.getBegin().split("T")[0]);
-                            scanBeginDate.setTextAppearance(android.R.style.TextAppearance_Large);
+                            scanBeginDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             scanBeginDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
                             scanEndDate.setText(scan.getEnd().split("T")[0]);
-                            scanEndDate.setTextAppearance(android.R.style.TextAppearance_Large);
+                            scanEndDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             scanEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
                             scanStatus.setText(scan.getStatus().toString());
-                            scanStatus.setTextAppearance(android.R.style.TextAppearance_Large);
+                            scanStatus.setTextAppearance(android.R.style.TextAppearance_Medium);
                             scanStatus.setGravity(Gravity.CENTER_HORIZONTAL);
 
                             row.addView(scanBeginDate);
@@ -79,12 +80,11 @@ public class MyScansActivity extends Activity {
                             row.setGravity(Gravity.CENTER_HORIZONTAL);
                             row.setPadding(5, 5, 5, 5);
 
-                            if(scan.getPoints().size() > 0) {
-                                row.setOnClickListener(view -> {
-                                    Intent intent = new Intent(MyScansActivity.this, ScanPointsActivity.class);
-                                    startActivity(intent);
-                                });
-                            }
+                            row.setOnClickListener(view -> {
+                                Intent intent = new Intent(MyScansActivity.this, ScanPointsActivity.class);
+                                intent.putExtra("scanId", scan.getId());
+                                startActivity(intent);
+                            });
 
                             myScansListView.addView(row);
                         });
@@ -102,7 +102,7 @@ public class MyScansActivity extends Activity {
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                System.out.println("Fail on scan operation");
+                System.out.println("Fail on getScans operation");
                 /*
                 Error callback
                 */

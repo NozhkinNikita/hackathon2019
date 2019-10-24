@@ -17,7 +17,7 @@
 
         <div class="md-collapse">
           <md-list>
-            <md-list-item href="#/user">
+            <md-list-item href="#/login">
               <i class="material-icons">person</i>
               <p class="hidden-lg hidden-md">Profile</p>
             </md-list-item>

@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -50,6 +49,6 @@ public class PointEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Collections.singletonList("routerDatas");
+        return Arrays.asList("routerDatas");
     }
 }
