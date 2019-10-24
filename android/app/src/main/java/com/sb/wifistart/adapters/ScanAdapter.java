@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,30 +43,34 @@ public class ScanAdapter extends RecyclerView.Adapter<ScanAdapter.ScanHolder> {
     public void onBindViewHolder(@NonNull ScanHolder holder, int position) {
         Scan scan = scans.get(position);
 
-//        holder.scanInfoLayout.findViewById().setText(scan.hashCode());
-//        holder.button.setOnClickListener(view -> {
-//            if(holder.visible) {
-//                holder.scanPoints.setVisibility(View.GONE);
-//            } else {
-//                holder.scanPoints.setVisibility(View.VISIBLE);
-//            }
-//            holder.visible = !holder.visible;
-//        });
+        holder.scanStatus.setText(scan.getStatus().toString());
+        holder.scanDateRange.setText(scan.getBegin().toString() + " - " + scan.getEnd().toString());
+        holder.scanItem.setOnClickListener(view -> {
+            if(holder.visible) {
+                holder.scanPoints.setVisibility(View.GONE);
+            } else {
+                holder.scanPoints.setVisibility(View.VISIBLE);
+            }
+            holder.visible = !holder.visible;
+        });
 
         holder.scanPoints.setLayoutManager(new LinearLayoutManager(context));
         holder.scanPoints.setAdapter(new PointAdapter(scan.getPoints(), context));
-//        Log.i("dataaa",nameDetails.getName());
     }
 
     class ScanHolder extends RecyclerView.ViewHolder
     {
-        LinearLayout scanInfoLayout;
+        LinearLayout scanItem;
+        TextView scanDateRange;
+        TextView scanStatus;
         RecyclerView scanPoints;
         boolean visible;
 
         public ScanHolder(View itemView) {
             super(itemView);
-            this.scanInfoLayout = (LinearLayout) itemView.findViewById(R.id.scanItem);
+            scanItem = (LinearLayout) itemView.findViewById(R.id.scanItem);
+            this.scanDateRange = (TextView) itemView.findViewById(R.id.scanDateRange);
+            this.scanStatus = (TextView) itemView.findViewById(R.id.scanStatus);
             this.scanPoints = (RecyclerView) itemView.findViewById(R.id.scanPoints);
         }
     }
