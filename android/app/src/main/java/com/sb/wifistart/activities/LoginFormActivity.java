@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.sb.wifistart.R;
 import com.sb.wifistart.httprequests.LoginRequest;
+import com.sb.wifistart.httprequests.TokenInterceptor;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.httprequests.UserResponse;
 
@@ -135,7 +136,7 @@ public class LoginFormActivity extends AppCompatActivity {
                 System.out.println("on response login");
                 if (response.body() != null) {
                     UserResponse userResponse = (UserResponse) response.body();
-                    String token = userResponse.getToken();
+                    TokenInterceptor.setToken(userResponse.getToken());
                     Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
                     startActivity(mainIntent);
                 } else {
