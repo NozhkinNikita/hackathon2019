@@ -30,7 +30,7 @@ public interface UserApi {
     @Headers({
             "Content-Type:application/json"
     })
-    @GET("/api/security/location/")
+    @GET("/api/security/locations/")
     Call<List<LocationResponse>> getLocations();
 
     @Headers({
