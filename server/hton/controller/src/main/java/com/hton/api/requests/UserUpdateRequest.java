@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class UserUpdateRequest {
     private User user;
-    private List<Location> locaiotns;
+    private List<String> locationIds;
 }

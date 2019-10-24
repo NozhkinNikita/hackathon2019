@@ -12,6 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationUpdateRequest {
-    private List<User> users;
     private Location location;
+    private List<String> userIds;
 }

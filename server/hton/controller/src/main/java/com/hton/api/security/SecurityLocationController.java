@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,9 +68,9 @@ public class SecurityLocationController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        List<User> users = userLocations.stream()
-                .map(UserLocation::getUser).collect(Collectors.toList());
-        return new ResponseEntity<>(new LocationUsersResponse(location, users), HttpStatus.OK);
+        List<String> userIds = userLocations.stream()
+                .map(ul -> ul.getUser().getId()).collect(Collectors.toList());
+        return new ResponseEntity<>(new LocationUsersResponse(location, userIds), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
@@ -95,16 +96,28 @@ public class SecurityLocationController {
         }
         locationDao.update(request.getLocation());
 
-        request.getUsers().forEach(user -> {
-            Condition condition = UserLocationConditionHelper
-                    .getUserLocationCondition(user.getId(), request.getLocation().getId(), Collections.singletonList("id"));
+        if (!CollectionUtils.isEmpty(request.getUserIds())) {
+            request.getUserIds().forEach(userId -> {
+                Condition condition = UserLocationConditionHelper
+                        .getUserLocationCondition(userId, request.getLocation().getId(), Collections.singletonList("id"));
+                userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
+                User user = userDao.getById(userId);
+                if (user != null) {
+                    UserLocation userLocation = new UserLocation();
+                    userLocation.setUser(user);
+                    userLocation.setLocation(request.getLocation());
+                    userLocationDao.save(userLocation);
+                }
+            });
+        }  else {
+            Condition condition = new SimpleCondition.Builder()
+                    .setSearchField("locationlId")
+                    .setSearchCondition(SearchCondition.EQUALS)
+                    .setSearchValue(request.getLocation().getId())
+                    .setMaskFields(Collections.singletonList("id"))
+                    .build();
             userLocationDao.getByCondition(condition).forEach(ul -> userLocationDao.remove(ul.getId()));
-            UserLocation userLocation = new UserLocation();
-            userLocation.setUser(user);
-            userLocation.setLocation(request.getLocation());
-            userLocationDao.save(userLocation);
-
-        });
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
