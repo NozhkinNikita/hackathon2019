@@ -47,13 +47,6 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(userDetails, token));
     }
 
-    @PostMapping(value = "/logout")
-    public ResponseEntity<?> removeAuthenticationToken() {
-        String login = credentialUtils.getCredentialLogin();
-        tokenCache.removeToken(login);
-        return ResponseEntity.ok().build();
-    }
-
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
