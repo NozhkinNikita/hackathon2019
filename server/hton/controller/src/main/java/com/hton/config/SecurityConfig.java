@@ -3,6 +3,7 @@ package com.hton.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hton.api.CredentialUtils;
 import com.hton.api.WebMvcConfig;
+import com.hton.config.jwt.JwtAuthenticationEntryPoint;
 import com.hton.config.jwt.JwtRequestFilter;
 import com.hton.entities.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LogoutHandler logoutHandler;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -75,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .logout()
                 .logoutUrl("/logout").permitAll()
