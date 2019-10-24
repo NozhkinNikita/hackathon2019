@@ -47,7 +47,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Vue MD"
+      default: "Wi-Fi scanner"
     },
     backgroundImage: {
       type: String,

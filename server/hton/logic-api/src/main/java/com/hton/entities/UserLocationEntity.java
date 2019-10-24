@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -26,8 +24,8 @@ import java.util.List;
 public class UserLocationEntity implements BaseEntity {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     @Column(updatable = false, insertable = false)
@@ -35,6 +33,8 @@ public class UserLocationEntity implements BaseEntity {
 
     @Column(updatable = false, insertable = false)
     private String locationId;
+
+    private Boolean actualRelation;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = UserEntity.class)
     @JoinColumn(name = "userId")
@@ -46,7 +46,7 @@ public class UserLocationEntity implements BaseEntity {
 
     @Override
     public List<String> getBaseFields() {
-        return Collections.singletonList("id");
+        return Arrays.asList("id", "actualRelation");
     }
 
     @Override
