@@ -8,6 +8,7 @@ import NavTabsTable from "./Tables/NavTabsTable.vue";
 import OrderedTable from "./Tables/OrderedTable.vue";
 import SimpleTable from "./Tables/SimpleTable.vue";
 import LocationTable from "./Tables/LocationsTable.vue";
+import ScansTable from "./Tables/ScansTable.vue";
 
 
 // Modals
@@ -27,6 +28,7 @@ export {
     UserAdd,
     LocationTable,
     LocationCrud,
-    LocationAdd
+    LocationAdd,
+    ScansTable
 
 };
