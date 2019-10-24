@@ -11,22 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sb.wifistart.R;
 import com.sb.wifistart.adapters.ScanAdapter;
-import com.sb.wifistart.dto.Scan;
-import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
-import com.sb.wifistart.httprequests.GetScanRequest;
-import com.sb.wifistart.httprequests.ScanApi;
 import com.sb.wifistart.httprequests.ScanResponse;
 import com.sb.wifistart.httprequests.UserApi;
-import com.sb.wifistart.service.RestAdapter;
+import com.sb.wifistart.service.UserApiHolder;
 
 import java.util.ArrayList;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyScansActivity extends Activity {
 
@@ -47,10 +40,8 @@ public class MyScansActivity extends Activity {
     }
 
     public void postData() {
-        RestAdapter restAdapter = new RestAdapter("https://192.168.43.40:8443", GsonConverterFactory.create(),
-                UnsafeOkHttpClient.getUnsafeOkHttpClient());
-        UserApi yourScanApi = restAdapter.getUserApi(UserApi.class);
-        Call call = yourScanApi.getScans();
+        UserApi yourUserApi = UserApiHolder.getUserApi();
+        Call call = yourUserApi.getScans();
 
         call.enqueue(new Callback() {
             @Override
@@ -60,9 +51,6 @@ public class MyScansActivity extends Activity {
                 System.out.println("on response login");
                 if (response.body() != null) {
                     ScanResponse scanResponse = (ScanResponse) response.body();
-
-                    int a;
-                    a = 5 + 20;
                 } else {
 //                    info.setText("No of attempts remaining: " + counter);
 //                    // ToDo Do the same in NewScan activity

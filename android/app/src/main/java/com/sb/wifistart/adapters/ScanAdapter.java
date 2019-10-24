@@ -43,15 +43,15 @@ public class ScanAdapter extends RecyclerView.Adapter<ScanAdapter.ScanHolder> {
     public void onBindViewHolder(@NonNull ScanHolder holder, int position) {
         Scan scan = scans.get(position);
 
-        holder.scanInfoLayout.findViewById().setText(scan.hashCode());
-        holder.button.setOnClickListener(view -> {
-            if(holder.visible) {
-                holder.scanPoints.setVisibility(View.GONE);
-            } else {
-                holder.scanPoints.setVisibility(View.VISIBLE);
-            }
-            holder.visible = !holder.visible;
-        });
+//        holder.scanInfoLayout.findViewById().setText(scan.hashCode());
+//        holder.button.setOnClickListener(view -> {
+//            if(holder.visible) {
+//                holder.scanPoints.setVisibility(View.GONE);
+//            } else {
+//                holder.scanPoints.setVisibility(View.VISIBLE);
+//            }
+//            holder.visible = !holder.visible;
+//        });
 
         holder.scanPoints.setLayoutManager(new LinearLayoutManager(context));
         holder.scanPoints.setAdapter(new PointAdapter(scan.getPoints(), context));
