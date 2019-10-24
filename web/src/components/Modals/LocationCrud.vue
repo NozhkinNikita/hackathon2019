@@ -7,7 +7,6 @@
 
 
             <md-dialog-content>
-{{currentUsers}}
 
                 <md-field>
                     <label>Name</label>
@@ -16,8 +15,8 @@
 
 
                 <md-field>
-                    <label for="locations">Locations</label>
-                    <md-select v-model="currentUsers" name="locations" id="locations" multiple>
+                    <label for="users">Locations</label>
+                    <md-select v-model="currentUsers" name="users" id="users" multiple>
                         <md-option v-for="user in users" :value="user.id">{{user.login}}</md-option>
                     </md-select>
                 </md-field>
@@ -43,7 +42,7 @@
             },
             users: {
                 type: [],
-                default: ""
+                default: []
             },
 
         },
@@ -67,7 +66,7 @@
                 this.$http.put(this.$hostname + '/api/security/locations/',
                     {
                         location: this.location,
-                         userIds: this.currentUsers
+                        userIds: this.currentUsers
                     },
                     {
                         headers: {
