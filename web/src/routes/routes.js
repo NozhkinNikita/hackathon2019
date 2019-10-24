@@ -5,6 +5,7 @@ import Router from 'vue-router';
 import Login from "@/pages/Login.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Locations from "@/pages/Locations.vue";
+import Scans from "@/pages/Scans.vue";
 import Routers from "@/pages/Routers.vue";
 
 Vue.use(Router)
@@ -19,6 +20,11 @@ let router = new Router({
             },
             redirect: "/users",
             children: [
+                {
+                    path: "scans",
+                    name: "Scans",
+                    component: Scans
+                },
                 {
                     path: "users",
                     name: "Users",
