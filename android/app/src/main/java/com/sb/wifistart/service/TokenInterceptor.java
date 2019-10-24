@@ -17,7 +17,7 @@ public class TokenInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request originalRequest = chain.request();
-        if (token != null) {
+        if (token == null) {
             return chain.proceed(originalRequest);
         } else {
             Request newRequest = originalRequest.newBuilder()
