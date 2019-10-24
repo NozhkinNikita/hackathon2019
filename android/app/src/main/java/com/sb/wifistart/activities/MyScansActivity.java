@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sb.wifistart.R;
 import com.sb.wifistart.dto.Scan;
 import com.sb.wifistart.httprequests.UserApi;

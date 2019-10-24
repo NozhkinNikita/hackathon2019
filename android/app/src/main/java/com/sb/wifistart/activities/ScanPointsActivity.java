@@ -36,38 +36,40 @@ public class ScanPointsActivity extends Activity {
 
         pointsListView = (TableLayout) findViewById(R.id.pointsList);
 
-        TableRow row = new TableRow(getApplicationContext());
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        row.setLayoutParams(lp);
+        if(point != null) {
+            TableRow row = new TableRow(getApplicationContext());
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            row.setLayoutParams(lp);
 
-        TextView pointName = new TextView(getApplicationContext());
-        TextView pointBeginDate = new TextView(getApplicationContext());
-        TextView pointEndDate = new TextView(getApplicationContext());
-        TextView pointWasRescaned = new TextView(getApplicationContext());
+            TextView pointName = new TextView(getApplicationContext());
+            TextView pointBeginDate = new TextView(getApplicationContext());
+            TextView pointEndDate = new TextView(getApplicationContext());
+            TextView pointWasRescaned = new TextView(getApplicationContext());
 
-        pointName.setText(point.getName());
-        pointName.setTextAppearance(android.R.style.TextAppearance_Large);
-        pointName.setGravity(Gravity.CENTER_HORIZONTAL);
+            pointName.setText(point.getName());
+            pointName.setTextAppearance(android.R.style.TextAppearance_Large);
+            pointName.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        pointBeginDate.setText(point.getBegin().split("T")[0]);
-        pointBeginDate.setTextAppearance(android.R.style.TextAppearance_Large);
-        pointBeginDate.setGravity(Gravity.CENTER_HORIZONTAL);
+            pointBeginDate.setText(point.getBegin().split("T")[0]);
+            pointBeginDate.setTextAppearance(android.R.style.TextAppearance_Large);
+            pointBeginDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        pointEndDate.setText(point.getEnd().split("T")[0]);
-        pointEndDate.setTextAppearance(android.R.style.TextAppearance_Large);
-        pointEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
+            pointEndDate.setText(point.getEnd().split("T")[0]);
+            pointEndDate.setTextAppearance(android.R.style.TextAppearance_Large);
+            pointEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        pointWasRescaned.setText(point.getIsRepeat()? "Да": "Нет");
-        pointWasRescaned.setTextAppearance(android.R.style.TextAppearance_Large);
-        pointWasRescaned.setGravity(Gravity.CENTER_HORIZONTAL);
+            pointWasRescaned.setText(point.getIsRepeat()? "Да": "Нет");
+            pointWasRescaned.setTextAppearance(android.R.style.TextAppearance_Large);
+            pointWasRescaned.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        row.addView(pointName);
-        row.addView(pointBeginDate);
-        row.addView(pointEndDate);
-        row.addView(pointWasRescaned);
+            row.addView(pointName);
+            row.addView(pointBeginDate);
+            row.addView(pointEndDate);
+            row.addView(pointWasRescaned);
 
-        row.setGravity(Gravity.CENTER_HORIZONTAL);
-        row.setPadding(5, 5, 5, 5);
-        pointsListView.addView(row);
+            row.setGravity(Gravity.CENTER_HORIZONTAL);
+            row.setPadding(5, 5, 5, 5);
+            pointsListView.addView(row);
+        }
     }
 }
