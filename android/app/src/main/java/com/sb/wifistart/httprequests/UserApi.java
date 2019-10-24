@@ -1,5 +1,7 @@
 package com.sb.wifistart.httprequests;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
@@ -30,6 +32,11 @@ public interface UserApi {
             "Content-Type:application/json"
     })
     @GET("/api/security/location/")
-    Call<UserResponse> getLocations();
+    Call<List<LocationResponse>> getLocations();
 
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/security/scans")
+    Call<ScanResponse> getScans();
 }

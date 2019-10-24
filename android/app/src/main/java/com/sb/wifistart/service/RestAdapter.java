@@ -1,8 +1,5 @@
 package com.sb.wifistart.service;
 
-import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
-import com.sb.wifistart.httprequests.Api;
-import com.sb.wifistart.httprequests.Request;
 import com.sb.wifistart.httprequests.UserApi;
 
 import lombok.Data;
