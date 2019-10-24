@@ -83,7 +83,7 @@ public class ScanController {
     public ResponseEntity<?> getScans(@RequestParam(required = false) String filter) {
         User user = credentialUtils.getUserInfo();
         Condition condition = FilterUtils.getFilterWithLogin(filter, "userLocation.userId", user.getId());
-        condition.setMaskFields(Arrays.asList("id", "begin", "end", "status"));
+        condition.setMaskFields(Arrays.asList("id", "begin", "end", "status", "device", "userLocation.location"));
         return new ResponseEntity<>(scanDao.getByCondition(condition), HttpStatus.OK);
     }
 
