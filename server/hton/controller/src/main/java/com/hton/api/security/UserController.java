@@ -6,7 +6,9 @@ import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.UserUpdateRequest;
 import com.hton.api.responses.UserLocationsResponse;
 import com.hton.dao.CommonDao;
+import com.hton.dao.filters.ComplexCondition;
 import com.hton.dao.filters.Condition;
+import com.hton.dao.filters.Operation;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Location;
@@ -71,20 +73,29 @@ public class UserController {
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> removeUserById(@PathVariable("id") String id) {
-        SimpleCondition condition = new SimpleCondition.Builder()
-                .setSearchField("userId")
-                .setSearchCondition(SearchCondition.EQUALS)
-                .setSearchValue(id)
-                .setMaskFields(Collections.singletonList("id"))
-                .build();
-        List<UserLocation> userLocations = userLocationDao.getByCondition(condition);
-        userDao.remove(id, userLocations.stream().map(UserLocation::getId).collect(Collectors.toList()));
+        User user = userDao.getById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setEnabled(false);
+        userDao.update(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<?> getUsers(@RequestParam(required = false) String filter) {
-        return new ResponseEntity<>(userDao.getByCondition(FilterUtils.parseFilter(filter)), HttpStatus.OK);
+        ComplexCondition condition = new ComplexCondition.Builder()
+                .setOperation(Operation.AND)
+                .setConditions(
+                        FilterUtils.parseFilter(filter),
+                        new SimpleCondition.Builder()
+                                .setSearchField("enabled")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(true)
+                                .build()
+                        )
+                .build();
+        return new ResponseEntity<>(userDao.getByCondition(condition), HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
