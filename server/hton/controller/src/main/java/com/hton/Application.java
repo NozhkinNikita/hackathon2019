@@ -62,7 +62,7 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     public ConfigurableServletWebServerFactory servletContainerCustomizer() {
         JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
-        factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/unauthenticated"));
+//        factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/unauthenticated"));
         factory.addServerCustomizers((JettyServerCustomizer) server -> {
 //            // HTTP
 //            ServerConnector connector = new ServerConnector(server);
