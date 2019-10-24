@@ -8,7 +8,7 @@
                 <md-table-cell md-label="Roles">{{ item.roles }}</md-table-cell>
                 <md-table-cell md-label="Enabled">{{ item.enabled }}</md-table-cell>
                 <md-table-cell md-label="Action">
-                    <user-crud :user-id="item.id"></user-crud>
+                    <user-crud :user-id="item.id" v-on:toggle="toggleHeader()"></user-crud>
                 </md-table-cell>
             </md-table-row>
         </md-table>
@@ -71,6 +71,10 @@
                     });
 
             },
+
+            toggleHeader(){
+                this.getUsers();
+            }
 
         },
         mounted() {

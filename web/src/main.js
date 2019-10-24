@@ -37,8 +37,8 @@ import Chartist from "chartist";
 
 Vue.prototype.$Chartist = Chartist;
 
- Vue.prototype.$hostname = 'https://172.30.14.67:8443';
-//Vue.prototype.$hostname = 'https://localhost:8443';
+// Vue.prototype.$hostname = 'https://172.30.14.67:8443';
+Vue.prototype.$hostname = 'https://localhost:8443';
 
 Vue.use(VueRouter);
 Vue.use(MaterialDashboard);
