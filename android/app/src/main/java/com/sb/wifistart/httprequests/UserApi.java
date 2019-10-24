@@ -32,4 +32,9 @@ public interface UserApi {
     @GET("/api/security/location/")
     Call<UserResponse> getLocations();
 
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/security/scans")
+    Call<ScanResponse> getScans();
 }
