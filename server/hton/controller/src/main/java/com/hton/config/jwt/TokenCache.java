@@ -17,7 +17,7 @@ public class TokenCache {
 
     private Map<String, String> tokenCache = new HashMap<>();
 
-    @Scheduled(fixedRate = 10_000)
+    @Scheduled(fixedRate = 60_000)
     public void clearCache() {
         log.info("Clearing cache");
         tokenCache.entrySet().removeIf(entry -> jwtTokenUtil.isTokenExpired(entry.getValue()));
@@ -29,10 +29,12 @@ public class TokenCache {
     }
 
     public void addToken(String login, String token) {
+        log.info("Adding token for login {}", login);
         tokenCache.putIfAbsent(login, token);
     }
 
     public void removeToken(String login) {
+        log.info("Removing token by login {}", login);
         tokenCache.remove(login);
     }
 }
