@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".activities.NewScanActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="225dp">
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Место сканирования:"
+            tools:layout_editor_absoluteX="49dp"
+            tools:layout_editor_absoluteY="58dp" />
+
+        <TextView
+            android:id="@+id/locationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Место сканирования"
+            tools:layout_editor_absoluteX="281dp"
+            tools:layout_editor_absoluteY="75dp" />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Начало сканирования:"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="117dp" />
+
+        <TextView
+            android:id="@+id/locationStartDate"
+            android:layout_width="211dp"
+            android:layout_height="43dp"
+            android:text="Начало сканирования:"
+            tools:layout_editor_absoluteX="281dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <TextView
+            android:id="@+id/textView523"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            tools:layout_editor_absoluteX="195dp"
+            tools:layout_editor_absoluteY="277dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
