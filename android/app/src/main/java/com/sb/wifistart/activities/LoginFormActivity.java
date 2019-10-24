@@ -139,6 +139,13 @@ public class LoginFormActivity extends AppCompatActivity {
                     Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
                     startActivity(mainIntent);
                 } else {
+                    counter--;
+
+                    info.setText("No of attempts remaining: " + counter);
+
+                    if (counter == 0) {
+                        loginBtn.setEnabled(false);
+                    }
                     System.out.println("Invalid user/password");
                 }
             }
