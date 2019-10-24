@@ -5,6 +5,7 @@ import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -24,5 +25,11 @@ public interface UserApi {
     })
     @POST("/login")
     Call<UserResponse> login(@Body LoginRequest loginRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/security/location/")
+    Call<UserResponse> getLocations();
 
 }
