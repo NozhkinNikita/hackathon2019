@@ -16,7 +16,6 @@ public class UserApiHolder {
             return userApi;
         } else {
             OkHttpClient unsafeOkHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
-            unsafeOkHttpClient.networkInterceptors().add(new TokenInterceptor());
             RestAdapter restAdapter = new RestAdapter(baseUrl,
                     GsonConverterFactory.create(), unsafeOkHttpClient);
             return restAdapter.getUserApi();
