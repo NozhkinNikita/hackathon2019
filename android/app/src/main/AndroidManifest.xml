@@ -26,9 +26,7 @@
         <activity android:name=".activities.StackedBarActivity"/>
         <activity android:name=".activities.MainScreenActivity"/>
         <activity android:name=".activities.MyScansActivity"/>
-        <activity android:name=".activities.NewScanActivity"/>
         <activity android:name=".activities.WifiInfoActivity"/>
-
     </application>
 
 </manifest>

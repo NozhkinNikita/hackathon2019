@@ -3,13 +3,19 @@ package com.hton.api.user;
 import com.hton.api.CredentialUtils;
 import com.hton.api.FilterUtils;
 import com.hton.api.WebMvcConfig;
-import com.hton.api.requests.PointRequest;
+import com.hton.api.requests.PointCreateRequest;
+import com.hton.api.requests.PointUpdateRequest;
 import com.hton.dao.CommonDao;
 import com.hton.dao.filters.Condition;
+import com.hton.dao.filters.SearchCondition;
+import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Point;
+import com.hton.domain.Router;
+import com.hton.domain.RouterData;
 import com.hton.domain.Scan;
 import com.hton.domain.UserLocation;
 import com.hton.entities.PointEntity;
+import com.hton.entities.RouterEntity;
 import com.hton.entities.ScanEntity;
 import com.hton.service.LocationValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +33,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Controller
@@ -44,6 +54,9 @@ public class PointController {
     private LocationValidatorService locationValidatorService;
 
     @Autowired
+    private CommonDao<Router, RouterEntity> routerDao;
+
+    @Autowired
     private CredentialUtils credentialUtils;
 
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -51,7 +64,7 @@ public class PointController {
         return new ResponseEntity<>(pointDao.getById(id), HttpStatus.OK);
     }
 
-    // TODO dikma когд нам нужно удалять точки?
+    // TODO dikma когда нам нужно удалять точки?
     @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<?> removePointById(@PathVariable("id") String id) {
         pointDao.remove(id);
@@ -66,7 +79,7 @@ public class PointController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> createPoint(@RequestBody PointRequest request) {
+    public ResponseEntity<?> createPoint(@RequestBody PointCreateRequest request) {
         Scan scan = scanDao.getById(request.getScanId());
 
         if (scan.getUserLocation() == null) {
@@ -77,19 +90,14 @@ public class PointController {
             Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
 
             if (userLocation.isPresent()) {
-                //TODO dikma убери из request все поля кроме имя и ид сканирования, переименуй -> CreatePointRequest
                 Point point = new Point();
-                point.setBegin(request.getBegin());
-                point.setEnd(request.getEnd());
                 point.setName(request.getName());
                 point.setIsRepeat(false);
                 point.setScanId(request.getScanId());
-                // TODO dikma точки будут сохраняться в методе com.hton.api.user.PointController.updatePoint
-//                point.setRouterDatas(request.getRouterDatas());
 
                 Point savedPoint = pointDao.save(point);
 
-                PointRequest result = new PointRequest();
+                PointCreateRequest result = new PointCreateRequest();
                 result.setId(savedPoint.getId());
 
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -100,9 +108,51 @@ public class PointController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<?> updatePoint(@RequestBody Point point) {
-        // TODO dikma будет изменена сигнатура
-        pointDao.update(point);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> updatePoint(@RequestBody PointUpdateRequest request) {
+        Point point = pointDao.getById(request.getId());
+
+        if (point == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            Scan scan = scanDao.getById(point.getScanId());
+
+            if (scan.getUserLocation() == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                String login = credentialUtils.getCredentialLogin();
+
+                Optional<UserLocation> userLocation = locationValidatorService.validateLocation(login, scan.getUserLocation().getLocation().getId());
+
+                if (userLocation.isPresent()) {
+                    Condition condition = new SimpleCondition.Builder()
+                            .setSearchField("locationId")
+                            .setSearchCondition(SearchCondition.EQUALS)
+                            .setSearchValue(scan.getUserLocation().getLocation().getId())
+                            .build();
+
+                    List<Router> routers = routerDao.getByCondition(condition);
+
+                    Map<String, String> ourRouters = routers.stream().collect(Collectors.toMap(Router::getBssid, Router::getId));
+
+                    request.getRouterDatas().forEach(p -> {
+                        p.setOurRouterId(ourRouters.get(p.getBssid()));
+                        p.setPointId(point.getId());
+                    });
+
+                    List<String> removeRouterDataIds = point.getRouterDatas().stream().map(RouterData::getId).collect(Collectors.toList());
+
+                    point.setBegin(request.getBegin());
+                    point.setEnd(request.getEnd());
+                    point.setIsRepeat(!point.getRouterDatas().isEmpty());
+                    point.setRouterDatas(request.getRouterDatas());
+
+                    pointDao.update(point, removeRouterDataIds);
+
+                    return new ResponseEntity<>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
+        }
     }
 }

@@ -14,6 +14,8 @@ public class Router {
 
     private String ssid;
 
+    private String bssid;
+
     private String pwd;
 
     private String adminLogin;

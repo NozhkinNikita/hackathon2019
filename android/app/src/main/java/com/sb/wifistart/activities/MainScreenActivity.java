@@ -19,24 +19,16 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        showChartBtn= findViewById(R.id.showChartButton);
-
-        showChartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent chartIntent = new Intent(MainScreenActivity.this, StackedBarActivity.class);
-                startActivity(chartIntent);
-            }
-        });
-
-        Button toMyScans = (Button) findViewById(R.id.myScans);
+        Button toMyScans = findViewById(R.id.myScans);
         toMyScans.setOnClickListener(view ->
                 startActivity(new Intent(MainScreenActivity.this, MyScansActivity.class))
         );
 
-        Button newScan = (Button) findViewById(R.id.newScan);
-        newScan.setOnClickListener(view ->
-                startActivity(new Intent(MainScreenActivity.this, WifiInfoActivity.class))
+        Button newScan = findViewById(R.id.newScan);
+        newScan.setOnClickListener(view -> {
+                Intent chartIntent = new Intent(MainScreenActivity.this, StackedBarActivity.class);
+                startActivity(chartIntent);
+            }
         );
     }
 }

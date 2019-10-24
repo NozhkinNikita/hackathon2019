@@ -11,16 +11,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointRequest {
+public class PointUpdateRequest {
     private String id;
-
-    private String name;
 
     private LocalDateTime begin;
 
     private LocalDateTime end;
-
-    private String scanId;
 
     private List<RouterData> routerDatas;
 }

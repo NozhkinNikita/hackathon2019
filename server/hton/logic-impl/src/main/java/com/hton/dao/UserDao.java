@@ -3,7 +3,6 @@ package com.hton.dao;
 import com.hton.domain.User;
 import com.hton.entities.UserEntity;
 import com.hton.entities.UserLocationEntity;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -34,5 +33,10 @@ public class UserDao extends CommonDao<User, UserEntity> {
             transaction.commit();
             em.close();
         }
+    }
+
+    @Override
+    public void update(User domain, List<String> removeIds) {
+        // do nothing
     }
 }

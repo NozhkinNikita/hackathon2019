@@ -131,7 +131,7 @@ public class LoginFormActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of WResponse POJO class
                  */
-                System.out.println("qwewq");
+                System.out.println("on response login");
                 if (response.body() != null) {
                     Object wResponse = response.body();
                 }
@@ -139,7 +139,7 @@ public class LoginFormActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                System.out.println("qwewq123");
+                System.out.println("on failure login");
                 /*
                 Error callback
                 */
