@@ -18,4 +18,9 @@ public class ScanDao extends CommonDao<Scan, ScanEntity> {
     public void remove(String id, List<String> joinIds) {
         // do nothing
     }
+
+    @Override
+    public void update(Scan domain, List<String> removeIds) {
+        // do nothing
+    }
 }

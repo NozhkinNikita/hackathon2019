@@ -1,7 +1,9 @@
 package com.hton.api.auth;
 
+import com.hton.api.CredentialUtils;
 import com.hton.config.UserDetails;
 import com.hton.config.jwt.JwtTokenUtil;
+import com.hton.config.jwt.TokenCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +31,27 @@ public class AuthController {
     @Qualifier("htonUserDetailService")
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private TokenCache tokenCache;
+
+    @Autowired
+    private CredentialUtils credentialUtils;
+
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest) throws Exception {
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         UserDetails userDetails = (UserDetails) userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
+        tokenCache.addToken(userDetails.getUsername(), token);
         return ResponseEntity.ok(new LoginResponse(userDetails, token));
+    }
+
+    @PostMapping(value = "/logout")
+    public ResponseEntity<?> removeAuthenticationToken() {
+        String login = credentialUtils.getCredentialLogin();
+        tokenCache.removeToken(login);
+        return ResponseEntity.ok().build();
     }
 
     private void authenticate(String username, String password) throws Exception {

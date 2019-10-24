@@ -61,6 +61,7 @@
             <column name="id" value="-1"/>
             <column name="ip" value="KFMN_IP"/>
             <column name="ssid" value="KFMN_SSID"/>
+            <column name="bssid" value="KFMN_BSSID"/>
             <column name="pwd" value="KFMN_PWD"/>
             <column name="adminLogin" value="KFMN_ROUTER_LOGIN"/>
             <column name="adminPwd" value="KFMN_ROUTER_PWD"/>

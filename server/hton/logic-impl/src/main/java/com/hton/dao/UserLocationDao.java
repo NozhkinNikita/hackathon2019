@@ -17,4 +17,9 @@ public class UserLocationDao extends CommonDao<UserLocation, UserLocationEntity>
     public void remove(String id, List<String> joinIds) {
         // do nothing
     }
+
+    @Override
+    public void update(UserLocation domain, List<String> removeIds) {
+        // do nothing
+    }
 }

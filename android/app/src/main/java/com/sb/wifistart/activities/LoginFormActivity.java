@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.sb.wifistart.R;
 import com.sb.wifistart.httprequests.LoginRequest;
 import com.sb.wifistart.httprequests.UserApi;
+import com.sb.wifistart.httprequests.UserResponse;
 
 import java.security.cert.CertificateException;
 
@@ -64,7 +65,7 @@ public class LoginFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 postData();
-                validate(login.getText().toString(), password.getText().toString());
+                /*validate(login.getText().toString(), password.getText().toString());*/
             }
         });
     }
@@ -117,7 +118,7 @@ public class LoginFormActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = getUnsafeOkHttpClient();
 
         Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://192.168.1.37:8443")
+                .baseUrl("https://172.30.14.91:8443")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -131,15 +132,27 @@ public class LoginFormActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 /*This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of WResponse POJO class
                  */
-                System.out.println("qwewq");
+                System.out.println("on response login");
                 if (response.body() != null) {
-                    Object wResponse = response.body();
+                    UserResponse userResponse = (UserResponse) response.body();
+                    String token = userResponse.getToken();
+                    Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
+                    startActivity(mainIntent);
+                } else {
+                    counter--;
+
+                    info.setText("No of attempts remaining: " + counter);
+
+                    if (counter == 0) {
+                        loginBtn.setEnabled(false);
+                    }
+                    System.out.println("Invalid user/password");
                 }
             }
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                System.out.println("qwewq123");
+                System.out.println("on failure login");
                 /*
                 Error callback
                 */

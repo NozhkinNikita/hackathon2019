@@ -8,8 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +21,15 @@ import java.util.List;
 public class RouterEntity implements BaseEntity {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     private String ip;
 
     private String ssid;
+
+    private String bssid;
 
     private String pwd;
 
@@ -41,7 +41,7 @@ public class RouterEntity implements BaseEntity {
 
     @Override
     public List<String> getBaseFields() {
-        return Arrays.asList("id", "ip", "ssid", "pwd", "adminLogin", "adminPwd", "locationId");
+        return Arrays.asList("id", "ip", "ssid", "bsid", "pwd", "adminLogin", "adminPwd", "locationId");
     }
 
     @Override

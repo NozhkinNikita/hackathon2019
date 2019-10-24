@@ -23,6 +23,7 @@ import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerF
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URL;
@@ -37,6 +38,7 @@ import java.net.URL;
 })
 @EntityScan("com.hton.entities")
 @EnableConfigurationProperties
+@EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
