@@ -4,6 +4,10 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
+      <sidebar-link to="/scans">
+        <md-icon>perm_scan_wifi</md-icon>
+        <p>Scans</p>
+      </sidebar-link>
       <sidebar-link to="/users">
         <md-icon>person</md-icon>
         <p>Users</p>

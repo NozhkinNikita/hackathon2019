@@ -15,7 +15,7 @@
 
 
                 <md-field>
-                    <label for="users">Locations</label>
+                    <label for="users">Users</label>
                     <md-select v-model="currentUsers" name="users" id="users" multiple>
                         <md-option v-for="user in users" :value="user.id">{{user.login}}</md-option>
                     </md-select>

@@ -6,7 +6,9 @@ import com.hton.api.WebMvcConfig;
 import com.hton.api.requests.PointCreateRequest;
 import com.hton.api.requests.PointUpdateRequest;
 import com.hton.dao.CommonDao;
+import com.hton.dao.filters.ComplexCondition;
 import com.hton.dao.filters.Condition;
+import com.hton.dao.filters.Operation;
 import com.hton.dao.filters.SearchCondition;
 import com.hton.dao.filters.SimpleCondition;
 import com.hton.domain.Point;
@@ -32,7 +34,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -76,6 +80,23 @@ public class PointController {
         Condition condition = FilterUtils.parseFilter(filter);
         condition.setMaskFields(Arrays.asList("id", "name", "begin", "end", "isRepeat", "scanId"));
         return new ResponseEntity<>(pointDao.getByCondition(condition), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/location-points/{id}", produces = "application/json")
+    public ResponseEntity<?> getByLocationId(@PathVariable("id") String locationId) {
+        ComplexCondition condition = new ComplexCondition.Builder()
+                .setOperation(Operation.AND)
+                .setConditions(
+                        new SimpleCondition.Builder()
+                                .setSearchField("userLocation.locationId")
+                                .setSearchCondition(SearchCondition.EQUALS)
+                                .setSearchValue(locationId)
+                                .build()
+                )
+                .build();
+        Set<Point> points = new HashSet<>();
+        scanDao.getByCondition(condition).forEach(scan -> points.addAll(scan.getPoints()));
+        return new ResponseEntity<>(points, HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
