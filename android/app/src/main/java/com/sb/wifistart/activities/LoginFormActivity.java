@@ -73,7 +73,9 @@ public class LoginFormActivity extends AppCompatActivity {
                 System.out.println("on response login");
                 if (response.body() != null) {
                     UserResponse userResponse = (UserResponse) response.body();
-                    TokenInterceptor.setToken(userResponse.getToken());
+                    String token = userResponse.getToken();
+                    System.out.println("Token: " + token);
+                    TokenInterceptor.setToken(token);
                     Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
                     startActivity(mainIntent);
                 } else {

@@ -1,5 +1,7 @@
 package com.sb.wifistart.httpclient;
 
+import com.sb.wifistart.service.TokenInterceptor;
+
 import java.security.cert.CertificateException;
 
 import javax.net.ssl.HostnameVerifier;
@@ -46,7 +48,7 @@ public class UnsafeOkHttpClient {
                     return true;
                 }
             });
-
+            builder.addInterceptor(new TokenInterceptor());
             OkHttpClient okHttpClient = builder.build();
             return okHttpClient;
         } catch (Exception e) {
