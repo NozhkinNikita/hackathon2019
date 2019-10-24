@@ -4,17 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.sb.wifistart.R;
+import com.sb.wifistart.dto.Device;
+import com.sb.wifistart.httprequests.CreateScanRequest;
 import com.sb.wifistart.httprequests.LocationResponse;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.service.UserApiHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,8 @@ public class StackedBarActivity extends AppCompatActivity {
 
     private BarChart stackedChart;
     private Spinner locationSpinner;
+
+    private EditText location;
 
     private Button startScanBtn;
 
@@ -45,7 +49,12 @@ public class StackedBarActivity extends AppCompatActivity {
         Button startScan = findViewById(R.id.startScan);
         startScan.setOnClickListener(view -> {
                     UserApi userApi = UserApiHolder.getUserApi();
-                    Call call = userApi.createScan();
+                    String selectedLocationName = locationSpinner.getSelectedItem().toString();
+                    String selectedLocationId = locationResponses.stream().
+                            filter(locationResponse -> locationResponse.getName().equals(selectedLocationName))
+                            .findFirst().get().getId();
+
+                    Call call = userApi.createScan(new CreateScanRequest(selectedLocationId, new Device()));
 
                     call.enqueue(new Callback() {
                         @Override

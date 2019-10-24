@@ -41,6 +41,8 @@ public class Device {
         serial = android.os.Build.SERIAL;
         user = android.os.Build.USER;
         host = android.os.Build.HOST;
+        mac = getMac("wlan0");
+        ipV4 = getIpV4();
     }
 
     /**
