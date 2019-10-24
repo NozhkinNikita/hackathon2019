@@ -6,14 +6,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -24,8 +21,8 @@ import java.util.List;
 public class RouterDataEntity implements BaseEntity {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
     private String ssid;
@@ -47,6 +44,6 @@ public class RouterDataEntity implements BaseEntity {
 
     @Override
     public List<String> getJoinFields() {
-        return Collections.EMPTY_LIST;
+        return new ArrayList<>(0);
     }
 }

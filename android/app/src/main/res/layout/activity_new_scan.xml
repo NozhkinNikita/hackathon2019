@@ -6,54 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".activities.NewScanActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="208dp"
-        tools:layout_editor_absoluteY="225dp">
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Место сканирования:"
-            tools:layout_editor_absoluteX="49dp"
-            tools:layout_editor_absoluteY="58dp" />
+            <TableRow>
+                <EditText
+                    android:id="@+id/newScanLabel"
+                    android:layout_span="2"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold"
+                    android:background="@null"
+                    android:textSize="25dp"
+                    android:text="Новое сканирование" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/locationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Место сканирования"
-            tools:layout_editor_absoluteX="281dp"
-            tools:layout_editor_absoluteY="75dp" />
+            <TableRow>
+                <EditText
+                    android:id="@+id/editText3"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:padding="3dip"
+                    android:background="@null"
+                    android:text="Место сканирования:" />
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Начало сканирования:"
-            tools:layout_editor_absoluteX="50dp"
-            tools:layout_editor_absoluteY="117dp" />
+                <TextView
+                    android:id="@+id/locationName"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="Место сканирования" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/locationStartDate"
-            android:layout_width="211dp"
-            android:layout_height="43dp"
-            android:text="Начало сканирования:"
-            tools:layout_editor_absoluteX="281dp"
-            tools:layout_editor_absoluteY="126dp" />
+            <TableRow>
 
-        <TextView
-            android:id="@+id/textView523"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="195dp"
-            tools:layout_editor_absoluteY="277dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/editText4"
+                    android:gravity="center"
+                    android:inputType="textPersonName"
+                    android:padding="3dip"
+                    android:background="@null"
+                    android:text="Начало сканирования:" />
+
+                <TextView
+                    android:id="@+id/locationStartDate"
+                    android:gravity="center"
+                    android:padding="3dip"
+                    android:text="Начало сканирования:" />
+            </TableRow>
+
+        </TableLayout>
+
+        <!--  <EditText
+              android:id="@+id/editText3"
+              android:gravity="center"
+              android:padding="3dip"
+              android:inputType="textPersonName"
+              android:text="Место сканирования:" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

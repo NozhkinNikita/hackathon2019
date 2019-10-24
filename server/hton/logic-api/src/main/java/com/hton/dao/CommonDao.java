@@ -4,7 +4,6 @@ import com.hton.converters.Converter;
 import com.hton.dao.filters.Condition;
 import com.hton.entities.BaseEntity;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Transaction;
 import org.hibernate.query.criteria.internal.PathSource;
 import org.hibernate.query.criteria.internal.path.AbstractPathImpl;
 import org.hibernate.query.criteria.internal.path.ListAttributeJoin;
@@ -34,7 +33,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,7 +44,9 @@ import java.util.stream.Collectors;
 public abstract class CommonDao<D, E extends BaseEntity> {
 
     public abstract Class<E> getEntityClass();
+
     public abstract void remove(String id, List<String> joinIds);
+
     public abstract void update(D domain, List<String> removeIds);
 
     @PersistenceUnit
@@ -85,8 +85,8 @@ public abstract class CommonDao<D, E extends BaseEntity> {
                 converter.toDomainObject(e, d);
                 return d;
             }).collect(Collectors.toList());
-        } catch (Exception e ) {
-          throw new IllegalArgumentException(e);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         } finally {
             em.close();
         }
@@ -418,9 +418,9 @@ public abstract class CommonDao<D, E extends BaseEntity> {
             field.setAccessible(true);
             if (field.getType().equals(List.class)) {
                 if (field.get(object) == null) {
-                    field.set(object, Collections.singletonList(value));
+                    field.set(object, Arrays.asList(value));
                 } else {
-                    List listField = ((ArrayList) field.get(object));
+                    List listField = (new ArrayList((List) field.get(object)));
                     if (!listField.contains(value)) {
                         listField.add(value);
                     }

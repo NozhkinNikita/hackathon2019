@@ -2,7 +2,6 @@ package com.hton.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -12,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -29,7 +28,7 @@ public class RoleEntity implements BaseEntity {
 
     @Override
     public List<String> getBaseFields() {
-        return Collections.singletonList("id");
+        return Arrays.asList("id");
     }
 
     @Override

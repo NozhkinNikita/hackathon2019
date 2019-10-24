@@ -1,5 +1,6 @@
 package com.sb.wifistart.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Scan {
+public class Scan implements Serializable {
 
     private String id;
     private String begin;
