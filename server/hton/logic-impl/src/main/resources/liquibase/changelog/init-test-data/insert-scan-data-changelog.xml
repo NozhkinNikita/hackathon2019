@@ -68,5 +68,59 @@
             <column name="ourRouterId" value="-1"/>
             <column name="pointId" value="-1"/>
         </insert>
+
+        <insert tableName="scan">
+            <column name="id" value="1"/>
+            <column name="begin" value="2019-10-08 21:50:49"/>
+            <column name="end" value="2019-10-08 21:56:49"/>
+            <column name="status" value="FINISHED"/>
+            <column name="deviceId" value="-1"/>
+            <column name="userLocationId" value="-3"/>
+        </insert>
+
+        <insert tableName="point">
+            <column name="id" value="1"/>
+            <column name="name" value="stable1"/>
+            <column name="begin" value="2019-10-08 21:51:00"/>
+            <column name="end" value="2019-10-08 21:51:10"/>
+            <column name="isRepeat" value="false"/>
+            <column name="scanId" value="1"/>
+        </insert>
+
+        <insert tableName="point">
+            <column name="id" value="2"/>
+            <column name="name" value="stable"/>
+            <column name="begin" value="2019-10-08 21:51:00"/>
+            <column name="end" value="2019-10-08 21:51:10"/>
+            <column name="isRepeat" value="false"/>
+            <column name="scanId" value="1"/>
+        </insert>
+
+        <insert tableName="point">
+            <column name="id" value="3"/>
+            <column name="name" value="stable"/>
+            <column name="begin" value="2019-10-08 21:51:00"/>
+            <column name="end" value="2019-10-08 21:51:10"/>
+            <column name="isRepeat" value="false"/>
+            <column name="scanId" value="1"/>
+        </insert>
+
+        <insert tableName="scan">
+            <column name="id" value="2"/>
+            <column name="begin" value="2019-10-01 21:50:49"/>
+            <column name="end" value="2019-10-01 21:56:49"/>
+            <column name="status" value="DRAFT"/>
+            <column name="deviceId" value="-1"/>
+            <column name="userLocationId" value="-3"/>
+        </insert>
+
+        <insert tableName="scan">
+            <column name="id" value="3"/>
+            <column name="begin" value="2019-10-20 21:50:49"/>
+            <column name="end" value="2019-10-21 21:56:49"/>
+            <column name="status" value="FINISHED"/>
+            <column name="deviceId" value="-1"/>
+            <column name="userLocationId" value="-3"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
