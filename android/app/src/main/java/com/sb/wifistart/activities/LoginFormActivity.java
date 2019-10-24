@@ -13,29 +13,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sb.wifistart.R;
-import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
 import com.sb.wifistart.httprequests.LoginRequest;
-import com.sb.wifistart.httprequests.TokenInterceptor;
+import com.sb.wifistart.service.TokenInterceptor;
 import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.httprequests.UserResponse;
-import com.sb.wifistart.service.RestAdapter;
 import com.sb.wifistart.service.UserApiHolder;
 
-import java.security.cert.CertificateException;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginFormActivity extends AppCompatActivity {
 

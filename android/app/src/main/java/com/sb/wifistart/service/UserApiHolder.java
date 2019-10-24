@@ -3,6 +3,7 @@ package com.sb.wifistart.service;
 import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
 import com.sb.wifistart.httprequests.UserApi;
 
+import okhttp3.OkHttpClient;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserApiHolder {
@@ -14,8 +15,10 @@ public class UserApiHolder {
         if (userApi != null) {
             return userApi;
         } else {
+            OkHttpClient unsafeOkHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+            unsafeOkHttpClient.networkInterceptors().add(new TokenInterceptor());
             RestAdapter restAdapter = new RestAdapter(baseUrl,
-                    GsonConverterFactory.create(), UnsafeOkHttpClient.getUnsafeOkHttpClient());
+                    GsonConverterFactory.create(), unsafeOkHttpClient);
             return restAdapter.getUserApi();
         }
     }

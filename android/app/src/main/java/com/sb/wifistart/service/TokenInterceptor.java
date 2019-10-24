@@ -1,4 +1,4 @@
-package com.sb.wifistart.httprequests;
+package com.sb.wifistart.service;
 
 import java.io.IOException;
 
