@@ -13,8 +13,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sb.wifistart.R;
+import com.sb.wifistart.httpclient.UnsafeOkHttpClient;
 import com.sb.wifistart.httprequests.LoginRequest;
 import com.sb.wifistart.httprequests.UserApi;
+import com.sb.wifistart.httprequests.UserResponse;
+import com.sb.wifistart.service.RestAdapter;
 
 import java.security.cert.CertificateException;
 
@@ -64,65 +67,15 @@ public class LoginFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 postData();
-                validate(login.getText().toString(), password.getText().toString());
+                /*validate(login.getText().toString(), password.getText().toString());*/
             }
         });
     }
 
-    private static OkHttpClient getUnsafeOkHttpClient() {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                    }
-            };
-
-            // Install the all-trusting trust manager
-            final SSLContext sslContext = SSLContext.getInstance("SSL");
-            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-            // Create an ssl socket factory with our all-trusting manager
-            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory);
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-
-            OkHttpClient okHttpClient = builder.build();
-            return okHttpClient;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     public void postData() {
-
-        OkHttpClient okHttpClient = getUnsafeOkHttpClient();
-
-        Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://172.30.14.62:8443")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-
-        UserApi yourUsersApi = restAdapter.create(UserApi.class);
+        RestAdapter restAdapter = new RestAdapter("https://192.168.43.40:8443",
+                GsonConverterFactory.create(), UnsafeOkHttpClient.getUnsafeOkHttpClient());
+        UserApi yourUsersApi = restAdapter.getUserApi();
 
         Call call = yourUsersApi.login(new LoginRequest(login.getText().toString(), password.getText().toString()));
 
@@ -133,7 +86,19 @@ public class LoginFormActivity extends AppCompatActivity {
                  */
                 System.out.println("on response login");
                 if (response.body() != null) {
-                    Object wResponse = response.body();
+                    UserResponse userResponse = (UserResponse) response.body();
+                    String token = userResponse.getToken();
+                    Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
+                    startActivity(mainIntent);
+                } else {
+                    counter--;
+
+                    info.setText("No of attempts remaining: " + counter);
+
+                    if (counter == 0) {
+                        loginBtn.setEnabled(false);
+                    }
+                    System.out.println("Invalid user/password");
                 }
             }
             @Override
