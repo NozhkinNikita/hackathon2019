@@ -30,7 +30,7 @@ public class Device {
     private String host;
 
     public Device() {
-        id = android.os.Build.ID;
+        deviceId = android.os.Build.ID;
         model = android.os.Build.MODEL;
         osVersion = System.getProperty("os.version");
         manufacturer = android.os.Build.MANUFACTURER;
