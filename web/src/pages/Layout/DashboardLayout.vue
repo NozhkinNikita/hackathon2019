@@ -4,7 +4,7 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/user">
+      <sidebar-link to="/users">
         <md-icon>person</md-icon>
         <p>Users</p>
       </sidebar-link>
