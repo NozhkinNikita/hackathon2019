@@ -96,19 +96,29 @@ public class PointInfoActivity extends Activity {
                 if (response.body() != null) {
                     Point point = (Point) response.body();
 
-                    List<RouterData> routerDates = point.getRouterDates();
+                    List<RouterData> routerDatas = point.getRouterDatas();
 
                     pointDetail = (TableLayout) findViewById(R.id.pointDetail);
 
-                    if (routerDates != null && routerDates.size() != 0) {
-
-                        WifiReceiver wifiReceiver = new WifiReceiverImpl(getApplicationContext());
-                        wifiReceiver.registerReceiver(getApplicationContext());
-                        wifiReceiver.startScan();
-
+                    if (routerDatas != null && routerDatas.size() != 0) {
                         stackedChart = findViewById(R.id.stackedBarChart);
+                        List<String> ssidList = new ArrayList<>();
+                        List<BarEntry> dataVals = new ArrayList<>();
+                        for(int i = 0; i < routerDatas.size(); i++) {
+                            ssidList.add(routerDatas.get(i).getSsid() + "\n" + "(" + routerDatas.get(i).getChannel() + ")");
+                            dataVals.add(new BarEntry(i, -Float.valueOf(routerDatas.get(i).getRssi().toString())));
+                        }
 
-                        routerDates.forEach(routerData -> {
+                        XAxis xAxis = stackedChart.getXAxis();
+                        xAxis.setLabelRotationAngle(45);
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(ssidList));
+
+                        BarDataSet barDataSet = new BarDataSet(dataVals, "WiFi signals");
+                        BarData barData = new BarData(barDataSet);
+                        stackedChart.setData(barData);
+                        stackedChart.invalidate();
+
+//                        routerDates.forEach(routerData -> {
 //                            TableRow row = new TableRow(getApplicationContext());
 //                            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
 //                            row.setLayoutParams(lp);
@@ -143,7 +153,7 @@ public class PointInfoActivity extends Activity {
 //                            row.setPadding(5, 5, 5, 5);
 //
 //                            pointDetail.addView(row);
-                        });
+//                        });
                     }
                 } else {
 //                    info.setText("No of attempts remaining: " + counter);
@@ -158,42 +168,11 @@ public class PointInfoActivity extends Activity {
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                System.out.println("Fail on getPoints operation");
+                System.out.println("Fail on pointinfo activity operation");
                 /*
                 Error callback
                 */
             }
         });
-    }
-
-    private class WifiReceiverImpl extends WifiReceiver {
-
-        public WifiReceiverImpl(Context context){
-            super(context);
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            boolean success = intent.getBooleanExtra(getWifiManager().EXTRA_RESULTS_UPDATED, false);
-            if(success) {
-                setScanResults(getWifiManager().getScanResults());
-            }
-
-            List<String> ssidList = new ArrayList<>();
-            List<BarEntry> dataVals = new ArrayList<>();
-            for(int i = 0; i < getScanResults().size(); i++) {
-                ssidList.add(getScanResults().get(i).SSID + "\n" + "(" + getScanResults().get(i).frequency + ")");
-                dataVals.add(new BarEntry(i, -getScanResults().get(i).level));
-            }
-
-            XAxis xAxis = stackedChart.getXAxis();
-            xAxis.setLabelRotationAngle(45);
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(ssidList));
-
-            BarDataSet barDataSet = new BarDataSet(dataVals, "WiFi signals");
-            BarData barData = new BarData(barDataSet);
-            stackedChart.setData(barData);
-            stackedChart.invalidate();
-        }
     }
 }

@@ -13,7 +13,7 @@ public class RouterData {
     private String ssid;
     private String bssid;
     private Integer channel;
-    private Integer rssi;
+    private Double rssi;
     private String pointId;
     private Router ourRouter;
 }
