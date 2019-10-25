@@ -13,6 +13,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.sb.wifistart.R;
 import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.dto.Device;
+import com.sb.wifistart.dto.Point;
 import com.sb.wifistart.httprequests.CreateScanRequest;
 import com.sb.wifistart.httprequests.CreateScanResponse;
 import com.sb.wifistart.httprequests.LocationResponse;
@@ -57,6 +58,8 @@ public class StackedBarActivity extends AppCompatActivity {
                             .findFirst().get().getId();
 
                     Call call = userApi.createScan(new CreateScanRequest(selectedLocationId, new Device()));
+            final boolean[] createScanFinished = {false};
+            final boolean[] getPointsFinished = {false};
 
                     call.enqueue(new Callback() {
                         @Override
@@ -68,9 +71,31 @@ public class StackedBarActivity extends AppCompatActivity {
                                 CreateScanResponse createScanResponse = (CreateScanResponse) response.body();
                                 CommonVarsHolder.locationName = locationSpinner.getSelectedItem().toString();
                                 CommonVarsHolder.locationStartDate = createScanResponse.getBegin();
-
-                                Intent chartIntent = new Intent(StackedBarActivity.this, NewScanActivity.class);
-                                startActivity(chartIntent);
+                                CommonVarsHolder.scanId = createScanResponse.getId();
+                                if (getPointsFinished[0]) {
+                                    Intent chartIntent = new Intent(StackedBarActivity.this, NewScanActivity.class);
+                                    startActivity(chartIntent);
+                                }
+                                createScanFinished[0] = true;
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+                            System.out.println("on failure get locations");
+                        }
+                    });
+                    Call pointsCall = userApi.getPoints(selectedLocationId);
+                    pointsCall.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            System.out.println("on get points");
+                            if (response.body() != null) {
+                                CommonVarsHolder.currentPoints = (List<Point>) response.body();
+                                if (createScanFinished[0]) {
+                                    Intent chartIntent = new Intent(StackedBarActivity.this, NewScanActivity.class);
+                                    startActivity(chartIntent);
+                                }
+                                getPointsFinished[0] = true;
                             }
                         }
 

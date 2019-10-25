@@ -1,5 +1,6 @@
 package com.sb.wifistart.httprequests;
 
+import com.sb.wifistart.dto.Point;
 import com.sb.wifistart.dto.Scan;
 
 import java.util.List;
@@ -39,6 +40,18 @@ public interface UserApi {
     })
     @POST("/api/user/scans/")
     Call<CreateScanResponse> createScan(@Body CreateScanRequest createScanRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @POST("/api/user/points/")
+    Call<CreateScanResponse> addPoint(@Body PointCreateRequest pointCreateRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/user/points/location-points/{id}")
+    Call<List<Point>> getPoints(@Path("id") String id);
 
     @Headers({
             "Content-Type:application/json"
