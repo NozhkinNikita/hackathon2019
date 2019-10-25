@@ -52,7 +52,9 @@ public class PointInfoActivity extends Activity {
         pointBeginLabel.setGravity(Gravity.CENTER_HORIZONTAL);
 
         TextView pointBegin = new TextView(getApplicationContext());
-        pointBegin.setText(getIntent().getStringExtra("pointBegin").split("T")[0]);
+        if(getIntent().getStringExtra("pointBegin") != null) {
+            pointBegin.setText(getIntent().getStringExtra("pointBegin").split("T")[0]);
+        }
         pointBegin.setTextAppearance(android.R.style.TextAppearance_Medium);
         pointBegin.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -69,7 +71,9 @@ public class PointInfoActivity extends Activity {
         pointEndLabel.setGravity(Gravity.CENTER_HORIZONTAL);
 
         TextView pointEnd = new TextView(getApplicationContext());
-        pointEnd.setText(getIntent().getStringExtra("pointEnd").split("T")[0]);
+        if(getIntent().getStringExtra("pointEnd") != null) {
+            pointEnd.setText(getIntent().getStringExtra("pointEnd").split("T")[0]);
+        }
         pointEnd.setTextAppearance(android.R.style.TextAppearance_Medium);
         pointEnd.setGravity(Gravity.CENTER_HORIZONTAL);
 
