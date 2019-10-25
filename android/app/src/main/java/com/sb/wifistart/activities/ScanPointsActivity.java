@@ -70,11 +70,15 @@ public class ScanPointsActivity extends Activity {
                             pointName.setTextAppearance(android.R.style.TextAppearance_Medium);
                             pointName.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                            pointBeginDate.setText(point.getBegin().split("T")[0]);
+                            if(point.getBegin() != null) {
+                                pointBeginDate.setText(point.getBegin().split("T")[0]);
+                            }
                             pointBeginDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             pointBeginDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                            pointEndDate.setText(point.getEnd().split("T")[0]);
+                            if(point.getEnd() != null) {
+                                pointEndDate.setText(point.getEnd().split("T")[0]);
+                            }
                             pointEndDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             pointEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
