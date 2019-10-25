@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:scrollbars="vertical">
-
-    <TableLayout
-        android:id="@+id/myScansList"
+<ScrollView android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#eeeeee"
-        android:scrollbars="vertical"
-        android:stretchColumns="*">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
 
-        <TableRow
-            android:background="#cccccc"
-            android:padding="5dp">
+        <TableLayout
+            android:id="@+id/myScansList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eeeeee"
+            android:scrollbars="vertical"
+            android:stretchColumns="*">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Начало"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TableRow
+                android:background="#cccccc"
+                android:padding="5dp">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Окончание"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Начало"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Статус"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Окончание"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Статус"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>
