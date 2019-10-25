@@ -55,8 +55,8 @@ public class LoginFormActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postData();
-                /*validate(login.getText().toString(), password.getText().toString());*/
+//                postData();
+                validate(login.getText().toString(), password.getText().toString());
             }
         });
     }
