@@ -82,7 +82,13 @@
                         console.log(response)
                         let is_admin = response.data.roles.includes("SECUTITY_ADMIN");
                         localStorage.setItem('user', JSON.stringify(response.data.login))
-                        localStorage.setItem('jwt', response.data.token)
+                        localStorage.setItem('jwt', response.data.token);
+                        localStorage.setItem('roles', JSON.stringify(response.data.roles));
+
+                        var roles=JSON.parse(localStorage.getItem('roles'));
+
+                        console.log("nnnnnnnnnn")
+                        console.log(roles);
 
                         if (localStorage.getItem('jwt') != null) {
                             this.$emit('loggedIn')
@@ -92,7 +98,7 @@
                                 if (is_admin == 1) {
                                     this.$router.push('users')
                                 } else {
-                                    this.$router.push('routers')
+                                    this.$router.push('scans')
                                 }
                             }
                         }

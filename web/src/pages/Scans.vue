@@ -24,9 +24,7 @@
                         <!--                        <p class="category">Here is a subtitle for this table</p>-->
                     </md-card-header>
                     <md-card-content>
-                        <scans-table :locations="locations" table-header-color="green"></scans-table>
-
-                        <LocationAdd v-on:toggle="toggleHeader()"></LocationAdd>
+                        <scans-table :scans="scans" table-header-color="green"></scans-table>
                     </md-card-content>
                 </md-card>
             </div>
@@ -52,7 +50,7 @@
 
         methods: {
 
-            getLocations() {
+            getScans() {
                 // your code to login user
                 // this is only for example of loading
 
@@ -72,7 +70,7 @@
                     .then(response => {
                         console.log("scansssssssssssssss");
                         console.log(response);
-                        this.locations = response.data
+                        this.scans = response.data
                     })
                     .catch(function (error) {
                         console.log("auth fuck");
@@ -82,17 +80,17 @@
 
             },
             toggleHeader() {
-                this.getLocations();
+                this.getScans();
             }
 
         },
         mounted() {
-            this.getLocations();
+            this.getScans();
         },
 
         data() {
             return {
-                locations: [
+                scans: [
                     {}
                 ]
             }

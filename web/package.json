@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "c3": "^0.7.11",
     "chartist": "0.11.2",
     "google-maps": "3.3.0",
     "vue": "2.6.10",
+    "vue-c3js": "git+https://github.com/andreas2510/vue-c3js.git",
     "vue-clickaway": "2.2.2",
     "vue-github-buttons": "3.1.0",
     "vue-material": "1.0.0-beta-11",

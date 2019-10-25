@@ -6,6 +6,7 @@ import Login from "@/pages/Login.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import Locations from "@/pages/Locations.vue";
 import Scans from "@/pages/Scans.vue";
+import CurrentScan from "@/pages/CurrentScan.vue";
 import Routers from "@/pages/Routers.vue";
 
 Vue.use(Router)
@@ -23,14 +24,20 @@ let router = new Router({
                 {
                     path: "scans",
                     name: "Scans",
-                    component: Scans
+                    component: Scans,
+                },
+                {
+                    path: "/scans/:id",
+                    name: "Scans",
+                    component: CurrentScan,
+
                 },
                 {
                     path: "users",
                     name: "Users",
                     component: UserProfile
                 },
-              {
+                {
                     path: "locations",
                     name: "Locations",
                     component: Locations
