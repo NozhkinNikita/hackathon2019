@@ -65,7 +65,9 @@ public class MyScansActivity extends Activity {
                             scanBeginDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             scanBeginDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                            scanEndDate.setText(scan.getEnd().split("T")[0]);
+                            if (scan.getEnd() != null) {
+                                scanEndDate.setText(scan.getEnd().split("T")[0]);
+                            }
                             scanEndDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             scanEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
 

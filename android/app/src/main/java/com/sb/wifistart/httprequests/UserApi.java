@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserApi {
@@ -47,6 +48,12 @@ public interface UserApi {
     })
     @POST("/api/user/points/")
     Call<Point> addPoint(@Body PointCreateRequest pointCreateRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @PUT("/api/user/points/")
+    Call<Void> updatePoint(@Body PointUpdateRequest pointUpdateRequest);
 
     @Headers({
             "Content-Type:application/json"

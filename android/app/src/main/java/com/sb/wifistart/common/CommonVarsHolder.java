@@ -12,6 +12,7 @@ public class CommonVarsHolder {
     public static String locationId;
     public static String locationStartDate;
     public static List<Point> currentPoints;
+    public static Point chosenPoint;
     public static String scanId;
     public static UserResponse userResponse;
 
