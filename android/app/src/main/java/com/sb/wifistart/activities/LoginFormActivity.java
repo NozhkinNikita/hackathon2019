@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sb.wifistart.R;
+import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.httprequests.LoginRequest;
 import com.sb.wifistart.service.TokenInterceptor;
 import com.sb.wifistart.httprequests.UserApi;
@@ -77,6 +78,7 @@ public class LoginFormActivity extends AppCompatActivity {
                     System.out.println("Token: " + token);
                     TokenInterceptor.setToken(token);
                     Intent mainIntent = new Intent(LoginFormActivity.this, MainScreenActivity.class);
+                    CommonVarsHolder.userResponse = userResponse;
                     startActivity(mainIntent);
                 } else {
                     counter--;
