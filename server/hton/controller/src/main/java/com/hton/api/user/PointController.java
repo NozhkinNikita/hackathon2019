@@ -116,12 +116,7 @@ public class PointController {
                 point.setIsRepeat(false);
                 point.setScanId(request.getScanId());
 
-                Point savedPoint = pointDao.save(point);
-
-                PointCreateRequest result = new PointCreateRequest();
-                result.setId(savedPoint.getId());
-
-                return new ResponseEntity<>(result, HttpStatus.OK);
+                return new ResponseEntity<>(pointDao.save(point), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

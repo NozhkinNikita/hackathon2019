@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.NewScanActivity"></activity>
+        <activity android:name=".activities.AddPointActivity"></activity>
+        <activity android:name=".activities.NewScanActivity" />
         <activity android:name=".activities.LoginFormActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,13 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.StackedBarActivity" />
         <activity android:name=".activities.MainScreenActivity" />
         <activity android:name=".activities.MyScansActivity" />
         <activity android:name=".activities.WifiInfoActivity" />
-        <activity android:name=".activities.ScanPointsActivity"/>
-        <activity android:name=".activities.PointInfoActivity"/>
+        <activity android:name=".activities.ScanPointsActivity" />
     </application>
 
 </manifest>

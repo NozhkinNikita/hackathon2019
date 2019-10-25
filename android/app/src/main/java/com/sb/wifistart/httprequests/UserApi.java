@@ -45,6 +45,18 @@ public interface UserApi {
     @Headers({
             "Content-Type:application/json"
     })
+    @POST("/api/user/points/")
+    Call<Point> addPoint(@Body PointCreateRequest pointCreateRequest);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/user/points/location-points/{id}")
+    Call<List<Point>> getPoints(@Path("id") String id);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
     @GET("/api/user/scans/")
     Call<List<Scan>> getScans();
 
