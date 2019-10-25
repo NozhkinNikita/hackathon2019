@@ -1,5 +1,7 @@
 package com.sb.wifistart.httprequests;
 
+import com.sb.wifistart.dto.Point;
+import com.sb.wifistart.dto.Router;
 import com.sb.wifistart.dto.Scan;
 
 import java.util.List;
@@ -51,4 +53,16 @@ public interface UserApi {
     })
     @GET("/api/user/scans/{scanId}")
     Call<Scan> getScan(@Path("scanId") String scanId);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/user/points/{pointId}")
+    Call<Point> getPoint(@Path("pointId") String pointId);
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @GET("/api/user/points/{routerId}")
+    Call<Router> getRouter(@Path("routerId") String routerId);
 }

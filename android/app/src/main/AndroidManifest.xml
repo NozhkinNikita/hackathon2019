@@ -28,6 +28,7 @@
         <activity android:name=".activities.MyScansActivity" />
         <activity android:name=".activities.WifiInfoActivity" />
         <activity android:name=".activities.ScanPointsActivity"/>
+        <activity android:name=".activities.PointInfoActivity"/>
     </application>
 
 </manifest>
