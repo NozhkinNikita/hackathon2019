@@ -20,9 +20,6 @@
 
                 <!--                {{points.points}}<br><br><br>-->
 
-                {{getDataForGraph()}}
-
-                {{this.points.points}}
                 <nav-tabs-card>
                     <template slot="content">
                         <span class="md-nav-tabs-title">Scan:</span>
