@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    android:orientation="vertical">-->
+<!--    <ConstraintLayout></ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintRight_toLeftOf="parent">
 
     </com.github.mikephil.charting.charts.BarChart>
 
@@ -26,11 +31,8 @@
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
@@ -78,9 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/progressBar"
-                android:layout_alignLeft="@+id/progressBar"
-                android:textColor="#F50707"
-                android:textStyle="bold" />
+                android:layout_alignLeft="@+id/progressBar" />
         </TableRow>
 
         <TableRow
@@ -93,8 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Send"
-                android:textAlignment="textStart" />
+                android:text="Send" />
 
             <TextView
                 android:id="@+id/tvSendedValue"
@@ -113,8 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Send per second"
-                android:textAlignment="textStart" />
+                android:text="Send per second" />
 
             <TextView
                 android:id="@+id/tvSendedPerSecondValue"
@@ -133,8 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Received"
-                android:textAlignment="textStart" />
+                android:text="Received" />
 
             <TextView
                 android:id="@+id/tvReceivedValue"
@@ -153,8 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Received per second"
-                android:textAlignment="textStart" />
+                android:text="Received per second" />
 
             <TextView
                 android:id="@+id/tvReceivedPerSecondValue"
@@ -166,8 +162,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="5dp">
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btnTest"
@@ -175,9 +170,10 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#187C13"
                 android:gravity="center"
-                android:text="Проверка скорости сети"
+                android:text="Test"
                 android:textColor="#D5D5D5" />
         </TableRow>
     </TableLayout>
 
+    <!--</LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
