@@ -77,6 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(WebMvcConfig.SECURITY_PATH + "/**").hasRole(Role.SECUTITY_ADMIN.name())
                 .antMatchers(WebMvcConfig.ADMIN_PATH + "/**").hasRole(Role.NETWORK_ADMIN.name())
                 .antMatchers(WebMvcConfig.USER_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
+                .antMatchers(WebMvcConfig.USER_LOCATION_PATH + "/**").hasAnyRole(Role.NETWORK_ADMIN.name(), Role.USER.name())
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
