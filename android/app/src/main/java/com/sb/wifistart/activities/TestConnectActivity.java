@@ -38,6 +38,7 @@ public class TestConnectActivity extends AppCompatActivity {
     //    private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 2;
     private String ipref = "iperf";
     private String argument = "-J";
+    private Boolean isTestFinished = false;
 
     private int i = 0;
     private Handler hdlr = new Handler();
@@ -73,12 +74,13 @@ public class TestConnectActivity extends AppCompatActivity {
         test.setOnClickListener(view -> {
             try {
                 progressBar.setVisibility(View.VISIBLE);
+                isTestFinished = false;
                 clearResult();
 
                 i = progressBar.getProgress();
                 new Thread(new Runnable() {
                     public void run() {
-                        while (i < 100) {
+                        while (i < 150 && !isTestFinished) {
                             i += 1;
                             // Update the progress bar and display the current value in text view
                             hdlr.post(new Runnable() {
@@ -102,12 +104,12 @@ public class TestConnectActivity extends AppCompatActivity {
                 setDataToText(server, new DataListener() {
                     @Override
                     public void onDataReady(IprefResult iprefResult) {
+                        isTestFinished = true;
                         renderedResult(iprefResult);
                     }
                 });
             } catch (Exception e) {
                 progressBar.setVisibility(View.INVISIBLE);
-                System.out.println("boom: " + e.getMessage());
                 e.printStackTrace();
             }
         });
@@ -120,12 +122,7 @@ public class TestConnectActivity extends AppCompatActivity {
             public void run() {
                 try {
                     String appFileDirectory = getFilesDir().getPath();
-
-                    System.out.println("Attempting to copy this file: " + appFileDirectory);
-
                     saveIperf(appFileDirectory);
-
-                    System.out.println("Copy ipref");
 
                     String filePath = appFileDirectory + File.separator + ipref;
 
@@ -143,13 +140,24 @@ public class TestConnectActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception e) {
-                    System.out.println("boom: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
 
+    public static String humanReadableByteCount(long bytes, boolean si) {
+        int unit = si ? 1000 : 1024;
+        if (bytes < unit) return bytes + " B";
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+    }
 
+    public static Float getKb(long bytes, boolean si) {
+        int unit = si ? 1000 : 1024;
+        Long exp = bytes / unit;
+        return exp.floatValue();
     }
 
     private void clearResult() {
@@ -164,21 +172,27 @@ public class TestConnectActivity extends AppCompatActivity {
 
         TextView tvReceivedPerSecondValue = findViewById(R.id.tvReceivedPerSecondValue);
         tvReceivedPerSecondValue.setText("");
+
+        TextView tvStatus = findViewById(R.id.tvStatus);
+        tvStatus.setText("");
+
+        BarChart barChart = findViewById(R.id.barChart);
+        barChart.clear();
     }
 
     private void renderedResult(IprefResult iprefResult) {
         if (iprefResult.getError() == null) {
             TextView tvSendedValue = findViewById(R.id.tvSendedValue);
-            tvSendedValue.setText(iprefResult.getEnd().getSum_sent().getBytes().toString());
+            tvSendedValue.setText(humanReadableByteCount(iprefResult.getEnd().getSum_sent().getBytes().longValue(), true));
 
             TextView tvSendedPerSecondValue = findViewById(R.id.tvSendedPerSecondValue);
-            tvSendedPerSecondValue.setText(iprefResult.getEnd().getSum_sent().getBits_per_second().toString());
+            tvSendedPerSecondValue.setText(humanReadableByteCount(iprefResult.getEnd().getSum_sent().getBits_per_second().longValue(), true));
 
             TextView tvReceivedValue = findViewById(R.id.tvReceivedValue);
-            tvReceivedValue.setText(iprefResult.getEnd().getSum_received().getBytes().toString());
+            tvReceivedValue.setText(humanReadableByteCount(iprefResult.getEnd().getSum_received().getBytes().longValue(), true));
 
             TextView tvReceivedPerSecondValue = findViewById(R.id.tvReceivedPerSecondValue);
-            tvReceivedPerSecondValue.setText(iprefResult.getEnd().getSum_received().getBits_per_second().toString());
+            tvReceivedPerSecondValue.setText(humanReadableByteCount(iprefResult.getEnd().getSum_received().getBits_per_second().longValue(), true));
 
             TextView tvStatus = findViewById(R.id.tvStatus);
             tvStatus.setText("");
@@ -187,7 +201,7 @@ public class TestConnectActivity extends AppCompatActivity {
             List<BarEntry> values = new ArrayList<>();
             for(int i = 0; i < iprefResult.getIntervals().size(); i++) {
                 seconds.add(String.valueOf(i+1));
-                values.add(new BarEntry(i, Float.valueOf(iprefResult.getIntervals().get(i).getSumInterval().getBytes().toString())));
+                values.add(new BarEntry(i, getKb(iprefResult.getIntervals().get(i).getSumInterval().getBytes().longValue(), true)));
             }
 
             BarChart barChart = findViewById(R.id.barChart);
@@ -195,15 +209,17 @@ public class TestConnectActivity extends AppCompatActivity {
             xAxis.setLabelRotationAngle(45);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(seconds));
 
-            BarDataSet barDataSet = new BarDataSet(values, "Test chanel");
+            BarDataSet barDataSet = new BarDataSet(values, "Скорость Кб в сек.");
             BarData barData = new BarData(barDataSet);
             barChart.setData(barData);
             barChart.invalidate();
         } else {
-            TextView tvStatus = findViewById(R.id.tvStatus);
-            tvStatus.setText(iprefResult.getError());
+            isTestFinished = true;
 
             clearResult();
+
+            TextView tvStatus = findViewById(R.id.tvStatus);
+            tvStatus.setText(iprefResult.getError());
         }
     }
 
