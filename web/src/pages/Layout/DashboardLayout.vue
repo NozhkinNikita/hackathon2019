@@ -12,7 +12,7 @@
                 <md-icon>person</md-icon>
                 <p>Users</p>
             </sidebar-link>
-            <sidebar-link to="/locations">
+            <sidebar-link v-if="rolesContains('SECUTITY_ADMIN') || rolesContains('NETWORK_ADMIN')" to="/locations">
                 <md-icon>my_location</md-icon>
                 <p>Locations</p>
             </sidebar-link>
