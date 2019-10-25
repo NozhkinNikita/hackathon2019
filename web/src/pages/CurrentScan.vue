@@ -24,7 +24,7 @@
                     <template slot="content">
                         <span class="md-nav-tabs-title">Scan:</span>
                         <md-tabs class="md-success" md-alignment="left">
-                            <md-tab id="tab-home" md-label="Points" md-icon="bug_report">
+                            <md-tab id="tab-home" md-label="Points" md-icon="wifi_tethering">
 
                                 <points-table :points="points" table-header-color="green"></points-table>
 
@@ -47,7 +47,7 @@
 
                             </md-tab>
 
-                            <md-tab id="tab-posts" md-label="device" md-icon="cloud">
+                            <md-tab id="tab-posts" md-label="device" md-icon="device_unknown">
 
 
                                 <p><b>model: </b> &nbsp; {{ points.device.model }}</p>
@@ -237,7 +237,7 @@
                             showGrid: true
                         },
                         low: 0,
-                        high: 20,
+                        high: 100,
                         chartPadding: {
                             top: 0,
                             right: 5,
