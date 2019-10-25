@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sb.wifistart.R;
+import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.dto.Point;
 import com.sb.wifistart.dto.Scan;
 import com.sb.wifistart.httprequests.UserApi;
@@ -52,7 +53,7 @@ public class ScanPointsActivity extends Activity {
 
                     pointsListView = (TableLayout) findViewById(R.id.pointsList);
 
-                    if(points.size() == 0) {
+                    if (points.size() == 0) {
                         pointsListView.addView(TableContentHelper.getRowWithEmptyMessage(getApplicationContext(), 4));
                     } else {
                         points.forEach(point -> {
@@ -77,7 +78,7 @@ public class ScanPointsActivity extends Activity {
                             pointEndDate.setTextAppearance(android.R.style.TextAppearance_Medium);
                             pointEndDate.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                            pointWasRescaned.setText(point.getIsRepeat()? "Да": "Нет");
+                            pointWasRescaned.setText(point.getIsRepeat() ? "Да" : "Нет");
                             pointWasRescaned.setTextAppearance(android.R.style.TextAppearance_Medium);
                             pointWasRescaned.setGravity(Gravity.CENTER_HORIZONTAL);
 
@@ -89,11 +90,17 @@ public class ScanPointsActivity extends Activity {
                             row.setGravity(Gravity.CENTER_HORIZONTAL);
                             row.setPadding(5, 5, 5, 5);
 
-//                        row.setOnClickListener(view -> {
-//                            Intent intent = new Intent(MyScansActivity.this, ScanPointsActivity.class);
-//                            intent.putExtra("scanId", scan.getId());
-//                            startActivity(intent);
-//                        });
+//                            if(CommonVarsHolder.userResponse != null && CommonVarsHolder.userResponse.getRoles().contains("NETWORK_ADMIN")) {
+                                row.setOnClickListener(view -> {
+                                    Intent intent = new Intent(ScanPointsActivity.this, PointInfoActivity.class);
+                                    intent.putExtra("pointId", point.getId());
+                                    intent.putExtra("pointName", point.getName());
+                                    intent.putExtra("pointBegin", point.getBegin());
+                                    intent.putExtra("pointEnd", point.getEnd());
+
+                                    startActivity(intent);
+                                });
+//                            }
 
                             pointsListView.addView(row);
                         });
