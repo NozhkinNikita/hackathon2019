@@ -59,5 +59,10 @@ public class MainScreenActivity extends AppCompatActivity {
                     });
                 }
         );
+
+        Button testConnect = findViewById(R.id.testConnect);
+        testConnect.setOnClickListener(view ->
+                startActivity(new Intent(MainScreenActivity.this, TestConnectActivity.class))
+        );
     }
 }

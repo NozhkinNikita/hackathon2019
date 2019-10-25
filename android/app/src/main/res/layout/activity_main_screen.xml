@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/firstDivider"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#00FFFFFF" />
@@ -35,6 +35,26 @@
         android:layout_height="150dp"
         android:backgroundTint="#187C13"
         android:text="Мои сканирования"
+        android:textColor="#D5D5D5"
+        android:textSize="16pt"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newScan" />
+
+    <View
+        android:id="@+id/secondDivider"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00FFFFFF" />
+
+    <Button
+        android:id="@+id/testConnect"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:backgroundTint="#187C13"
+        android:text="Тест канала"
         android:textColor="#D5D5D5"
         android:textSize="16pt"
         android:textStyle="normal"
