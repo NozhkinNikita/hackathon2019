@@ -9,6 +9,7 @@ import OrderedTable from "./Tables/OrderedTable.vue";
 import SimpleTable from "./Tables/SimpleTable.vue";
 import LocationTable from "./Tables/LocationsTable.vue";
 import ScansTable from "./Tables/ScansTable.vue";
+import PointsTable from "./Tables/PointsTable.vue";
 
 
 // Modals
@@ -29,6 +30,8 @@ export {
     LocationTable,
     LocationCrud,
     LocationAdd,
-    ScansTable
+    ScansTable,
+    PointsTable
+
 
 };

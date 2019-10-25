@@ -98,20 +98,31 @@
         app:layout_constraintStart_toEndOf="@+id/pointSpinner"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
-    <Button
-        android:id="@+id/startPointScanBtn"
-        android:layout_width="367dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:text="Провести сканирование в точке"
-        app:layout_constraintTop_toBottomOf="@+id/addPointBtn"
-        tools:layout_editor_absoluteX="28dp" />
-
     <!--  <EditText
           android:id="@+id/editText3"
           android:gravity="center"
           android:padding="3dip"
           android:inputType="textPersonName"
           android:text="Место сканирования:" />-->
+
+    <Button
+        android:id="@+id/startPointScanBtn"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:text="Провести сканирование в точке"
+        app:layout_constraintBottom_toTopOf="@+id/newScanBarChart"
+        app:layout_constraintTop_toBottomOf="@+id/addPointBtn"
+        app:layout_constraintVertical_bias="0.481"
+        tools:layout_editor_absoluteX="22dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/newScanBarChart"
+        android:layout_width="349dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
