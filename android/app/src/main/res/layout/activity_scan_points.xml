@@ -11,34 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eeeeee"
-        android:stretchColumns="*" >
+        android:scrollbars="vertical"
+        android:stretchColumns="*">
 
-        <TableRow android:background="#cccccc"
+        <TableRow
+            android:background="#cccccc"
             android:padding="5dp">
-            <TextView android:layout_width="fill_parent"
+
+            <TextView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="Имя"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-            <TextView android:layout_width="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="Начало"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-            <TextView android:layout_width="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Оканчание"
                 android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
-            <TextView android:layout_width="fill_parent"
+                android:text="Окончание"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="Повтор"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </TableRow>
     </TableLayout>
 
