@@ -2,67 +2,127 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".activities.NewScanActivity">
 
-        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="1">
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        app:layout_constraintEnd_toEndOf="parent">
 
-            <TableRow>
-                <EditText
-                    android:id="@+id/newScanLabel"
-                    android:layout_span="2"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:textSize="25dp"
-                    android:text="Новое сканирование" />
-            </TableRow>
+        <TableRow>
 
-            <TableRow>
-                <EditText
-                    android:id="@+id/editText3"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:padding="3dip"
-                    android:background="@null"
-                    android:text="Место сканирования:" />
+            <EditText
+                android:id="@+id/newScanLabel"
+                android:layout_span="2"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="Новое сканирование"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </TableRow>
 
-                <TextView
-                    android:id="@+id/locationName"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:text="Место сканирования" />
-            </TableRow>
+        <TableRow>
 
-            <TableRow>
+            <EditText
+                android:id="@+id/editText3"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:padding="3dip"
+                android:focusable="false"
+                android:text="Место сканирования:" />
 
-                <EditText
-                    android:id="@+id/editText4"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:padding="3dip"
-                    android:background="@null"
-                    android:text="Начало сканирования:" />
+            <TextView
+                android:id="@+id/locationName"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="Место сканирования" />
+        </TableRow>
 
-                <TextView
-                    android:id="@+id/locationStartDate"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:text="Начало сканирования:" />
-            </TableRow>
+        <TableRow>
 
-        </TableLayout>
+            <EditText
+                android:id="@+id/editText4"
+                android:background="@null"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:padding="3dip"
+                android:focusable="false"
+                android:text="Начало сканирования:" />
 
-        <!--  <EditText
-              android:id="@+id/editText3"
-              android:gravity="center"
-              android:padding="3dip"
-              android:inputType="textPersonName"
-              android:text="Место сканирования:" />-->
+            <TextView
+                android:id="@+id/locationStartDate"
+                android:gravity="center"
+                android:padding="3dip"
+                android:text="Начало сканирования:" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Spinner
+        android:id="@+id/pointSpinner"
+        android:layout_width="191dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="58dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText5"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="280dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Выберите точку сканирования:"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <Button
+        android:id="@+id/addPointBtn"
+        android:layout_width="148dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="76dp"
+        android:text="Добавить новую точку"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintStart_toEndOf="@+id/pointSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <!--  <EditText
+          android:id="@+id/editText3"
+          android:gravity="center"
+          android:padding="3dip"
+          android:inputType="textPersonName"
+          android:text="Место сканирования:" />-->
+
+    <Button
+        android:id="@+id/startPointScanBtn"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:text="Провести сканирование в точке"
+        app:layout_constraintBottom_toTopOf="@+id/newScanBarChart"
+        app:layout_constraintTop_toBottomOf="@+id/addPointBtn"
+        app:layout_constraintVertical_bias="0.481"
+        tools:layout_editor_absoluteX="22dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/newScanBarChart"
+        android:layout_width="349dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

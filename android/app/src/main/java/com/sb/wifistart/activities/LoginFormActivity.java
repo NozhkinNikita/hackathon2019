@@ -56,7 +56,7 @@ public class LoginFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 postData();
-                /*validate(login.getText().toString(), password.getText().toString());*/
+              //  validate(login.getText().toString(), password.getText().toString());
             }
         });
     }

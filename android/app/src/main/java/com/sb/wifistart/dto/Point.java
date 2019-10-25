@@ -18,5 +18,5 @@ public class Point {
     private String end;
     private Boolean isRepeat;
     private String scanId;
-    private List<RouterData> routerDates;
+    private List<RouterData> routerDatas;
 }
