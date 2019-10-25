@@ -56,6 +56,7 @@ public class StackedBarActivity extends AppCompatActivity {
                     String selectedLocationId = locationResponses.stream().
                             filter(locationResponse -> locationResponse.getName().equals(selectedLocationName))
                             .findFirst().get().getId();
+                    CommonVarsHolder.locationId = selectedLocationId;
 
                     Call call = userApi.createScan(new CreateScanRequest(selectedLocationId, new Device()));
             final boolean[] createScanFinished = {false};

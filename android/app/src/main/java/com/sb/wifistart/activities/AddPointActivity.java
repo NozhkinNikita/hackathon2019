@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.sb.wifistart.R;
 import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.dto.Device;
+import com.sb.wifistart.dto.Point;
 import com.sb.wifistart.httprequests.CreateScanRequest;
 import com.sb.wifistart.httprequests.CreateScanResponse;
 import com.sb.wifistart.httprequests.LoginRequest;
@@ -18,6 +19,8 @@ import com.sb.wifistart.httprequests.UserApi;
 import com.sb.wifistart.httprequests.UserResponse;
 import com.sb.wifistart.service.TokenInterceptor;
 import com.sb.wifistart.service.UserApiHolder;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +32,7 @@ public class AddPointActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_point);
-        Button addPointButton = findViewById(R.id.addPointBtn);
+        Button addPointButton = findViewById(R.id.addPointButton);
         EditText pointName = findViewById(R.id.newPointName);
         addPointButton.setOnClickListener(view -> {
             UserApi userApi = UserApiHolder.getUserApi();
@@ -43,6 +46,23 @@ public class AddPointActivity extends AppCompatActivity {
                      */
                     System.out.println("on add point");
                     if (response.body() != null) {
+                        Call pointsCall = userApi.getPoints(CommonVarsHolder.locationId);
+                        pointsCall.enqueue(new Callback() {
+                            @Override
+                            public void onResponse(Call call, Response response) {
+                                System.out.println("on get points");
+                                if (response.body() != null) {
+                                    CommonVarsHolder.currentPoints = (List<Point>) response.body();
+                                    Intent chartIntent = new Intent(AddPointActivity.this, NewScanActivity.class);
+                                    startActivity(chartIntent);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call call, Throwable t) {
+                                System.out.println("on failure get locations");
+                            }
+                        });
                     }
                 }
                 @Override

@@ -46,7 +46,7 @@ public interface UserApi {
             "Content-Type:application/json"
     })
     @POST("/api/user/points/")
-    Call<CreateScanResponse> addPoint(@Body PointCreateRequest pointCreateRequest);
+    Call<Point> addPoint(@Body PointCreateRequest pointCreateRequest);
 
     @Headers({
             "Content-Type:application/json"
