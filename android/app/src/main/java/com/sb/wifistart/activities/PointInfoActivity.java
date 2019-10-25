@@ -66,7 +66,7 @@ public class PointInfoActivity extends Activity {
         pointDetail.addView(pointBeginRow);
 
         TextView pointEndLabel = new TextView(getApplicationContext());
-        pointEndLabel.setText("Дата оканчания");
+        pointEndLabel.setText("Дата окончания");
         pointEndLabel.setTextAppearance(android.R.style.TextAppearance_Medium);
         pointEndLabel.setGravity(Gravity.CENTER_HORIZONTAL);
 
