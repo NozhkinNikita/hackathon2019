@@ -1,5 +1,6 @@
 package com.sb.wifistart.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,9 +22,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.sb.wifistart.R;
 import com.sb.wifistart.common.CommonVarsHolder;
 import com.sb.wifistart.httprequests.LocationResponse;
+import com.sb.wifistart.receiver.WifiReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +43,8 @@ public class NewScanActivity extends AppCompatActivity {
 
 
     private Spinner pointSpinner;
-
     private Button addPointBtn;
+    private BarChart stackedChart;
 
 
     @Override
@@ -60,6 +67,12 @@ public class NewScanActivity extends AppCompatActivity {
                 }
         );
 
+        Button startPointScanBtn = findViewById(R.id.startPointScanBtn);
+        startPointScanBtn.setOnClickListener(view -> {
+            WifiReceiver wifiReceiver = new PointInfoActivity.WifiReceiverImpl(getApplicationContext());
+            wifiReceiver.registerReceiver(getApplicationContext());
+            wifiReceiver.startScan();
+        });
     }
 
 /*    public void onButtonShowPopupWindowClick(View view) {
@@ -99,7 +112,7 @@ public class NewScanActivity extends AppCompatActivity {
     }*/
 
 
-        // add items into spinner dynamically
+    // add items into spinner dynamically
     public void addItemsOnSpinner() {
 
         pointSpinner = (Spinner) findViewById(R.id.pointSpinner);
@@ -111,4 +124,34 @@ public class NewScanActivity extends AppCompatActivity {
         pointSpinner.setAdapter(dataAdapter);
     }
 
+    private class WifiReceiverImpl extends WifiReceiver {
+
+        public WifiReceiverImpl(Context context){
+            super(context);
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean success = intent.getBooleanExtra(getWifiManager().EXTRA_RESULTS_UPDATED, false);
+            if(success) {
+                setScanResults(getWifiManager().getScanResults());
+            }
+
+            List<String> ssidList = new ArrayList<>();
+            List<BarEntry> dataVals = new ArrayList<>();
+            for(int i = 0; i < getScanResults().size(); i++) {
+                ssidList.add(getScanResults().get(i).SSID + "\n" + "(" + getScanResults().get(i).frequency + ")");
+                dataVals.add(new BarEntry(i, -getScanResults().get(i).level));
+            }
+
+            XAxis xAxis = stackedChart.getXAxis();
+            xAxis.setLabelRotationAngle(45);
+            xAxis.setValueFormatter(new IndexAxisValueFormatter(ssidList));
+
+            BarDataSet barDataSet = new BarDataSet(dataVals, "WiFi signals");
+            BarData barData = new BarData(barDataSet);
+            stackedChart.setData(barData);
+            stackedChart.invalidate();
+        }
     }
+}
