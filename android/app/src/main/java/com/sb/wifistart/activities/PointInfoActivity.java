@@ -106,7 +106,7 @@ public class PointInfoActivity extends Activity {
                         List<BarEntry> dataVals = new ArrayList<>();
                         for(int i = 0; i < routerDatas.size(); i++) {
                             ssidList.add(routerDatas.get(i).getSsid() + "\n" + "(" + routerDatas.get(i).getChannel() + ")");
-                            dataVals.add(new BarEntry(i, -Float.valueOf(routerDatas.get(i).getRssi().toString())));
+                            dataVals.add(new BarEntry(i, Float.valueOf(routerDatas.get(i).getRssi().toString())));
                         }
 
                         XAxis xAxis = stackedChart.getXAxis();
