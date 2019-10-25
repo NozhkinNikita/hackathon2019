@@ -80,7 +80,7 @@
         android:id="@+id/editText5"
         android:layout_width="280dp"
         android:layout_height="47dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Выберите точку сканирования:"
@@ -91,12 +91,21 @@
         android:id="@+id/addPointBtn"
         android:layout_width="148dp"
         android:layout_height="61dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="76dp"
         android:text="Добавить новую точку"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toEndOf="@+id/pointSpinner"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <Button
+        android:id="@+id/startPointScanBtn"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:text="Провести сканирование в точке"
+        app:layout_constraintTop_toBottomOf="@+id/addPointBtn"
+        tools:layout_editor_absoluteX="28dp" />
 
     <!--  <EditText
           android:id="@+id/editText3"
