@@ -47,7 +47,7 @@
             <column name="end" value="2019-10-08 21:56:49"/>
             <column name="status" value="DRAFT"/>
             <column name="deviceId" value="-1"/>
-            <column name="userLocationId" value="-3"/>
+            <column name="userLocationId" value="-1"/>
         </insert>
 
         <insert tableName="point">
@@ -64,7 +64,7 @@
             <column name="ssid" value="unicorn_wi-fi"/>
             <column name="bssid" value="unicorn_wi-fi"/>
             <column name="channel" value="1"/>
-            <column name="rssi" value="3.14"/>
+            <column name="rssi" value="62"/>
             <column name="ourRouterId" value="-1"/>
             <column name="pointId" value="-1"/>
         </insert>
@@ -83,7 +83,7 @@
             <column name="ssid" value="unicorn_wi-fi-1"/>
             <column name="bssid" value="unicorn_wi-fi-1"/>
             <column name="channel" value="1"/>
-            <column name="rssi" value="10"/>
+            <column name="rssi" value="85"/>
             <column name="ourRouterId" value="-1"/>
             <column name="pointId" value="-2"/>
         </insert>
@@ -102,7 +102,7 @@
             <column name="ssid" value="unicorn_wi-fi-1"/>
             <column name="bssid" value="unicorn_wi-fi-1"/>
             <column name="channel" value="1"/>
-            <column name="rssi" value="5"/>
+            <column name="rssi" value="50"/>
             <column name="ourRouterId" value="-1"/>
             <column name="pointId" value="-3"/>
         </insert>

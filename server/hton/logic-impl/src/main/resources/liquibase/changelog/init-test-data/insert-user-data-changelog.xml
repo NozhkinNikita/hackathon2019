@@ -49,6 +49,14 @@
             <column name="roleId" value="SECUTITY_ADMIN"/>
         </insert>
         <insert tableName="user_roles">
+            <column name="userId" valueNumeric="1"/>
+            <column name="roleId" value="NETWORK_ADMIN"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="userId" valueNumeric="1"/>
+            <column name="roleId" value="USER"/>
+        </insert>
+        <insert tableName="user_roles">
             <column name="userId" valueNumeric="2"/>
             <column name="roleId" value="NETWORK_ADMIN"/>
         </insert>
