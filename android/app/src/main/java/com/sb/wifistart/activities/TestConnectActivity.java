@@ -144,8 +144,6 @@ public class TestConnectActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
-
     }
 
     public static String humanReadableByteCount(long bytes, boolean si) {
@@ -211,7 +209,7 @@ public class TestConnectActivity extends AppCompatActivity {
             xAxis.setLabelRotationAngle(45);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(seconds));
 
-            BarDataSet barDataSet = new BarDataSet(values, "Test chanel");
+            BarDataSet barDataSet = new BarDataSet(values, "Скорость Кб в сек.");
             BarData barData = new BarData(barDataSet);
             barChart.setData(barData);
             barChart.invalidate();
