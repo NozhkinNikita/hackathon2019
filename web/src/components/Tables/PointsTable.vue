@@ -3,18 +3,22 @@
         <!--        v-model="users"-->
         <!--        :users.sync="users"-->
         <md-table
-                v-model="scans"
+                v-model="points.points"
 
 
                 :table-header-color="tableHeaderColor">
-            <md-table-row slot="md-table-row" slot-scope="{ item }" @click="open(item.id)">
+            <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!--                <md-table-cell md-label="Id">{{ item.id }}</md-table-cell>-->
+                <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
                 <md-table-cell md-label="Begin">{{ item.begin }}</md-table-cell>
                 <md-table-cell md-label="End">{{ item.end }}</md-table-cell>
-                <md-table-cell md-label="Status">{{ item.status }}</md-table-cell>
-                <md-table-cell md-label="User location">{{ getLocation(item.userLocation)}}</md-table-cell>
+<!--                <md-table-cell md-label="IsRepeat">{{ item.isRepeat }}</md-table-cell>-->
+
 
             </md-table-row>
+
+
+
         </md-table>
     </div>
 </template>
@@ -25,14 +29,14 @@
     import LocationCrud from "../Modals/LocationCrud";
 
     export default {
-        name: "scans-table",
+        name: "points-table",
         components: {LocationCrud},
         props: {
             tableHeaderColor: {
                 type: String,
                 default: ""
             },
-            scans: {
+            points: {
                 type: Array,
                 default: [],
             }

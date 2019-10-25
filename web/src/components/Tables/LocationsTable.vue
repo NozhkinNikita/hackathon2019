@@ -10,7 +10,6 @@
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!--                <md-table-cell md-label="Id">{{ item.id }}</md-table-cell>-->
                 <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
-                <md-table-cell md-label="Routers">{{ item.routers }}</md-table-cell>
                 <md-table-cell md-label="Action">
                     <location-crud :location-id="item.id" :users="users" v-on:toggle="toggleHeader()"></location-crud>
                     <md-button class="md-danger" @click="deleteLocation(item.id)">Delete</md-button>
