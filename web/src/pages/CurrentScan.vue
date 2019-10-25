@@ -53,7 +53,7 @@
                                 <p><b>model: </b> &nbsp; {{ points.device.model }}</p>
                                 <p><b>Version os: </b> &nbsp; {{ points.device.osVersion }}</p>
                                 <p><b>Manufacturer: </b>&nbsp;{{ points.device.manufacturer }}</p>
-                                <p><b>Brand: </b>&nbsp;{{ points.device.brand }}></p>
+                                <p><b>Brand: </b>&nbsp;{{ points.device.brand }}</p>
                                 <p><b>Device id: </b>&nbsp;{{ points.device.UNICORN_deviceId }}</p>
                                 <p><b>Device: </b>&nbsp;{{ points.device.device }}</p>
                                 <p><b>Mac: </b>&nbsp;{{ points.device.mac }}</p>
